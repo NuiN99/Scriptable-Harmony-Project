@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2174405833c76d49bb5799a2da3e8cf, type: 3}
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
-  path: Assets/Plugins/NuiN/ScriptableVariables/VariableSOClasses/Generated
-  displayType: Float
-  actualType: float
+  path: Assets/Plugins/NuiN/ScriptableVariables/VariableClasses
+  displayType: Long
+  actualType: long
