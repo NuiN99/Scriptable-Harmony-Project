@@ -5,7 +5,7 @@ using UnityEditor;
 [CreateAssetMenu(menuName = "ScriptableObjects/Variables/Generator/VariableScriptGenerator", fileName = "Variable Script Generator")]
 public class VariableScriptGeneratorSO : ScriptableObject
 {
-    [SerializeField] string path = "Assets/Plugins/NuiN/ScriptableVariables/VariableSOClasses/Generated";
+    [SerializeField] string path = "Assets/Plugins/NuiN/ScriptableVariables/VariableClasses";
     
     [SerializeField] string displayType = "Float";
     [SerializeField] string actualType = "float";
@@ -15,8 +15,8 @@ public class VariableScriptGeneratorSO : ScriptableObject
 {
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = ""ScriptableObjects/Variables/<TypeUpper> Variable"", fileName = ""<TypeUpper>Variable"")]
-    public class <TypeUpper>SO : VariableSO<<Type>> { }
+    [CreateAssetMenu(menuName = ""ScriptableObjects/Variables/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
+    public class <DisplayType>SO : VariableSO<<ActualType>> { }
 }";
     
     public void Generate()
@@ -28,8 +28,8 @@ public class VariableScriptGeneratorSO : ScriptableObject
     string GetModifiedTemplate()
     {
         string template = SCRIPT_TEMPLATE;
-        template = template.Replace("<Type>", actualType);
-        template = template.Replace("<TypeUpper>", displayType);
+        template = template.Replace("<ActualType>", actualType);
+        template = template.Replace("<DisplayType>", displayType);
         
         return template;
     }
