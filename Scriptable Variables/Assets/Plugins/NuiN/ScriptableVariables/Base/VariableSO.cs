@@ -14,7 +14,6 @@ namespace NuiN.ScriptableVariables
         T _startValue;
         [SerializeField] bool keepRuntimeValues;
         
-        [Space(25)]
         [Header("Prefab References")]
         [SerializeField] List<Object> prefabReferences; 
         
