@@ -15,8 +15,8 @@ namespace NuiN.ScriptableVariables.Generator
         const string SCRIPT_TEMPLATE =
 @"namespace NuiN.ScriptableVariables
 {
-    using UnityEngine;
-
+    using UnityEngine; <Directives>
+    
     [CreateAssetMenu(menuName = ""ScriptableObjects/Variables/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
     public class <DisplayType>SO : VariableSO<<ActualType>> { }
 }";
@@ -26,23 +26,26 @@ namespace NuiN.ScriptableVariables.Generator
         [SerializeField] string displayType = "Float";
         [SerializeField] string actualType = "float";
 
-        [TextArea(10, 10)] [SerializeField] string scriptPreview;
+        [TextArea(8, 8)] [SerializeField] string scriptPreview;
 
         [SerializeField] bool autoUpdateTemplate = true;
         [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
-        [SerializeField] string path = "Assets/Plugins/NuiN/ScriptableVariables/VariableClasses";
+        
+        [SerializeField] string constantPath = "Assets/Plugins/NuiN/ScriptableVariables/VariableClasses";
+        [SerializeField] string updatedPath;
 
         void OnValidate()
         {
+            updatedPath = constantPath;
             if (autoUpdateTemplate) scriptPreview = AdjustedScriptPreview();
-            if (autoUpdatePath) path = AdjustedPath();
+            if (autoUpdatePath) updatedPath = AdjustedPath();
         }
 
         public void Generate()
         {
             scriptPreview = AdjustedScriptPreview();
-            if(autoUpdatePath) path = AdjustedPath();
+            if(autoUpdatePath) updatedPath = AdjustedPath();
             string newDisplayType = AdjustedDisplayType();
             GenerateCSharpFile($"{newDisplayType}SO", scriptPreview);
         }
@@ -53,6 +56,7 @@ namespace NuiN.ScriptableVariables.Generator
             
             template = template.Replace("<ActualType>", AdjustedActualType());
             template = template.Replace("<DisplayType>", AdjustedDisplayType());
+            template = template.Replace("<Directives>", GetRequiredDirectives());
         
             return template;
         }
@@ -62,8 +66,8 @@ namespace NuiN.ScriptableVariables.Generator
             return dataType switch
             {
                 DataType.Normal => displayType,
-                DataType.Array => $"{displayType} Array",
-                DataType.List => $"{displayType} List",
+                DataType.Array => $"{displayType}Array",
+                DataType.List => $"{displayType}List",
                 _ => displayType
             };
         }
@@ -73,24 +77,34 @@ namespace NuiN.ScriptableVariables.Generator
             {
                 DataType.Normal => actualType,
                 DataType.Array => $"{actualType}[]",
-                DataType.List => $"List<{displayType}>",
-                _ => displayType
+                DataType.List => $"List<{actualType}>",
+                _ => actualType
             };
         }
         string AdjustedPath()
         {
             return dataType switch
             {
-                DataType.Normal => path,
-                DataType.Array => $"{path}/Arrays",
-                DataType.List => $"{path}/Lists",
-                _ => path
+                DataType.Normal => constantPath,
+                DataType.Array => $"{constantPath}/Arrays",
+                DataType.List => $"{constantPath}/Lists",
+                _ => constantPath
+            };
+        }
+        string GetRequiredDirectives()
+        {
+            return dataType switch
+            {
+                DataType.List => 
+    @"
+    using System.Collections.Generic;",
+                _ => null
             };
         }
 
         void GenerateCSharpFile(string fileName, string fileContents)
         {
-            string filePath = Path.Combine(path, $"{fileName}.cs");
+            string filePath = Path.Combine(updatedPath, $"{fileName}.cs");
 
             if (File.Exists(filePath) && !overwriteExisting)
             {
