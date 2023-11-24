@@ -1,0 +1,16 @@
+{
+    "name": "VariableTypes-assembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9644cc5367d0b2d4fa38655ed711e12d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

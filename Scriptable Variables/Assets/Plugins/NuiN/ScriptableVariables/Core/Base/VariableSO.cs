@@ -1,4 +1,4 @@
-namespace NuiN.ScriptableVariables
+namespace NuiN.ScriptableVariables.Base
 {
     using System.Collections.Generic;
     using System.Linq;

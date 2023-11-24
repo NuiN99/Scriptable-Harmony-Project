@@ -15,7 +15,8 @@ namespace NuiN.ScriptableVariables.Generator
         const string SCRIPT_TEMPLATE =
 @"namespace NuiN.ScriptableVariables
 {
-    using UnityEngine; <Directives>
+    using UnityEngine;
+    using NuiN.ScriptableVariables.Base;<Directives>
     
     [CreateAssetMenu(menuName = ""ScriptableObjects/Variables/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
     public class <DisplayType>SO : VariableSO<<ActualType>> { }
@@ -85,9 +86,9 @@ namespace NuiN.ScriptableVariables.Generator
         {
             return dataType switch
             {
-                DataType.Normal => constantPath,
-                DataType.Array => $"{constantPath}/Arrays",
-                DataType.List => $"{constantPath}/Lists",
+                DataType.Normal => $"{constantPath}/Normal",
+                DataType.Array => $"{constantPath}/Array",
+                DataType.List => $"{constantPath}/List",
                 _ => constantPath
             };
         }

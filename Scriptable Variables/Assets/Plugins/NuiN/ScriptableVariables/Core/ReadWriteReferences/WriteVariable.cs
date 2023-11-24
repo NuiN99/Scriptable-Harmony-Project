@@ -1,3 +1,5 @@
+using NuiN.ScriptableVariables.Base;
+
 namespace NuiN.ScriptableVariables
 {
     using System;

@@ -9,7 +9,6 @@ using UnityEngine.UI;
 public class SetTextWithScriptableVariable : MonoBehaviour
 {
     [SerializeField] ReadVariable<string> stringVariable;
-
     [SerializeField] Text displayedText;
 
     void Update()
