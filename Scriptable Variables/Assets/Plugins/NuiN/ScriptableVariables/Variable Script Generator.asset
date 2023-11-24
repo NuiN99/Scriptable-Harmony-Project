@@ -15,8 +15,10 @@ MonoBehaviour:
   dataType: 0
   displayType: Float
   actualType: float
-  scriptPreview: 
+  scriptPreview: "namespace NuiN.ScriptableVariables\r\n{\r\n    using UnityEngine;\r\n\r\n   
+    [CreateAssetMenu(menuName = \"ScriptableObjects/Variables/float\", fileName =
+    \"New Float Variable\")]\r\n    public class FloatSO : VariableSO<float> { }\r\n}"
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
-  path: Assets/Plugins/NuiN/ScriptableVariables/VariableClasses
+  path: Assets/Plugins/NuiN/ScriptableVariables/VariableClasses/Arrays
