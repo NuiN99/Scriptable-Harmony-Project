@@ -2,13 +2,13 @@ using UnityEngine;
 using System.IO;
 using UnityEditor;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/VariableSOClassGenerator")]
-public class VariableCreatorSO : ScriptableObject
+[CreateAssetMenu(menuName = "ScriptableObjects/Variables/Generator/VariableScriptGenerator", fileName = "Variable Script Generator")]
+public class VariableScriptGeneratorSO : ScriptableObject
 {
     [SerializeField] string path = "Assets/Plugins/NuiN/ScriptableVariables/VariableSOClasses/Generated";
     
-    [SerializeField] string variableTypeUpper;
-    [SerializeField] string variableType;
+    [SerializeField] string displayType = "Float";
+    [SerializeField] string actualType = "float";
     
     const string SCRIPT_TEMPLATE =
 @"namespace NuiN.ScriptableVariables
@@ -22,14 +22,14 @@ public class VariableCreatorSO : ScriptableObject
     public void Generate()
     {
         string scriptContents = GetModifiedTemplate();
-        GenerateCSharpFile($"{variableTypeUpper}SO", scriptContents);
+        GenerateCSharpFile($"{displayType}SO", scriptContents);
     }
 
     string GetModifiedTemplate()
     {
         string template = SCRIPT_TEMPLATE;
-        template = template.Replace("<Type>", variableType);
-        template = template.Replace("<TypeUpper>", variableTypeUpper);
+        template = template.Replace("<Type>", actualType);
+        template = template.Replace("<TypeUpper>", displayType);
         
         return template;
     }
@@ -56,18 +56,18 @@ public class VariableCreatorSO : ScriptableObject
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(VariableCreatorSO))]
+[CustomEditor(typeof(VariableScriptGeneratorSO))]
 public class VariableCreatorSOEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        VariableCreatorSO creator = (VariableCreatorSO)target;
+        VariableScriptGeneratorSO scriptGenerator = (VariableScriptGeneratorSO)target;
 
         if (GUILayout.Button("Generate Variable Script"))
         {
-            creator.Generate();
+            scriptGenerator.Generate();
         }
     }
 }
