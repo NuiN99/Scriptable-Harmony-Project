@@ -5,7 +5,7 @@ namespace NuiN.ScriptableVariables
     using UnityEditor;
     using UnityEngine;
 
-    public abstract class VariableSO<T> : ScriptableObject
+    public class VariableSO<T> : ScriptableObject
     {
         public T value;
         
