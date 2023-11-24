@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2174405833c76d49bb5799a2da3e8cf, type: 3}
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
-  dataType: 0
-  displayType: Float
-  actualType: float
-  scriptPreview: "namespace NuiN.ScriptableVariables\r\n{\r\n    using UnityEngine;\r\n\r\n   
-    [CreateAssetMenu(menuName = \"ScriptableObjects/Variables/float\", fileName =
-    \"New Float Variable\")]\r\n    public class FloatSO : VariableSO<float> { }\r\n}"
+  dataType: 2
+  displayType: Color
+  actualType: Color
+  scriptPreview: "namespace NuiN.ScriptableVariables\r\n{\r\n    using UnityEngine;\r\n   
+    using NuiN.ScriptableVariables.Base;\r\n    using System.Collections.Generic;\r\n   
+    \r\n    [CreateAssetMenu(menuName = \"ScriptableObjects/Variables/List<Color>\",
+    fileName = \"New ColorList Variable\")]\r\n    public class ColorListSO : VariableSO<List<Color>>
+    { }\r\n}"
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
-  path: Assets/Plugins/NuiN/ScriptableVariables/VariableClasses/Arrays
+  constantPath: Assets/Plugins/NuiN/ScriptableVariables/VariableTypes
+  updatedPath: Assets/Plugins/NuiN/ScriptableVariables/VariableTypes/List
