@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2174405833c76d49bb5799a2da3e8cf, type: 3}
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
-  path: Assets/Plugins/NuiN/ScriptableVariables/VariableClasses
-  displayType: Long
-  actualType: long
+  variableType: 1
+  path: Assets/Plugins/NuiN/ScriptableVariables/VariableClasses/Arrays
+  displayType: Bool
+  actualType: bool
+  overwriteExisting: 0
+  scriptTemplate: "namespace NuiN.ScriptableVariables\r\n{\r\n    using UnityEngine;\r\n\r\n   
+    [CreateAssetMenu(menuName = \"ScriptableObjects/Variables/<ActualType>\", fileName
+    = \"New <DisplayType> Variable\")]\r\n    public class <DisplayType>SO : VariableSO<<ActualType>>
+    { }\r\n}"
