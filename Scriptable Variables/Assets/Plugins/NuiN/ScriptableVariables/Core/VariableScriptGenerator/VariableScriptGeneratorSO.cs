@@ -29,23 +29,25 @@ namespace NuiN.ScriptableVariables.Generator
         [TextArea(10, 10)] [SerializeField] string scriptPreview;
 
         [SerializeField] bool autoUpdateTemplate = true;
+        [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
         [SerializeField] string path = "Assets/Plugins/NuiN/ScriptableVariables/VariableClasses";
 
         void OnValidate()
         {
-            if (!autoUpdateTemplate) return;
-            scriptPreview = GetModifiedTemplate();
+            if (autoUpdateTemplate) scriptPreview = AdjustedScriptPreview();
+            if (autoUpdatePath) path = AdjustedPath();
         }
 
         public void Generate()
         {
-            scriptPreview = GetModifiedTemplate();
+            scriptPreview = AdjustedScriptPreview();
+            if(autoUpdatePath) path = AdjustedPath();
             string newDisplayType = AdjustedDisplayType();
             GenerateCSharpFile($"{newDisplayType}SO", scriptPreview);
         }
 
-        string GetModifiedTemplate()
+        string AdjustedScriptPreview()
         {
             string template = SCRIPT_TEMPLATE;
             
@@ -73,6 +75,16 @@ namespace NuiN.ScriptableVariables.Generator
                 DataType.Array => $"{actualType}[]",
                 DataType.List => $"List<{displayType}>",
                 _ => displayType
+            };
+        }
+        string AdjustedPath()
+        {
+            return dataType switch
+            {
+                DataType.Normal => path,
+                DataType.Array => $"{path}/Arrays",
+                DataType.List => $"{path}/Lists",
+                _ => path
             };
         }
 
