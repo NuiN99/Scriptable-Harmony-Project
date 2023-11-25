@@ -25,6 +25,7 @@ namespace NuiN.ScriptableVariables.Editor
                     not null when variableType == typeof(float) => "Float",
                     not null when variableType == typeof(bool) => "Bool",
                     not null when variableType == typeof(int) => "Int",
+                    not null when variableType == typeof(long) => "Long",
                     _ => variableType.Name
                 };
 
