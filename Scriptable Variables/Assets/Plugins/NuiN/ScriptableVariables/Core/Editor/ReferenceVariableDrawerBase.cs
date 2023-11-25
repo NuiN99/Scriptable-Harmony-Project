@@ -8,8 +8,16 @@ namespace NuiN.ScriptableVariables.Editor
     {
         protected abstract SerializedProperty GetVariableProperty(SerializedProperty property);
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) 
-            => EditorGUI.GetPropertyHeight(property);
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            SerializedProperty variableProperty = GetVariableProperty(property);
+            if(variableProperty.objectReferenceValue == null) 
+            {
+                return EditorGUIUtility.singleLineHeight * 2;
+            }
+
+            return EditorGUIUtility.singleLineHeight;
+        }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -29,27 +37,26 @@ namespace NuiN.ScriptableVariables.Editor
                     _ => variableType.Name
                 };
 
-                Rect helpBoxPosition = new Rect(position.x + position.width / 2f, position.y, position.width / 2f, EditorGUIUtility.singleLineHeight);
-                EditorGUI.HelpBox(helpBoxPosition, $"Missing {typeName}SO", MessageType.Warning);
+                Rect helpBoxPosition = new Rect(position.x + position.width / 2.33f, position.y, position.width / 1.75f, EditorGUIUtility.singleLineHeight);
+                EditorGUI.HelpBox(helpBoxPosition, $"Missing {typeName}SO Variable", MessageType.Warning);
             }
-            
-            // align the label to account for the extra space the dropdown arrow takes up
-            position.x -= 13;
-            
-            bool isExpanded = EditorGUI.PropertyField(position, property, label, true);
-            if (isExpanded)
+
+            if (variableProperty.objectReferenceValue == null)
             {
-                EditorGUI.indentLevel++;
-
-                float propertyHeight = EditorGUI.GetPropertyHeight(property);
-
-                position.height += propertyHeight + EditorGUI.GetPropertyHeight(property);
-
                 position.y += EditorGUIUtility.singleLineHeight;
-                EditorGUI.PropertyField(position, variableProperty, label, true);
-                EditorGUI.indentLevel--;
             }
+            
+            string readWriteLabelPrefix = variableProperty.name switch
+            {
+                "readReference" => $"Read",
+                "writeReference" => $"Write",
+                _ => ""
+            };
+            label.text = $"{readWriteLabelPrefix}: {label.text}";
 
+            EditorGUI.BeginProperty(position, GUIContent.none, variableProperty);
+            EditorGUI.PropertyField(position, variableProperty, label, true);
+            EditorGUI.EndProperty();
             EditorGUI.EndProperty();
         }
     }
@@ -68,6 +75,4 @@ namespace NuiN.ScriptableVariables.Editor
             => property.FindPropertyRelative("writeReference");
     }  
 }
-
-
-
+    
