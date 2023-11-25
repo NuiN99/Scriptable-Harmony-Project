@@ -51,10 +51,10 @@ namespace NuiN.ScriptableVariables.Base
         void OnSelected()
         {
             if (Selection.activeObject != this) return;
-            FindReferences();
+            SetReferences();
         }
 
-        public void FindReferences()
+        public void SetReferences()
         {
             string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
             GameObject[] allPrefabs = guids.Select(guid =>
@@ -65,11 +65,11 @@ namespace NuiN.ScriptableVariables.Base
             
             GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
             
-            sceneReferences = GetReferencesInGameObjectArray(allGameObjects);
-            prefabReferences = GetReferencesInGameObjectArray(allPrefabs);
+            sceneReferences = FindReferencesInGameObjects(allGameObjects);
+            prefabReferences = FindReferencesInGameObjects(allPrefabs);
         }
 
-        List<Object> GetReferencesInGameObjectArray(IEnumerable<GameObject> objects)
+        List<Object> FindReferencesInGameObjects(IEnumerable<GameObject> objects)
         {
             List<Object> references = new();
             foreach (var obj in objects)
