@@ -1,3 +1,5 @@
+using UnityEditor;
+
 namespace NuiN.ScriptableVariables
 {
     using System;
@@ -11,6 +13,18 @@ namespace NuiN.ScriptableVariables
         
         public T Val => readReference.value;
         
-        public Action<T> OnChange { get => readReference.onChange; set => readReference.onChange = value; }
+        public Action<T> OnChange
+        {
+            get => readReference.onChange;
+            set
+            {
+                readReference.onChange = value;
+                
+                #if UNITY_EDITOR
+                // so that changes made through code are shown in version control
+                EditorUtility.SetDirty(readReference);
+                #endif
+            }
+        }
     }
 }

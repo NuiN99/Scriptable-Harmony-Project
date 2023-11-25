@@ -15,7 +15,7 @@ namespace NuiN.ScriptableVariables
             set
             {
                 writeReference.value = value;
-                if (!writeReference.onChangeEvents) return;
+                if (!writeReference.invokeOnChangeEvent) return;
                 OnChange?.Invoke(writeReference.value);
             }
         }

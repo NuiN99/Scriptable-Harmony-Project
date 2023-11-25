@@ -13,7 +13,7 @@ namespace NuiN.ScriptableVariables.Base
         T _startValue;
         
         public T value;
-        public bool onChangeEvents;
+        public bool invokeOnChangeEvent;
         public Action<T> onChange;
         
         [SerializeField] bool keepValueThroughScenes;
@@ -26,31 +26,30 @@ namespace NuiN.ScriptableVariables.Base
         [SerializeField] List<Object> prefabReferences;
         [SerializeField] List<Object> sceneReferences;
 #endif
+        
+        // playModeStateChanged and selectionChanged events only run in editor
         void OnEnable()
         {
-            GameLoadedEvent.OnGameLoaded += GameStarted;
-            SceneManager.activeSceneChanged += SceneLoaded;
+            GameLoadedEvent.OnGameLoaded += CacheStartValueOnStart;
+            SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
 #if UNITY_EDITOR
-            EditorApplication.playModeStateChanged += PlayModeChanged;
-            Selection.selectionChanged += OnSelected;
+            EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
+            Selection.selectionChanged += OnSelectedInProjectWindow;
 #endif
         }
         void OnDisable()
         {
-            GameLoadedEvent.OnGameLoaded -= GameStarted;
-            SceneManager.activeSceneChanged -= SceneLoaded;
+            GameLoadedEvent.OnGameLoaded -= CacheStartValueOnStart;
+            SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
 #if UNITY_EDITOR
-            EditorApplication.playModeStateChanged -= PlayModeChanged;
-            Selection.selectionChanged -= OnSelected;
+            EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
+            Selection.selectionChanged -= OnSelectedInProjectWindow;
 #endif
         }
         
-        void GameStarted()
-        {
-            _startValue = value;
-        }
+        void CacheStartValueOnStart() =>  _startValue = value;
 
-        void SceneLoaded(Scene scene, Scene scene2)
+        void ResetValueOnSceneLoad(Scene scene, Scene scene2)
         {
             if (keepValueThroughScenes) return;
             value = _startValue;
@@ -58,19 +57,19 @@ namespace NuiN.ScriptableVariables.Base
         
 #if UNITY_EDITOR
         
-        void PlayModeChanged(PlayModeStateChange state)
+        void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (keepPlayModeValue) return;
             if (state == PlayModeStateChange.EnteredEditMode) value = _startValue;
         }
 
-        void OnSelected()
+        void OnSelectedInProjectWindow()
         {
             if (Selection.activeObject != this) return;
-            SetReferences();
+            SetReferencesFromProject();
         }
 
-        public void SetReferences()
+        public void SetReferencesFromProject()
         {
             string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
             GameObject[] allPrefabs = guids.Select(guid =>
