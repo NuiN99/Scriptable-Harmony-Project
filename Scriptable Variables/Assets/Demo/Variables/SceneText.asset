@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad623c23fce134d46b9225cf4ab99c24, type: 3}
   m_Name: SceneText
   m_EditorClassIdentifier: 
-  value: Default Value
-  keepRuntimeValues: 1
+  value: I am a string
+  onChangeEvents: 1
+  keepRuntimeValues: 0
   prefabReferences: []
   sceneReferences:
   - {fileID: 0}

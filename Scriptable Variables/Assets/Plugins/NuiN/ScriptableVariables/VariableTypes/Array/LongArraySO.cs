@@ -4,6 +4,6 @@ namespace NuiN.ScriptableVariables
 {
     using UnityEngine; 
     
-    [CreateAssetMenu(menuName = "ScriptableObjects/Variables/long[]", fileName = "New LongArray Variable")]
+    [CreateAssetMenu(menuName = "ScriptableVariables/Array/long[]", fileName = "New LongArray Variable")]
     public class LongArraySO : VariableSO<long[]> { }
 }

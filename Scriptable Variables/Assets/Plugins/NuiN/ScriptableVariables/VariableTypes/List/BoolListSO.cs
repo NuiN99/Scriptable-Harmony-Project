@@ -5,6 +5,6 @@ namespace NuiN.ScriptableVariables
     using UnityEngine; 
     using System.Collections.Generic;
     
-    [CreateAssetMenu(menuName = "ScriptableObjects/Variables/List<bool>", fileName = "New BoolList Variable")]
+    [CreateAssetMenu(menuName = "ScriptableVariables/List/List<bool>", fileName = "New BoolList Variable")]
     public class BoolListSO : VariableSO<List<bool>> { }
 }

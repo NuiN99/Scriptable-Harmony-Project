@@ -1,24 +1,30 @@
+
+
 namespace NuiN.ScriptableVariables.Base
 {
     using System.Collections.Generic;
     using System.Linq;
     using UnityEditor;
     using UnityEngine;
+    using System;
+    using Object = UnityEngine.Object;
 
     public class VariableSO<T> : ScriptableObject
     {
         public T value;
+        public bool onChangeEvents;
+        public Action<T> onChange;
         
 #if UNITY_EDITOR
         
-        T _startValue;
         [SerializeField] bool keepRuntimeValues;
         
-        [Header("Prefab References")]
-        [SerializeField] List<Object> prefabReferences; 
+        [Space(25)]
         
-        [Header("Scene References")]
-        [SerializeField] List<Object> sceneReferences; 
+        [SerializeField] List<Object> prefabReferences;
+        [SerializeField] List<Object> sceneReferences;
+        
+        T _startValue;
         
         void OnEnable()
         {

@@ -4,6 +4,6 @@ namespace NuiN.ScriptableVariables
 {
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ScriptableObjects/Variables/Vector3", fileName = "New Vector3 Variable")]
+    [CreateAssetMenu(menuName = "ScriptableVariables/Normal/Vector3", fileName = "New Vector3 Variable")]
     public class Vector3SO : VariableSO<Vector3> { }
 }

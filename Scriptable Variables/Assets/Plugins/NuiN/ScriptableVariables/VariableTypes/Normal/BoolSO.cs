@@ -4,6 +4,6 @@ namespace NuiN.ScriptableVariables
 {
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ScriptableObjects/Variables/bool", fileName = "New Bool Variable")]
+    [CreateAssetMenu(menuName = "ScriptableVariables/Normal/bool", fileName = "New Bool Variable")]
     public class BoolSO : VariableSO<bool> { }
 }

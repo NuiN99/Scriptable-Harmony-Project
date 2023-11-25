@@ -4,6 +4,6 @@ namespace NuiN.ScriptableVariables
 {
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ScriptableObjects/Variables/string", fileName = "New String Variable")]
+    [CreateAssetMenu(menuName = "ScriptableVariables/Normal/string", fileName = "New String Variable")]
     public class StringSO : VariableSO<string> { }
 }

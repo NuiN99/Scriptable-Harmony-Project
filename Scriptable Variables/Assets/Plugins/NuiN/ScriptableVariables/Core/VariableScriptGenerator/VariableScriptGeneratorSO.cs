@@ -7,7 +7,7 @@ namespace NuiN.ScriptableVariables.Generator
     using System.IO;
     using UnityEditor;
 
-    [CreateAssetMenu(menuName = "ScriptableObjects/Variables/Generator/VariableScriptGenerator", fileName = "Variable Script Generator")]
+    [CreateAssetMenu(menuName = "ScriptableVariables/Tools/VariableScriptGenerator", fileName = "Variable Script Generator")]
     public class VariableScriptGeneratorSO : ScriptableObject
     {
         enum DataType { Normal, Array, List }
@@ -18,7 +18,7 @@ namespace NuiN.ScriptableVariables.Generator
     using UnityEngine;
     using NuiN.ScriptableVariables.Base;<Directives>
     
-    [CreateAssetMenu(menuName = ""ScriptableObjects/Variables/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
+    [CreateAssetMenu(menuName = ""ScriptableVariables/<Suffix>/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
     public class <DisplayType>SO : VariableSO<<ActualType>> { }
 }";
         
@@ -27,7 +27,7 @@ namespace NuiN.ScriptableVariables.Generator
         [SerializeField] string displayType = "Float";
         [SerializeField] string actualType = "float";
 
-        [TextArea(8, 8)] [SerializeField] string scriptPreview;
+        [TextArea(10, 10)] [SerializeField] string scriptPreview;
 
         [SerializeField] bool autoUpdateTemplate = true;
         [SerializeField] bool autoUpdatePath = true;
@@ -35,6 +35,7 @@ namespace NuiN.ScriptableVariables.Generator
         
         [SerializeField] string constantPath = "Assets/Plugins/NuiN/ScriptableVariables/VariableTypes";
         [SerializeField] string updatedPath;
+        string _suffix;
 
         void OnValidate()
         {
@@ -58,6 +59,7 @@ namespace NuiN.ScriptableVariables.Generator
             template = template.Replace("<ActualType>", AdjustedActualType());
             template = template.Replace("<DisplayType>", AdjustedDisplayType());
             template = template.Replace("<Directives>", GetRequiredDirectives());
+            template = template.Replace("<Suffix>", GetSuffix());
         
             return template;
         }
@@ -84,14 +86,27 @@ namespace NuiN.ScriptableVariables.Generator
         }
         string AdjustedPath()
         {
+            string suffix = GetSuffix();
             return dataType switch
             {
-                DataType.Normal => $"{constantPath}/Normal",
-                DataType.Array => $"{constantPath}/Array",
-                DataType.List => $"{constantPath}/List",
+                DataType.Normal => $"{constantPath}/{suffix}",
+                DataType.Array => $"{constantPath}/{suffix}",
+                DataType.List => $"{constantPath}/{suffix}",
                 _ => constantPath
             };
         }
+
+        string GetSuffix()
+        {
+            return dataType switch
+            {
+                DataType.Normal => $"Normal",
+                DataType.Array => $"Array",
+                DataType.List => $"List",
+                _ => constantPath
+            };
+        }
+        
         string GetRequiredDirectives()
         {
             return dataType switch

@@ -5,6 +5,6 @@ namespace NuiN.ScriptableVariables
     using UnityEngine; 
     using System.Collections.Generic;
     
-    [CreateAssetMenu(menuName = "ScriptableObjects/Variables/List<string>", fileName = "New StringList Variable")]
+    [CreateAssetMenu(menuName = "ScriptableVariables/List/List<string>", fileName = "New StringList Variable")]
     public class StringListSO : VariableSO<List<string>> { }
 }
