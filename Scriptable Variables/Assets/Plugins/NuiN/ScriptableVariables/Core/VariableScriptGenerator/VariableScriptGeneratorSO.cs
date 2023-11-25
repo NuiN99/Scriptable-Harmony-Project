@@ -1,8 +1,5 @@
-using System;
-
 namespace NuiN.ScriptableVariables.Generator
 {
-    
     using UnityEngine;
     using System.IO;
     using UnityEditor;
@@ -10,6 +7,8 @@ namespace NuiN.ScriptableVariables.Generator
     [CreateAssetMenu(menuName = "ScriptableVariables/Tools/VariableScriptGenerator", fileName = "Variable Script Generator")]
     public class VariableScriptGeneratorSO : ScriptableObject
     {
+#if UNITY_EDITOR
+        
         enum DataType { Normal, Array, List }
         
         const string SCRIPT_TEMPLATE =
@@ -134,12 +133,13 @@ namespace NuiN.ScriptableVariables.Generator
 
             Debug.Log("Script Generated: " + fileName);
         }
+#endif
     }
-
 #if UNITY_EDITOR
     [CustomEditor(typeof(VariableScriptGeneratorSO))]
     internal class VariableCreatorSOEditor : Editor
     {
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
