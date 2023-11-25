@@ -12,9 +12,11 @@ public class WriteSceneTextVariable : MonoBehaviour
 
     [SerializeField] string[] possibleStrings;
 
+    [SerializeField] KeyCode key;
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(key))
         {
             stringVariable.Val = possibleStrings[Random.Range(0, possibleStrings.Length)];
         }

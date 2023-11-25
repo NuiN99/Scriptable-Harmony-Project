@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad623c23fce134d46b9225cf4ab99c24, type: 3}
-  m_Name: SceneText
+  m_Name: SceneText_KeepAll
   m_EditorClassIdentifier: 
-  value: I am a string
+  value: Keep All Default
   onChangeEvents: 1
-  keepRuntimeValues: 0
+  keepValueThroughScenes: 1
+  keepPlayModeValue: 1
   prefabReferences: []
   sceneReferences:
   - {fileID: 0}

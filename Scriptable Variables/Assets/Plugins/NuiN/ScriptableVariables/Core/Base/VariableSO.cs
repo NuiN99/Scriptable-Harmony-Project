@@ -1,7 +1,6 @@
-
-
 namespace NuiN.ScriptableVariables.Base
 {
+    using UnityEngine.SceneManagement;
     using System.Collections.Generic;
     using System.Linq;
     using UnityEditor;
@@ -11,41 +10,58 @@ namespace NuiN.ScriptableVariables.Base
 
     public class VariableSO<T> : ScriptableObject
     {
+        T _startValue;
+        
         public T value;
         public bool onChangeEvents;
         public Action<T> onChange;
         
-#if UNITY_EDITOR
+        [SerializeField] bool keepValueThroughScenes;
         
-        [SerializeField] bool keepRuntimeValues;
+#if UNITY_EDITOR
+        [SerializeField] bool keepPlayModeValue;
         
         [Space(25)]
         
         [SerializeField] List<Object> prefabReferences;
         [SerializeField] List<Object> sceneReferences;
-        
-        T _startValue;
-        
+#endif
         void OnEnable()
         {
+            GameLoadedEvent.OnGameLoaded += GameStarted;
+            SceneManager.activeSceneChanged += SceneLoaded;
+#if UNITY_EDITOR
             EditorApplication.playModeStateChanged += PlayModeChanged;
             Selection.selectionChanged += OnSelected;
+#endif
         }
         void OnDisable()
         {
+            GameLoadedEvent.OnGameLoaded -= GameStarted;
+            SceneManager.activeSceneChanged -= SceneLoaded;
+#if UNITY_EDITOR
             EditorApplication.playModeStateChanged -= PlayModeChanged;
             Selection.selectionChanged -= OnSelected;
+#endif
+        }
+        
+        void GameStarted()
+        {
+            _startValue = value;
         }
 
+        void SceneLoaded(Scene scene, Scene scene2)
+        {
+            if (keepValueThroughScenes) return;
+            value = _startValue;
+        }
+        
+#if UNITY_EDITOR
+        
         void PlayModeChanged(PlayModeStateChange state)
         {
-            if (keepRuntimeValues) return;
-            
-            switch (state)
-            {
-                case PlayModeStateChange.ExitingEditMode: _startValue = value; break;
-                case PlayModeStateChange.EnteredEditMode: value = _startValue; break;
-            }
+            if (keepPlayModeValue) return;
+            if(state == PlayModeStateChange.EnteredEditMode) value = _startValue;
         }
 
         void OnSelected()

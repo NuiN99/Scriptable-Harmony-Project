@@ -11,6 +11,11 @@ public class SetTextWithScriptableVariable : MonoBehaviour
     [SerializeField] ReadVariable<string> stringVariable;
     [SerializeField] Text displayedText;
 
+    void Start()
+    {
+        Test(stringVariable.Val);
+    }
+
     void OnEnable()
     {
         stringVariable.OnChange += Test;
@@ -22,6 +27,6 @@ public class SetTextWithScriptableVariable : MonoBehaviour
 
     void Test(string val)
     {
-        displayedText.text = stringVariable.Val;
+        displayedText.text = val;
     }
 }
