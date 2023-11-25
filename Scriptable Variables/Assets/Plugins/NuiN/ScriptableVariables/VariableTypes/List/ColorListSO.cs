@@ -5,5 +5,5 @@ namespace NuiN.ScriptableVariables
     using System.Collections.Generic;
     
     [CreateAssetMenu(menuName = "ScriptableVariables/List/List<Color>", fileName = "New ColorList Variable")]
-    public class ColorListSO : VariableSO<List<Color>> { }
+    internal class ColorListSO : VariableSO<List<Color>> { }
 }

@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables
     using System.Collections.Generic;
     
     [CreateAssetMenu(menuName = "ScriptableVariables/List/List<int>", fileName = "New IntList Variable")]
-    public class IntListSO : VariableSO<List<int>> { }
+    internal class IntListSO : VariableSO<List<int>> { }
 }

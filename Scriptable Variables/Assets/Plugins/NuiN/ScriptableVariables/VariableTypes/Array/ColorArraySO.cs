@@ -4,5 +4,5 @@ namespace NuiN.ScriptableVariables
     using NuiN.ScriptableVariables.Base;
     
     [CreateAssetMenu(menuName = "ScriptableVariables/Array/Color[]", fileName = "New ColorArray Variable")]
-    public class ColorArraySO : VariableSO<Color[]> { }
+    internal class ColorArraySO : VariableSO<Color[]> { }
 }

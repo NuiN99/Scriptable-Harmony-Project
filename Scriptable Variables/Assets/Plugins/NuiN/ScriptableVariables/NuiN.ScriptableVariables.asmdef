@@ -1,5 +1,5 @@
 {
-    "name": "VariableSO-assembly",
+    "name": "NuiN.ScriptableVariables",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
@@ -7,7 +7,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

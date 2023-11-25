@@ -5,5 +5,5 @@ namespace NuiN.ScriptableVariables
     using UnityEngine; 
     
     [CreateAssetMenu(menuName = "ScriptableVariables/Array/float[]", fileName = "New FloatArray Variable")]
-    public class FloatArraySO : VariableSO<float[]> { }
+    internal class FloatArraySO : VariableSO<float[]> { }
 }

@@ -5,5 +5,5 @@ namespace NuiN.ScriptableVariables
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ScriptableVariables/Normal/Vector2", fileName = "New Vector2 Variable")]
-    public class Vector2SO : VariableSO<Vector2> { }
+    internal class Vector2SO : VariableSO<Vector2> { }
 }

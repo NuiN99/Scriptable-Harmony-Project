@@ -5,5 +5,5 @@ namespace NuiN.ScriptableVariables
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ScriptableVariables/Normal/int", fileName = "New Int Variable")]
-    public class IntSO : VariableSO<int> { }
+    internal class IntSO : VariableSO<int> { }
 }

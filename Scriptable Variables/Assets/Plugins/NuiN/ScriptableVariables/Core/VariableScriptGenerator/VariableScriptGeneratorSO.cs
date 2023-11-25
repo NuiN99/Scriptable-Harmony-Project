@@ -18,7 +18,7 @@ namespace NuiN.ScriptableVariables.Generator
     using NuiN.ScriptableVariables.Base;<Directives>
     
     [CreateAssetMenu(menuName = ""ScriptableVariables/<Suffix>/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
-    public class <DisplayType>SO : VariableSO<<ActualType>> { }
+    internal class <DisplayType>SO : VariableSO<<ActualType>> { }
 }";
         
         [SerializeField] DataType dataType;

@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables
     using System.Collections.Generic;
     
     [CreateAssetMenu(menuName = "ScriptableVariables/List/List<Vector2>", fileName = "New Vector2List Variable")]
-    public class Vector2ListSO : VariableSO<List<Vector2>> { }
+    internal class Vector2ListSO : VariableSO<List<Vector2>> { }
 }

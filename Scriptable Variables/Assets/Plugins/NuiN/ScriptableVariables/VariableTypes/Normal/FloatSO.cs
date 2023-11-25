@@ -5,6 +5,6 @@ namespace NuiN.ScriptableVariables
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ScriptableVariables/Normal/float", fileName = "New Float Variable")]
-    public class FloatSO : VariableSO<float> { }
+    internal class FloatSO : VariableSO<float> { }
 }
 
