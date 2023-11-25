@@ -25,7 +25,11 @@ namespace NuiN.ScriptableVariables
                 #endif
             }
         }
-        
-        public Action<T> OnChange { get => writeReference.onChange; set => writeReference.onChange = value; }
+
+        public Action<T> OnChange
+        {
+            get => writeReference.onChange; 
+            set => writeReference.onChange = value;
+        }
     }
 }
