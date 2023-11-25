@@ -61,7 +61,8 @@ namespace NuiN.ScriptableVariables.Base
         void PlayModeChanged(PlayModeStateChange state)
         {
             if (keepPlayModeValue) return;
-            if(state == PlayModeStateChange.EnteredEditMode) value = _startValue;
+            if (state != PlayModeStateChange.EnteredEditMode) return;
+            value = _startValue;
         }
 
         void OnSelected()
