@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SceneText_KeepScene
   m_EditorClassIdentifier: 
   value: Keep Scene Default
-  onChangeEvents: 1
+  invokeOnChangeEvent: 1
   keepValueThroughScenes: 1
   keepPlayModeValue: 0
   prefabReferences: []
