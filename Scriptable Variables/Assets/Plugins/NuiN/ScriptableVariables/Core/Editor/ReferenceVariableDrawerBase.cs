@@ -63,7 +63,7 @@ namespace NuiN.ScriptableVariables.Editor
             
             if (GUILayout.Button("Find Variable"))
             {
-                CustomObjectPickerWindow.ShowWindow(typeName, variableProperty);
+                ScriptableVariableFinder.OpenFindWindow(typeName, variableProperty);
             }
 
             if (variableProperty.objectReferenceValue == null)
