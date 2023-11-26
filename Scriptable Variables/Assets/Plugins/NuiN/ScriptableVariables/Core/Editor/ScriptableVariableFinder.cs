@@ -36,20 +36,58 @@ namespace NuiN.ScriptableVariables.Editor
 
         void OnGUI()
         {
-            EditorGUILayout.BeginHorizontal();
-
-            GUIContent searchIcon = EditorGUIUtility.IconContent("Search Icon");
-
-            GUILayout.Space(5);
-
-            EditorGUILayout.LabelField(searchIcon, GUILayout.Width(20));
-            _searchFilter = EditorGUILayout.TextField(_searchFilter);
-
-            EditorGUILayout.EndHorizontal();
-
+            DrawSearchBar();
+            
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
             if (_foundObjects.Count == 0)
+            {
+                DrawNoResults();
+                return;
+            }
+
+            DrawTopBar();
+
+            DrawSearchResults();
+            
+            EditorGUILayout.EndScrollView();
+            return;
+
+            void DrawSearchBar()
+            {
+                EditorGUILayout.BeginHorizontal();
+                
+                GUIContent searchIcon = EditorGUIUtility.IconContent("Search Icon");
+                GUILayout.Space(5);
+                EditorGUILayout.LabelField(searchIcon, GUILayout.Width(20));
+                _searchFilter = EditorGUILayout.TextField(_searchFilter);
+                
+                EditorGUILayout.EndHorizontal();
+            }
+
+            void DrawTopBar()
+            {
+                GUILayout.BeginHorizontal();
+            
+                EditorGUILayout.LabelField($"Search Results: {_foundObjects.Count}");
+            
+                GUIStyle emptyFieldButtonStyle = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.white } };
+                Color ogColor = GUI.color;
+                GUI.color = Color.red;
+            
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("Remove", emptyFieldButtonStyle, GUILayout.Width(60)) && _property != null)
+                {
+                    _property.objectReferenceValue = null;
+                    _property.serializedObject.ApplyModifiedProperties();
+                    Close();
+                }
+                GUI.color = ogColor;
+                
+                GUILayout.EndHorizontal();
+            }
+
+            void DrawNoResults()
             {
                 Rect messageRect = new Rect(0, position.height / 2 - 50, position.width, 60);
                 GUIStyle messageStyle = new GUIStyle(EditorStyles.label)
@@ -60,56 +98,35 @@ namespace NuiN.ScriptableVariables.Editor
                 };
                 EditorGUI.LabelField(messageRect, $"No {_typeName} Variables Found", messageStyle);
                 EditorGUILayout.EndScrollView();
-                return;
             }
-            
-            GUILayout.BeginHorizontal();
-            
-            EditorGUILayout.LabelField($"Search Results: {_foundObjects.Count}");
-            
-            GUIStyle emptyFieldButtonStyle = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.white } };
-            Color ogColor = GUI.color;
-            GUI.color = Color.red;
-            
-            GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Remove", emptyFieldButtonStyle, GUILayout.Width(60)))
-            {
-                _property.objectReferenceValue = null;
-                _property.serializedObject.ApplyModifiedProperties();
-                Close();
-            }
-            GUILayout.EndHorizontal();
-            
-            GUI.color = ogColor;
-            
-            foreach (Object obj in _foundObjects.Where(obj =>
-                         string.IsNullOrEmpty(_searchFilter) ||
-                         obj.name.Contains(_searchFilter, StringComparison.OrdinalIgnoreCase)))
-            {
-                EditorGUILayout.BeginHorizontal();
 
-                Rect labelRect = GUILayoutUtility.GetRect(new GUIContent(obj.name), EditorStyles.label);
-                Rect objectFieldRect = new Rect(labelRect.x, labelRect.y, labelRect.width, EditorGUIUtility.singleLineHeight);
+            void DrawSearchResults()
+            {
+                foreach (Object obj in _foundObjects.Where(obj => string.IsNullOrEmpty(_searchFilter) || obj.name.Contains(_searchFilter, StringComparison.OrdinalIgnoreCase)))
+                {
+                    EditorGUILayout.BeginHorizontal();
+
+                    Rect labelRect = GUILayoutUtility.GetRect(new GUIContent(obj.name), EditorStyles.label);
+                    Rect objectFieldRect = new Rect(labelRect.x, labelRect.y, labelRect.width, EditorGUIUtility.singleLineHeight);
     
-                if (Event.current.type == EventType.MouseDown && objectFieldRect.Contains(Event.current.mousePosition))
-                {
-                    EditorGUIUtility.PingObject(obj);
-                    Event.current.Use();
-                }
+                    if (Event.current.type == EventType.MouseDown && objectFieldRect.Contains(Event.current.mousePosition))
+                    {
+                        EditorGUIUtility.PingObject(obj);
+                        Event.current.Use();
+                    }
                 
-                EditorGUI.ObjectField(objectFieldRect, GUIContent.none, obj, typeof(VariableSO<>), true);
-                GUIStyle style = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.black } };
-                if (GUILayout.Button("Assign", style, GUILayout.Width(60)))
-                {
-                    _property.objectReferenceValue = obj;
-                    _property.serializedObject.ApplyModifiedProperties();
-                    Close();
-                }
+                    EditorGUI.ObjectField(objectFieldRect, GUIContent.none, obj, typeof(VariableSO<>), true);
+                    GUIStyle style = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.black } };
+                    if (GUILayout.Button("Assign", style, GUILayout.Width(60)) && _property != null)
+                    {
+                        _property.objectReferenceValue = obj;
+                        _property.serializedObject.ApplyModifiedProperties();
+                        Close();
+                    }
 
-                EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.EndHorizontal();
+                }
             }
-            
-            EditorGUILayout.EndScrollView();
         }
 
         void FindObjects()
