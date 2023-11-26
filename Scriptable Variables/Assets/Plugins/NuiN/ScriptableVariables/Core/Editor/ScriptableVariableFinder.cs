@@ -56,13 +56,15 @@ namespace NuiN.ScriptableVariables.Editor
                 EditorGUILayout.BeginHorizontal();
 
                 Rect labelRect = GUILayoutUtility.GetRect(new GUIContent(obj.name), EditorStyles.label);
-                if (Event.current.type == EventType.MouseDown && labelRect.Contains(Event.current.mousePosition))
+                Rect objectFieldRect = new Rect(labelRect.x, labelRect.y, labelRect.width, EditorGUIUtility.singleLineHeight);
+    
+                if (Event.current.type == EventType.MouseDown && objectFieldRect.Contains(Event.current.mousePosition))
                 {
                     EditorGUIUtility.PingObject(obj);
                     Event.current.Use();
                 }
-
-                EditorGUI.ObjectField(labelRect, GUIContent.none, obj, typeof(VariableSO<>), true);
+                
+                EditorGUI.ObjectField(objectFieldRect, GUIContent.none, obj, typeof(VariableSO<>), true);
                 GUIStyle style = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.black } };
                 if (GUILayout.Button("Assign", style, GUILayout.Width(60)))
                 {
@@ -94,7 +96,7 @@ namespace NuiN.ScriptableVariables.Editor
 
         void CheckFocus()
         {
-            if (EditorWindow.focusedWindow != _windowInstance) Close();
+            if (focusedWindow != _windowInstance) Close();
         }
     }
 }
