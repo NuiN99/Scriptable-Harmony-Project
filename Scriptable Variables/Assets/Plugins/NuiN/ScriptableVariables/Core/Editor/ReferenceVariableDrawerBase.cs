@@ -40,24 +40,30 @@ namespace NuiN.ScriptableVariables.Editor
 
             SerializedProperty variableProperty = GetVariableProperty(property);
 
+            Type variableType = fieldInfo.FieldType.GetGenericArguments()[0];
+            string typeName = GetReadableTypeName(variableType);
+            
+            if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
+            {
+                Type listType = variableType.GetGenericArguments()[0];
+                typeName = $"{GetReadableTypeName(listType)}List";
+            }
+            else if (variableType.IsArray)
+            {
+                Type arrayType = variableType.GetElementType();
+                typeName = $"{GetReadableTypeName(arrayType)}Array";
+            }
+            typeName = $"{typeName}SO";
+            
             if (variableProperty.objectReferenceValue == null)
             {
-                Type variableType = fieldInfo.FieldType.GetGenericArguments()[0];
-                string typeName = GetReadableTypeName(variableType);
-                
-                if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
-                {
-                    Type listType = variableType.GetGenericArguments()[0];
-                    typeName = $"{GetReadableTypeName(listType)}List";
-                }
-                else if (variableType.IsArray)
-                {
-                    Type arrayType = variableType.GetElementType();
-                    typeName = $"{GetReadableTypeName(arrayType)}Array";
-                }
-                
                 Rect helpBoxPosition = new Rect(position.x + position.width / 2.33f, position.y, position.width / 1.75f, EditorGUIUtility.singleLineHeight);
-                EditorGUI.HelpBox(helpBoxPosition, $"Missing {typeName}SO Variable", MessageType.Warning);
+                EditorGUI.HelpBox(helpBoxPosition, $"Missing Variable: {typeName}", MessageType.Warning);
+            }
+            
+            if (GUILayout.Button("Find Variable"))
+            {
+                CustomObjectPickerWindow.ShowWindow(typeName, variableProperty);
             }
 
             if (variableProperty.objectReferenceValue == null)
