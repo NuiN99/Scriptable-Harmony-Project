@@ -399,9 +399,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9eb614ca4ef8b48b6808fe8f0b2fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stringVariable:
-    readReference: {fileID: 11400000, guid: b51bb171071943e45bf6a4dabc1f54e0, type: 2}
   displayedText: {fileID: 441378653}
+  stringVariable:
+    readReference: {fileID: 11400000, guid: ea4c099901ab00e458179989af4c8f44, type: 2}
+  test:
+    writeReference: {fileID: 11400000, guid: d909673a1fe82e643ba2d39420ebe67c, type: 2}
+  varInt:
+    readReference: {fileID: 0}
+  varIntList:
+    writeReference: {fileID: 0}
+  varIntArray:
+    readReference: {fileID: 0}
+  varLong:
+    readReference: {fileID: 0}
+  varLongList:
+    writeReference: {fileID: 0}
+  varLongArray:
+    readReference: {fileID: 0}
+  varDouble:
+    readReference: {fileID: 0}
+  varDoubleList:
+    writeReference: {fileID: 0}
+  varDoubleArray:
+    readReference: {fileID: 0}
+  varFloat:
+    readReference: {fileID: 11400000, guid: 07e44c6d83d470a4db4a9d10c05c3c26, type: 2}
+  varFloatList:
+    writeReference: {fileID: 0}
+  varFloatArray:
+    readReference: {fileID: 0}
+  varString:
+    readReference: {fileID: 0}
+  varStringList:
+    writeReference: {fileID: 0}
+  varStringArray:
+    readReference: {fileID: 0}
+  varVector2:
+    readReference: {fileID: 0}
+  varVector2List:
+    writeReference: {fileID: 11400000, guid: 83c35cd4b30d8a248b6e93061d4221ff, type: 2}
+  varVector2Array:
+    readReference: {fileID: 0}
+  varVector3:
+    readReference: {fileID: 0}
+  varVector3List:
+    writeReference: {fileID: 0}
+  varVector3Array:
+    readReference: {fileID: 0}
+  varColor:
+    readReference: {fileID: 0}
+  varColorList:
+    writeReference: {fileID: 0}
+  varColorArray:
+    readReference: {fileID: 11400000, guid: b19a89e36cad4164b8f98b52e153f4bd, type: 2}
+  varBool:
+    readReference: {fileID: 0}
+  varBoolList:
+    writeReference: {fileID: 0}
+  varBoolArray:
+    readReference: {fileID: 0}
 --- !u!1 &497173015
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,9 +810,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9eb614ca4ef8b48b6808fe8f0b2fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayedText: {fileID: 999474250}
   stringVariable:
     readReference: {fileID: 11400000, guid: fb14da2c7eae2ff428f8bc8131839eee, type: 2}
-  displayedText: {fileID: 999474250}
+  test:
+    writeReference: {fileID: 0}
+  varInt:
+    readReference: {fileID: 0}
+  varIntList:
+    writeReference: {fileID: 0}
+  varIntArray:
+    readReference: {fileID: 0}
+  varLong:
+    readReference: {fileID: 0}
+  varLongList:
+    writeReference: {fileID: 0}
+  varLongArray:
+    readReference: {fileID: 0}
+  varDouble:
+    readReference: {fileID: 0}
+  varDoubleList:
+    writeReference: {fileID: 0}
+  varDoubleArray:
+    readReference: {fileID: 0}
+  varFloat:
+    readReference: {fileID: 0}
+  varFloatList:
+    writeReference: {fileID: 0}
+  varFloatArray:
+    readReference: {fileID: 0}
+  varString:
+    readReference: {fileID: 0}
+  varStringList:
+    writeReference: {fileID: 0}
+  varStringArray:
+    readReference: {fileID: 0}
+  varVector2:
+    readReference: {fileID: 0}
+  varVector2List:
+    writeReference: {fileID: 0}
+  varVector2Array:
+    readReference: {fileID: 0}
+  varVector3:
+    readReference: {fileID: 0}
+  varVector3List:
+    writeReference: {fileID: 0}
+  varVector3Array:
+    readReference: {fileID: 0}
+  varColor:
+    readReference: {fileID: 0}
+  varColorList:
+    writeReference: {fileID: 0}
+  varColorArray:
+    readReference: {fileID: 0}
+  varBool:
+    readReference: {fileID: 0}
+  varBoolList:
+    writeReference: {fileID: 0}
+  varBoolArray:
+    readReference: {fileID: 0}
 --- !u!1 &1018449670
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,9 +961,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9eb614ca4ef8b48b6808fe8f0b2fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayedText: {fileID: 1018449673}
   stringVariable:
     readReference: {fileID: 11400000, guid: e30771390b9f57749a9617c2b1616a19, type: 2}
-  displayedText: {fileID: 1018449673}
+  test:
+    writeReference: {fileID: 0}
+  varInt:
+    readReference: {fileID: 0}
+  varIntList:
+    writeReference: {fileID: 0}
+  varIntArray:
+    readReference: {fileID: 0}
+  varLong:
+    readReference: {fileID: 0}
+  varLongList:
+    writeReference: {fileID: 0}
+  varLongArray:
+    readReference: {fileID: 0}
+  varDouble:
+    readReference: {fileID: 0}
+  varDoubleList:
+    writeReference: {fileID: 0}
+  varDoubleArray:
+    readReference: {fileID: 0}
+  varFloat:
+    readReference: {fileID: 0}
+  varFloatList:
+    writeReference: {fileID: 0}
+  varFloatArray:
+    readReference: {fileID: 0}
+  varString:
+    readReference: {fileID: 0}
+  varStringList:
+    writeReference: {fileID: 0}
+  varStringArray:
+    readReference: {fileID: 0}
+  varVector2:
+    readReference: {fileID: 0}
+  varVector2List:
+    writeReference: {fileID: 0}
+  varVector2Array:
+    readReference: {fileID: 0}
+  varVector3:
+    readReference: {fileID: 0}
+  varVector3List:
+    writeReference: {fileID: 0}
+  varVector3Array:
+    readReference: {fileID: 0}
+  varColor:
+    readReference: {fileID: 0}
+  varColorList:
+    writeReference: {fileID: 0}
+  varColorArray:
+    readReference: {fileID: 0}
+  varBool:
+    readReference: {fileID: 0}
+  varBoolList:
+    writeReference: {fileID: 0}
+  varBoolArray:
+    readReference: {fileID: 0}
 --- !u!1 &1069337202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,9 +1262,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9eb614ca4ef8b48b6808fe8f0b2fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayedText: {fileID: 1333000098}
   stringVariable:
     readReference: {fileID: 11400000, guid: b2c9848e3309ce447970883293dad8c7, type: 2}
-  displayedText: {fileID: 1333000098}
+  test:
+    writeReference: {fileID: 0}
+  varInt:
+    readReference: {fileID: 0}
+  varIntList:
+    writeReference: {fileID: 0}
+  varIntArray:
+    readReference: {fileID: 0}
+  varLong:
+    readReference: {fileID: 0}
+  varLongList:
+    writeReference: {fileID: 0}
+  varLongArray:
+    readReference: {fileID: 0}
+  varDouble:
+    readReference: {fileID: 0}
+  varDoubleList:
+    writeReference: {fileID: 0}
+  varDoubleArray:
+    readReference: {fileID: 0}
+  varFloat:
+    readReference: {fileID: 0}
+  varFloatList:
+    writeReference: {fileID: 0}
+  varFloatArray:
+    readReference: {fileID: 0}
+  varString:
+    readReference: {fileID: 0}
+  varStringList:
+    writeReference: {fileID: 0}
+  varStringArray:
+    readReference: {fileID: 0}
+  varVector2:
+    readReference: {fileID: 0}
+  varVector2List:
+    writeReference: {fileID: 0}
+  varVector2Array:
+    readReference: {fileID: 0}
+  varVector3:
+    readReference: {fileID: 0}
+  varVector3List:
+    writeReference: {fileID: 0}
+  varVector3Array:
+    readReference: {fileID: 0}
+  varColor:
+    readReference: {fileID: 0}
+  varColorList:
+    writeReference: {fileID: 0}
+  varColorArray:
+    readReference: {fileID: 0}
+  varBool:
+    readReference: {fileID: 0}
+  varBoolList:
+    writeReference: {fileID: 0}
+  varBoolArray:
+    readReference: {fileID: 0}
 --- !u!1 &1558175596
 GameObject:
   m_ObjectHideFlags: 0
