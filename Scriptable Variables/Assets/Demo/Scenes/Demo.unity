@@ -401,7 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayedText: {fileID: 441378653}
   stringVariable:
-    readReference: {fileID: 11400000, guid: ea4c099901ab00e458179989af4c8f44, type: 2}
+    readReference: {fileID: 11400000, guid: 93ae185572913184980d5e3299b49480, type: 2}
   test:
     writeReference: {fileID: 11400000, guid: d909673a1fe82e643ba2d39420ebe67c, type: 2}
   varInt:

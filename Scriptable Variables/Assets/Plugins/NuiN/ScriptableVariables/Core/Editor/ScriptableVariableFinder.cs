@@ -49,6 +49,20 @@ namespace NuiN.ScriptableVariables.Editor
 
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
+            if (_foundObjects.Count == 0)
+            {
+                Rect messageRect = new Rect(0, position.height / 2 - 50, position.width, 60);
+                GUIStyle messageStyle = new GUIStyle(EditorStyles.label)
+                {
+                    alignment = TextAnchor.UpperCenter,
+                    fontSize = 14,
+                    fontStyle = FontStyle.Bold
+                };
+                EditorGUI.LabelField(messageRect, $"No {_typeName} Variables Found", messageStyle);
+                EditorGUILayout.EndScrollView();
+                return;
+            }
+            
             foreach (Object obj in _foundObjects.Where(obj =>
                          string.IsNullOrEmpty(_searchFilter) ||
                          obj.name.Contains(_searchFilter, StringComparison.OrdinalIgnoreCase)))

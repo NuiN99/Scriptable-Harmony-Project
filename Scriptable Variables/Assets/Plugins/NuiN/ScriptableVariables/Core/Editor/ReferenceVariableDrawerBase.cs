@@ -1,12 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Editor
 {
-    using System;
-    using UnityEditor;
-    using UnityEngine;
-
     public abstract class ReferenceVariableDrawerBase : PropertyDrawer
     {
         protected abstract SerializedProperty GetVariableProperty(SerializedProperty property);
@@ -14,15 +12,11 @@ namespace NuiN.ScriptableVariables.Editor
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             SerializedProperty variableProperty = GetVariableProperty(property);
-            if(variableProperty.objectReferenceValue == null) 
-            {
-                return EditorGUIUtility.singleLineHeight * 2;
-            }
-
+            if (variableProperty.objectReferenceValue == null) return EditorGUIUtility.singleLineHeight * 2.25f;
             return EditorGUIUtility.singleLineHeight;
         }
 
-        string GetReadableTypeName(Type type)
+        static string GetReadableTypeName(Type type)
         {
             return type switch
             {
@@ -40,9 +34,29 @@ namespace NuiN.ScriptableVariables.Editor
 
             SerializedProperty variableProperty = GetVariableProperty(property);
 
+            if (variableProperty.objectReferenceValue == null)
+            {
+                position.y += EditorGUIUtility.singleLineHeight * 1.25f;
+            }
+
+            string readWriteLabelPrefix = variableProperty.name switch
+            {
+                "readReference" => $"Read",
+                "writeReference" => $"Write",
+                _ => ""
+            };
+            label.text = $"{readWriteLabelPrefix}: {label.text}";
+
+            Color labelTextColor = variableProperty.name switch
+            {
+                "readReference" => Color.blue,
+                "writeReference" => Color.red,
+                _ => Color.white
+            };
+
             Type variableType = fieldInfo.FieldType.GetGenericArguments()[0];
             string typeName = GetReadableTypeName(variableType);
-            
+
             if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
             {
                 Type listType = variableType.GetGenericArguments()[0];
@@ -55,37 +69,42 @@ namespace NuiN.ScriptableVariables.Editor
             }
             typeName = $"{typeName}SO";
             
-            if (variableProperty.objectReferenceValue == null)
-            {
-                Rect helpBoxPosition = new Rect(position.x + position.width / 2.33f, position.y, position.width / 1.75f, EditorGUIUtility.singleLineHeight);
-                EditorGUI.HelpBox(helpBoxPosition, $"Missing Variable: {typeName}", MessageType.Warning);
-            }
+            EditorStyles.label.normal.textColor = labelTextColor;
+
+            Rect objectFieldPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
             
-            if (GUILayout.Button("Find Variable"))
+            EditorGUI.BeginProperty(objectFieldPosition, GUIContent.none, variableProperty);
+            EditorGUI.PropertyField(objectFieldPosition, variableProperty, label, true);
+            EditorGUI.EndProperty();
+            
+
+            Rect buttonPosition = new Rect(position.x + position.width - EditorGUIUtility.singleLineHeight, position.y, EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
+
+            GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
+            
+            GUIContent buttonText = new GUIContent("^");
+
+            Color originalColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(0.4f, 0.4f, 0.8f, 1.0f);
+            if (GUI.Button(buttonPosition, buttonText, buttonStyle))
             {
                 ScriptableVariableFinder.OpenFindWindow(typeName, variableProperty);
             }
-
+            GUI.backgroundColor = originalColor;
+            
             if (variableProperty.objectReferenceValue == null)
             {
-                position.y += EditorGUIUtility.singleLineHeight;
-            }
-            
-            string readWriteLabelPrefix = variableProperty.name switch
-            {
-                "readReference" => $"Read",
-                "writeReference" => $"Write",
-                _ => ""
-            };
-            label.text = $"{readWriteLabelPrefix}: {label.text}";
+                float labelWidth = EditorGUIUtility.labelWidth;
+                float helpBoxWidth = position.width - labelWidth; // Calculate the width excluding the label
 
-            EditorGUI.BeginProperty(position, GUIContent.none, variableProperty);
-            EditorGUI.PropertyField(position, variableProperty, label, true);
-            EditorGUI.EndProperty();
+                Rect helpBoxPosition = new Rect(position.x + labelWidth, position.y - EditorGUIUtility.singleLineHeight, helpBoxWidth, EditorGUIUtility.singleLineHeight);
+                EditorGUI.HelpBox(helpBoxPosition, $"Missing Variable: {typeName}", MessageType.Warning);
+            }
+
             EditorGUI.EndProperty();
         }
     }
-    
+
     [CustomPropertyDrawer(typeof(ReadVariable<>))]
     public class ReadVariableDrawer : ReferenceVariableDrawerBase
     {
@@ -98,6 +117,5 @@ namespace NuiN.ScriptableVariables.Editor
     {
         protected override SerializedProperty GetVariableProperty(SerializedProperty property)
             => property.FindPropertyRelative("writeReference");
-    }  
+    }
 }
-    
