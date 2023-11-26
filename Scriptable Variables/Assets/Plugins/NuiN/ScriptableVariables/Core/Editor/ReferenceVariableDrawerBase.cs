@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -133,3 +135,5 @@ namespace NuiN.ScriptableVariables.Editor
             => property.FindPropertyRelative("writeReference");
     }
 }
+
+#endif
