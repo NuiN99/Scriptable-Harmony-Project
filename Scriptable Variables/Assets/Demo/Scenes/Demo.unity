@@ -399,11 +399,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9eb614ca4ef8b48b6808fe8f0b2fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayedText: {fileID: 0}
+  displayedText: {fileID: 441378653}
   stringVariable:
-    readReference: {fileID: 0}
+    readReference: {fileID: 11400000, guid: d8f60fd992110ec438abbc1e685d6868, type: 2}
   test:
-    writeReference: {fileID: 0}
+    writeReference: {fileID: 11400000, guid: 90d34f56a6cfcda44b842189e4af01e0, type: 2}
   varInt:
     readReference: {fileID: 0}
   varIntList:

@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
   dataType: 2
-  displayType: Color
-  actualType: Color
-  scriptPreview: "namespace NuiN.ScriptableVariables\r\n{\r\n    using UnityEngine;\r\n   
-    using NuiN.ScriptableVariables.Base;\r\n    using System.Collections.Generic;\r\n   
-    \r\n    [CreateAssetMenu(menuName = \"ScriptableObjects/Variables/List<Color>\",
-    fileName = \"New ColorList Variable\")]\r\n    public class ColorListSO : VariableSO<List<Color>>
-    { }\r\n}"
+  generateForAllTypes: 0
+  displayType: Vector2
+  actualType: Vector2
+  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Base;\nusing
+    System.Collections.Generic;\r\n\r\nnamespace NuiN.ScriptableVariables.Types\r\n{  
+    \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/List/List<Vector2>\",
+    fileName = \"New Vector2List Variable\")]\r\n    internal class Vector2ListSO
+    : VariableSO<List<Vector2>> { }\r\n}"
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
