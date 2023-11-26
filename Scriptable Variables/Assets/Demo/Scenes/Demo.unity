@@ -399,11 +399,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9eb614ca4ef8b48b6808fe8f0b2fc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayedText: {fileID: 441378653}
+  displayedText: {fileID: 0}
   stringVariable:
-    readReference: {fileID: 11400000, guid: 93ae185572913184980d5e3299b49480, type: 2}
+    readReference: {fileID: 0}
   test:
-    writeReference: {fileID: 11400000, guid: d909673a1fe82e643ba2d39420ebe67c, type: 2}
+    writeReference: {fileID: 0}
   varInt:
     readReference: {fileID: 0}
   varIntList:
@@ -437,7 +437,7 @@ MonoBehaviour:
   varVector2:
     readReference: {fileID: 0}
   varVector2List:
-    writeReference: {fileID: 11400000, guid: 83c35cd4b30d8a248b6e93061d4221ff, type: 2}
+    writeReference: {fileID: 0}
   varVector2Array:
     readReference: {fileID: 0}
   varVector3:

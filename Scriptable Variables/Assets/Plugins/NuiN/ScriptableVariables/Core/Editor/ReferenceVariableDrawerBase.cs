@@ -72,7 +72,7 @@ namespace NuiN.ScriptableVariables.Editor
                 GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
                 GUIContent buttonText = new GUIContent("^");
                 Color originalColor = GUI.backgroundColor;
-                GUI.backgroundColor = new Color(0.4f, 0.4f, 0.8f, 1.0f);
+                GUI.backgroundColor = new Color(0.4f,0.4f,0.4f, 1);
                 if (GUI.Button(buttonPosition, buttonText, buttonStyle))
                 {
                     ScriptableVariableFinder.OpenFindWindow(typeName, variableProperty);
@@ -86,7 +86,7 @@ namespace NuiN.ScriptableVariables.Editor
                 float labelWidth = EditorGUIUtility.labelWidth;
                 float helpBoxWidth = position.width - labelWidth - EditorGUIUtility.singleLineHeight; // Adjust width to make room for the button
                 Rect helpBoxPosition = new Rect(position.x + labelWidth, position.y - EditorGUIUtility.singleLineHeight, helpBoxWidth, EditorGUIUtility.singleLineHeight);
-                EditorGUI.HelpBox(helpBoxPosition, $"Unassigned - {typeName}", MessageType.Warning);
+                EditorGUI.HelpBox(helpBoxPosition, $"None ({typeName})", MessageType.Warning);
             }
 
             void DrawLabel()

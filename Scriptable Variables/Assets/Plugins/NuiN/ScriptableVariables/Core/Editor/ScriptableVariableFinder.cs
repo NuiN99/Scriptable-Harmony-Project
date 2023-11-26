@@ -29,10 +29,10 @@ namespace NuiN.ScriptableVariables.Editor
         void OnEnable()
         {
             FindObjects();
-            EditorApplication.update += CheckFocus;
+            EditorApplication.update += CloseIfNotFocused;
         }
 
-        void OnDestroy() => EditorApplication.update -= CheckFocus;
+        void OnDestroy() => EditorApplication.update -= CloseIfNotFocused;
 
         void OnGUI()
         {
@@ -62,6 +62,25 @@ namespace NuiN.ScriptableVariables.Editor
                 EditorGUILayout.EndScrollView();
                 return;
             }
+            
+            GUILayout.BeginHorizontal();
+            
+            EditorGUILayout.LabelField($"Search Results: {_foundObjects.Count}");
+            
+            GUIStyle emptyFieldButtonStyle = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.white } };
+            Color ogColor = GUI.color;
+            GUI.color = Color.red;
+            
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button("Remove", emptyFieldButtonStyle, GUILayout.Width(60)))
+            {
+                _property.objectReferenceValue = null;
+                _property.serializedObject.ApplyModifiedProperties();
+                Close();
+            }
+            GUILayout.EndHorizontal();
+            
+            GUI.color = ogColor;
             
             foreach (Object obj in _foundObjects.Where(obj =>
                          string.IsNullOrEmpty(_searchFilter) ||
@@ -108,7 +127,7 @@ namespace NuiN.ScriptableVariables.Editor
             }
         }
 
-        void CheckFocus()
+        void CloseIfNotFocused()
         {
             if (focusedWindow != _windowInstance) Close();
         }
