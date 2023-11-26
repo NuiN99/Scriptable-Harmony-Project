@@ -12,7 +12,7 @@ namespace NuiN.ScriptableVariables.Editor
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             SerializedProperty variableProperty = GetVariableProperty(property);
-            if (variableProperty.objectReferenceValue == null) return EditorGUIUtility.singleLineHeight * 2.25f;
+            if (variableProperty.objectReferenceValue == null) return EditorGUIUtility.singleLineHeight;
             return EditorGUIUtility.singleLineHeight;
         }
 
@@ -34,23 +34,10 @@ namespace NuiN.ScriptableVariables.Editor
 
             SerializedProperty variableProperty = GetVariableProperty(property);
 
-            if (variableProperty.objectReferenceValue == null)
-            {
-                position.y += EditorGUIUtility.singleLineHeight * 1.25f;
-            }
-
-            string readWriteLabelPrefix = variableProperty.name switch
-            {
-                "readReference" => $"Read",
-                "writeReference" => $"Write",
-                _ => ""
-            };
-            label.text = $"{readWriteLabelPrefix}: {label.text}";
-
             Color labelTextColor = variableProperty.name switch
             {
-                "readReference" => Color.blue,
-                "writeReference" => Color.red,
+                "readReference" => new Color(0.7f, 0.9f, 0.95f, 1f),
+                "writeReference" => new Color(0.9f, 0.7f, 0.7f, 1f),
                 _ => Color.white
             };
 
@@ -68,37 +55,62 @@ namespace NuiN.ScriptableVariables.Editor
                 typeName = $"{GetReadableTypeName(arrayType)}Array";
             }
             typeName = $"{typeName}SO";
-            
-            EditorStyles.label.normal.textColor = labelTextColor;
 
-            Rect objectFieldPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
-            
-            EditorGUI.BeginProperty(objectFieldPosition, GUIContent.none, variableProperty);
-            EditorGUI.PropertyField(objectFieldPosition, variableProperty, label, true);
-            EditorGUI.EndProperty();
-            
-
-            Rect buttonPosition = new Rect(position.x + position.width - EditorGUIUtility.singleLineHeight, position.y, EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
-
-            GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
-            
-            GUIContent buttonText = new GUIContent("^");
-
-            Color originalColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.4f, 0.4f, 0.8f, 1.0f);
-            if (GUI.Button(buttonPosition, buttonText, buttonStyle))
-            {
-                ScriptableVariableFinder.OpenFindWindow(typeName, variableProperty);
-            }
-            GUI.backgroundColor = originalColor;
-            
             if (variableProperty.objectReferenceValue == null)
             {
+                Color ogColor = EditorStyles.label.normal.textColor;
+                EditorStyles.label.normal.textColor = labelTextColor;
+
+                Rect labelPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
+                EditorGUI.LabelField(labelPosition, label);
+
+                EditorStyles.label.normal.textColor = ogColor;
+
+                Rect buttonPosition = new Rect(position.x + position.width - EditorGUIUtility.singleLineHeight, position.y, EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
+                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
+                GUIContent buttonText = new GUIContent("^");
+
+                Color originalColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.4f, 0.4f, 0.8f, 1.0f);
+                if (GUI.Button(buttonPosition, buttonText, buttonStyle))
+                {
+                    ScriptableVariableFinder.OpenFindWindow(typeName, variableProperty);
+                }
+                GUI.backgroundColor = originalColor;
+
+                position.y += EditorGUIUtility.singleLineHeight;
                 float labelWidth = EditorGUIUtility.labelWidth;
-                float helpBoxWidth = position.width - labelWidth; // Calculate the width excluding the label
+                float helpBoxWidth = position.width - labelWidth - EditorGUIUtility.singleLineHeight; // Adjust width to make room for the button
 
                 Rect helpBoxPosition = new Rect(position.x + labelWidth, position.y - EditorGUIUtility.singleLineHeight, helpBoxWidth, EditorGUIUtility.singleLineHeight);
-                EditorGUI.HelpBox(helpBoxPosition, $"Missing Variable: {typeName}", MessageType.Warning);
+                EditorGUI.HelpBox(helpBoxPosition, $"Unassigned - {typeName}", MessageType.Warning);
+            }
+            else
+            {
+                Rect objectFieldPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
+
+                Color ogColor = EditorStyles.label.normal.textColor;
+                EditorStyles.label.normal.textColor = labelTextColor;
+
+                EditorGUI.BeginProperty(objectFieldPosition, GUIContent.none, variableProperty);
+                EditorGUI.PropertyField(objectFieldPosition, variableProperty, label, true);
+                EditorGUI.EndProperty();
+
+                EditorStyles.label.normal.textColor = ogColor;
+
+                Rect buttonPosition = new Rect(position.x + position.width - EditorGUIUtility.singleLineHeight, position.y, EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
+
+                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
+
+                GUIContent buttonText = new GUIContent("^");
+
+                Color originalColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.4f, 0.4f, 0.8f, 1.0f);
+                if (GUI.Button(buttonPosition, buttonText, buttonStyle))
+                {
+                    ScriptableVariableFinder.OpenFindWindow(typeName, variableProperty);
+                }
+                GUI.backgroundColor = originalColor;
             }
 
             EditorGUI.EndProperty();
