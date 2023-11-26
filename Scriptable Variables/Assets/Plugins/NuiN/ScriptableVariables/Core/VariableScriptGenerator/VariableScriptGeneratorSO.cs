@@ -1,3 +1,5 @@
+using System;
+
 namespace NuiN.ScriptableVariables.Generator
 {
     using UnityEngine;
@@ -12,16 +14,17 @@ namespace NuiN.ScriptableVariables.Generator
         enum DataType { Normal, Array, List }
         
         const string SCRIPT_TEMPLATE =
-@"namespace NuiN.ScriptableVariables
-{
-    using UnityEngine;
-    using NuiN.ScriptableVariables.Base;<Directives>
-    
+@"using UnityEngine;
+using NuiN.ScriptableVariables.Base;<Directives>
+
+namespace NuiN.ScriptableVariables.Types
+{   
     [CreateAssetMenu(menuName = ""ScriptableVariables/<Suffix>/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
     internal class <DisplayType>SO : VariableSO<<ActualType>> { }
 }";
         
         [SerializeField] DataType dataType;
+        [SerializeField] bool generateForAllTypes;
     
         [SerializeField] string displayType = "Float";
         [SerializeField] string actualType = "float";
@@ -44,6 +47,27 @@ namespace NuiN.ScriptableVariables.Generator
         }
 
         public void Generate()
+        {
+            if (generateForAllTypes)
+            {
+                GenerateForAllTypes();
+                return;
+            }
+            GenerateScript();
+        }
+        
+        public void GenerateForAllTypes()
+        {
+            DataType originalType = dataType;
+            foreach (DataType type in Enum.GetValues(typeof(DataType)))
+            {
+                dataType = type;
+                GenerateScript();
+            }
+            dataType = originalType;
+        }
+
+        void GenerateScript()
         {
             scriptPreview = AdjustedScriptPreview();
             if(autoUpdatePath) updatedPath = AdjustedPath();
@@ -111,8 +135,7 @@ namespace NuiN.ScriptableVariables.Generator
             return dataType switch
             {
                 DataType.List => 
-    @"
-    using System.Collections.Generic;",
+                "\nusing System.Collections.Generic;",
                 _ => null
             };
         }
@@ -123,7 +146,7 @@ namespace NuiN.ScriptableVariables.Generator
 
             if (File.Exists(filePath) && !overwriteExisting)
             {
-                Debug.Log("Script already exists and Overwrite is disabled");
+                Debug.Log("Script already exists and 'Overwrite Existing' is disabled");
                 return;
             }
 
