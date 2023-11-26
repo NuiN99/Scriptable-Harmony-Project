@@ -1,10 +1,10 @@
+using System;
+using UnityEngine;
+using NuiN.ScriptableVariables.Base;
+using UnityEditor;
+
 namespace NuiN.ScriptableVariables
 {
-    using System;
-    using UnityEngine;
-    using NuiN.ScriptableVariables.Base;
-    using UnityEditor;
-
     [Serializable]
     public class WriteVariable<T>
     {

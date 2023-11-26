@@ -1,9 +1,9 @@
+using System;
+using UnityEngine;
+using NuiN.ScriptableVariables.Base;
+
 namespace NuiN.ScriptableVariables
 {
-    using System;
-    using UnityEngine;
-    using NuiN.ScriptableVariables.Base;
-
     [Serializable]
     public class ReadVariable<T>
     {

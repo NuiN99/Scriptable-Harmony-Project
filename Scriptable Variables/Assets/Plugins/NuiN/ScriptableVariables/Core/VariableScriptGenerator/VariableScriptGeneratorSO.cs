@@ -1,11 +1,10 @@
 using System;
+using UnityEngine;
+using System.IO;
+using UnityEditor;
 
 namespace NuiN.ScriptableVariables.Generator
-{
-    using UnityEngine;
-    using System.IO;
-    using UnityEditor;
-
+{ 
     [CreateAssetMenu(menuName = "ScriptableVariables/Tools/VariableScriptGenerator", fileName = "Variable Script Generator")]
     public class VariableScriptGeneratorSO : ScriptableObject
     {
@@ -160,7 +159,7 @@ namespace NuiN.ScriptableVariables.Types
     }
 #if UNITY_EDITOR
     [CustomEditor(typeof(VariableScriptGeneratorSO))]
-    internal class VariableCreatorSOEditor : Editor
+    internal class VariableCreatorSOEditor : UnityEditor.Editor
     {
 
         public override void OnInspectorGUI()

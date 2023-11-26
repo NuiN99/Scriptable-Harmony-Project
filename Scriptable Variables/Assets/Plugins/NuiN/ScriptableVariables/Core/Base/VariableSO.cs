@@ -1,13 +1,14 @@
+using NuiN.ScriptableVariables.Helper;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
+using System;
+using Object = UnityEngine.Object;
+
 namespace NuiN.ScriptableVariables.Base
 {
-    using UnityEngine.SceneManagement;
-    using System.Collections.Generic;
-    using System.Linq;
-    using UnityEditor;
-    using UnityEngine;
-    using System;
-    using Object = UnityEngine.Object;
-
     public class VariableSO<T> : ScriptableObject
     {
         T _startValue;
