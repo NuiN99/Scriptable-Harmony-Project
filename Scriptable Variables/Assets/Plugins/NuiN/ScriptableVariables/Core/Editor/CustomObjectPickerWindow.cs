@@ -39,8 +39,19 @@ public class CustomObjectPickerWindow : EditorWindow
     {
         GUILayout.Label("Object Picker", EditorStyles.boldLabel);
 
-        // Search bar
-        _searchFilter = EditorGUILayout.TextField("", _searchFilter);
+        // Create a horizontal layout for the search bar
+        EditorGUILayout.BeginHorizontal();
+
+        // Use EditorGUIUtility.IconContent for the magnifying glass icon
+        GUIContent searchIcon = EditorGUIUtility.IconContent("Search Icon");
+
+        GUILayout.Space(5); // Add space before the icon
+
+        // Draw the icon and search bar on the same line
+        EditorGUILayout.LabelField(searchIcon, GUILayout.Width(20));
+        _searchFilter = EditorGUILayout.TextField(_searchFilter);
+
+        EditorGUILayout.EndHorizontal();
 
         // Create a scroll view for the object list
         _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
@@ -85,12 +96,15 @@ public class CustomObjectPickerWindow : EditorWindow
     {
         _foundObjects.Clear();
 
-        // Find all objects in the scene
-        UnityEngine.Object[] allObjects = Resources.FindObjectsOfTypeAll<Object>();
+        // Find all assets of the specified type
+        string[] guids = AssetDatabase.FindAssets($"t:{_typeName}");
 
-        // Filter based on the search string
-        foreach (var obj in allObjects)
+        foreach (var guid in guids)
         {
+            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            Object obj = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
+
+            // Add the object to the list if it matches the specified type
             if (obj != null && obj.GetType().Name == _typeName)
             {
                 _foundObjects.Add(obj);
