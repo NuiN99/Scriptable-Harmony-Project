@@ -10,55 +10,75 @@ public class CustomObjectPickerWindow : EditorWindow
     static string _typeName;
     static SerializedProperty _property;
 
+    private static CustomObjectPickerWindow _windowInstance;
+    private Vector2 _scrollPosition;
+    private string _searchFilter = "";
+
     public static void ShowWindow(string typeName, SerializedProperty property)
     {
         _property = property;
         _typeName = typeName;
-        CustomObjectPickerWindow window = GetWindow<CustomObjectPickerWindow>("Custom Object Picker");
+        _windowInstance = GetWindow<CustomObjectPickerWindow>("Custom Object Picker");
 
         // Call FindObjects when the window is first created
-        window.FindObjects();
+        _windowInstance.FindObjects();
     }
 
     void OnEnable()
     {
         FindObjects();
+        EditorApplication.update += CheckFocus;
+    }
+
+    void OnDestroy()
+    {
+        EditorApplication.update -= CheckFocus;
     }
 
     private void OnGUI()
     {
         GUILayout.Label("Object Picker", EditorStyles.boldLabel);
 
+        // Search bar
+        _searchFilter = EditorGUILayout.TextField("", _searchFilter);
+
+        // Create a scroll view for the object list
+        _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+
         // Display found objects
-        if (_foundObjects.Count > 0)
+        foreach (var obj in _foundObjects)
         {
-            EditorGUILayout.LabelField("Found Objects:");
-            foreach (var obj in _foundObjects)
+            // Apply search filter
+            if (!string.IsNullOrEmpty(_searchFilter) && !obj.name.Contains(_searchFilter, StringComparison.OrdinalIgnoreCase))
+                continue;
+
+            EditorGUILayout.BeginHorizontal();
+
+            // Display the object name as a clickable label
+            Rect labelRect = GUILayoutUtility.GetRect(new GUIContent(obj.name), EditorStyles.label);
+            if (Event.current.type == EventType.MouseDown && labelRect.Contains(Event.current.mousePosition))
             {
-                // Display the object and an assign button
-                EditorGUILayout.BeginHorizontal();
-
-                // Display the object
-                EditorGUILayout.ObjectField(obj, typeof(UnityEngine.Object), true);
-
-                // Add a button to assign the object
-                if (GUILayout.Button("Assign", GUILayout.Width(60)))
-                {
-                    // When the button is clicked, assign the selected object to the SerializedProperty
-                    _property.objectReferenceValue = obj;
-                    // Apply modifications to the SerializedProperty
-                    _property.serializedObject.ApplyModifiedProperties();
-                    // Close the window
-                    Close();
-                }
-
-                EditorGUILayout.EndHorizontal();
+                EditorGUIUtility.PingObject(obj);
+                Event.current.Use();
             }
+
+            EditorGUI.ObjectField(labelRect, GUIContent.none, obj, typeof(UnityEngine.Object), true);
+
+            // Add a button to assign the object
+            if (GUILayout.Button("Assign", GUILayout.Width(60)))
+            {
+                // When the button is clicked, assign the selected object to the SerializedProperty
+                _property.objectReferenceValue = obj;
+                // Apply modifications to the SerializedProperty
+                _property.serializedObject.ApplyModifiedProperties();
+                // Close the window
+                Close();
+            }
+
+            EditorGUILayout.EndHorizontal();
         }
-        else
-        {
-            EditorGUILayout.LabelField("No objects found.");
-        }
+
+        EditorGUILayout.EndScrollView();
     }
 
     private void FindObjects()
@@ -75,6 +95,15 @@ public class CustomObjectPickerWindow : EditorWindow
             {
                 _foundObjects.Add(obj);
             }
+        }
+    }
+
+    // Check if the window has lost focus and close it if true
+    private void CheckFocus()
+    {
+        if (EditorWindow.focusedWindow != _windowInstance)
+        {
+            Close();
         }
     }
 }
