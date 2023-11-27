@@ -34,7 +34,7 @@ namespace NuiN.ScriptableVariables.Types
         [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
         
-        [SerializeField] string constantPath = "Assets/Plugins/NuiN/ScriptableVariables/VariableTypes";
+        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/VariableTypes";
         [SerializeField] string updatedPath;
         string _suffix;
 
