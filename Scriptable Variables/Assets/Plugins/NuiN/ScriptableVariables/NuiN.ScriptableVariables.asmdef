@@ -1,6 +1,6 @@
 {
     "name": "NuiN.ScriptableVariables",
-    "rootNamespace": "",
+    "rootNamespace": "NuiN.ScriptableVariables",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
