@@ -24,13 +24,13 @@ namespace NuiN.ScriptableVariables.Base
         
         [Space(25)]
         
-        [Header("Prefabs")]
-        [SerializeField] List<Object> prefabReaders;
-        [SerializeField] List<Object> prefabWriters;
+        [Header("Prefab References")]
+        [SerializeField] List<Object> _writers;
+        [SerializeField] List<Object> _readers;
         
-        [Header("Scene")]
-        [SerializeField] List<Object> sceneReaders;
-        [SerializeField] List<Object> sceneWriters;
+        [Header("Scene References")]
+        [SerializeField] List<Object> writers;
+        [SerializeField] List<Object> readers;
         
 #endif
         
@@ -78,10 +78,10 @@ namespace NuiN.ScriptableVariables.Base
 
         public void FindObjectsAndAssignReferences()
         {
-            prefabReaders.Clear();
-            prefabWriters.Clear();
-            sceneReaders.Clear();
-            sceneWriters.Clear();
+            _readers.Clear();
+            _writers.Clear();
+            readers.Clear();
+            writers.Clear();
             
             string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
             GameObject[] allPrefabs = guids.Select(guid =>
@@ -92,8 +92,8 @@ namespace NuiN.ScriptableVariables.Base
             
             GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
             
-            AssignReferences(allPrefabs, ref prefabReaders, ref prefabWriters);
-            AssignReferences(allGameObjects, ref sceneReaders, ref sceneWriters);
+            AssignReferences(allPrefabs, ref _readers, ref _writers);
+            AssignReferences(allGameObjects, ref readers, ref writers);
         }
 
         void AssignReferences(IEnumerable<GameObject> objects, ref List<Object> readers, ref List<Object> writers)
