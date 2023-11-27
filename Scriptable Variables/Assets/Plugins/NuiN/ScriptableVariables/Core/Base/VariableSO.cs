@@ -24,8 +24,14 @@ namespace NuiN.ScriptableVariables.Base
         
         [Space(25)]
         
-        [SerializeField] List<Object> prefabReferences;
-        [SerializeField] List<Object> sceneReferences;
+        [Header("Prefabs")]
+        [SerializeField] List<Object> prefabReaders;
+        [SerializeField] List<Object> prefabWriters;
+        
+        [Header("Scene")]
+        [SerializeField] List<Object> sceneReaders;
+        [SerializeField] List<Object> sceneWriters;
+        
 #endif
         
         // playModeStateChanged and selectionChanged events only run in editor
@@ -67,11 +73,16 @@ namespace NuiN.ScriptableVariables.Base
         void OnSelectedInProjectWindow()
         {
             if (Selection.activeObject != this) return;
-            SetReferencesFromProject();
+            FindObjectsAndAssignReferences();
         }
 
-        public void SetReferencesFromProject()
+        public void FindObjectsAndAssignReferences()
         {
+            prefabReaders.Clear();
+            prefabWriters.Clear();
+            sceneReaders.Clear();
+            sceneWriters.Clear();
+            
             string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
             GameObject[] allPrefabs = guids.Select(guid =>
             {
@@ -81,13 +92,12 @@ namespace NuiN.ScriptableVariables.Base
             
             GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
             
-            sceneReferences = FindReferencesInGameObjects(allGameObjects);
-            prefabReferences = FindReferencesInGameObjects(allPrefabs);
+            AssignReferences(allPrefabs, ref prefabReaders, ref prefabWriters);
+            AssignReferences(allGameObjects, ref sceneReaders, ref sceneWriters);
         }
 
-        List<Object> FindReferencesInGameObjects(IEnumerable<GameObject> objects)
+        void AssignReferences(IEnumerable<GameObject> objects, ref List<Object> readers, ref List<Object> writers)
         {
-            List<Object> references = new();
             foreach (var obj in objects)
             {
                 Component[] components = obj.GetComponentsInChildren<Component>();
@@ -98,16 +108,17 @@ namespace NuiN.ScriptableVariables.Base
 
                     var serializedObject = new SerializedObject(component);
                     var serializedProperty = serializedObject.GetIterator();
-
                     while (serializedProperty.NextVisible(true))
                     {
                         if (serializedProperty.propertyType != SerializedPropertyType.ObjectReference || serializedProperty.objectReferenceValue != this) continue;
-                        references.Add(component.gameObject);
+
+                        string propertyName = serializedProperty.name.ToUpper();
+                        
+                        if (propertyName.Contains("READ")) readers.Add(component);
+                        else if (propertyName.Contains("WRITE")) writers.Add(component);
                     }
                 }
             }
-
-            return references;
         }
 #endif
     }
