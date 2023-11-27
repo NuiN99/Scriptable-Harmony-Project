@@ -90,7 +90,7 @@ namespace NuiN.ScriptableVariables.Base
             List<Object> references = new();
             foreach (var obj in objects)
             {
-                Component[] components = obj.GetComponents<Component>();
+                Component[] components = obj.GetComponentsInChildren<Component>();
 
                 foreach (var component in components)
                 {
