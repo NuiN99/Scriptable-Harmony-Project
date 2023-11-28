@@ -16,5 +16,7 @@ MonoBehaviour:
   invokeOnChangeEvent: 0
   keepValueThroughScenes: 0
   keepPlayModeValue: 0
-  prefabReferences: []
-  sceneReferences: []
+  _writers: []
+  _readers: []
+  writers: []
+  readers: []

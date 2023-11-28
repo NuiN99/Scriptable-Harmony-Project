@@ -16,7 +16,16 @@ MonoBehaviour:
   invokeOnChangeEvent: 1
   keepValueThroughScenes: 0
   keepPlayModeValue: 1
-  prefabReferences: []
-  sceneReferences:
+  _writers:
+  - {fileID: 2412861387281467426, guid: 0bc1ec840361e614eb23716ac695a3c5, type: 3}
+  - {fileID: 2412861387281467426, guid: 269cf73198e697a4586db496c8225a21, type: 3}
+  - {fileID: 2412861387281467426, guid: 6c23b2743dae14f4ba127462f27d6e9c, type: 3}
+  - {fileID: 2412861387281467426, guid: c79ee50095833864da9928059b2e2259, type: 3}
+  - {fileID: 2412861387281467426, guid: 5c8ae981cb37fe74f95bd71f512ddf32, type: 3}
+  - {fileID: 2412861387281467426, guid: 6f6c71b936a67cb4aadf9770bb6491ec, type: 3}
+  _readers: []
+  writers:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  readers: []
