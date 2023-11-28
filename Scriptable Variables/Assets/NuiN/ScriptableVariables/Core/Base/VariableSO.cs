@@ -1,4 +1,4 @@
-using NuiN.ScriptableVariables.Helper;
+using NuiN.ScriptableVaraibles.Lifetime;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,9 @@ namespace NuiN.ScriptableVariables.Base
 {
     public class VariableSO<T> : ScriptableObject
     {
+#if UNITY_EDITOR
         [SerializeField] [TextArea] string description; 
+#endif
         
         T _startValue;
         public T value;
@@ -24,7 +26,6 @@ namespace NuiN.ScriptableVariables.Base
         [SerializeField] bool resetOnSceneLoad = true;
         
 #if UNITY_EDITOR
-        
         [Tooltip("Should it keep its value after exiting Playmode?")]
         [SerializeField] bool resetOnExitPlaymode = true;
 
@@ -32,10 +33,8 @@ namespace NuiN.ScriptableVariables.Base
         [Header("References")]
         [ReadOnly] [SerializeField] int total;
         [SerializeField] ReferenceLists objects;
-        
 #endif
         
-        // playModeStateChanged and selectionChanged events only run in editor
         void OnEnable()
         {
             GameLoadedEvent.OnGameLoaded += CacheStartValueOnStart;
@@ -119,7 +118,6 @@ namespace NuiN.ScriptableVariables.Base
                 }
             }
         }
-#endif
     }
     
     [Serializable]
@@ -145,4 +143,6 @@ namespace NuiN.ScriptableVariables.Base
             writers?.Clear();
         }
     }
+    
+#endif
 }
