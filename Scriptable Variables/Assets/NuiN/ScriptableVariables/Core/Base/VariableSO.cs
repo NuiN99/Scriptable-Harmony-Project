@@ -120,16 +120,18 @@ namespace NuiN.ScriptableVariables.Base
                         bool isWrite = type == typeof(WriteVariable<T>);
                         
                         if(!isRead && !isWrite) continue;
+
+                        if (field.GetValue(component) is not VariableReferenceParentClass<T> variableField) continue;
                         
-                        if (field.GetValue(component) is not VariableReferenceParentClass<T> variableField ||
-                            variableField.variable != this) continue;
+                        FieldInfo variableFieldInfo = typeof(VariableReferenceParentClass<T>).GetField("variable", BindingFlags.Instance | BindingFlags.NonPublic);
+
+                        if (variableFieldInfo == null || !ReferenceEquals(variableFieldInfo.GetValue(variableField), this)) continue;
                         
                         if (isRead) readers.Add(component);
                         else writers.Add(component);
                     }
                 }
             }
-
         }
 
     }

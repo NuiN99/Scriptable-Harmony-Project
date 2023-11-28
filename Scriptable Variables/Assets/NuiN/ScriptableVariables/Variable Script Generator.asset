@@ -12,17 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2174405833c76d49bb5799a2da3e8cf, type: 3}
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
-  dataType: 2
+  dataType: 0
   generateForAllTypes: 0
-  displayType: Vector2
-  actualType: Vector2
-  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Base;\nusing
-    System.Collections.Generic;\r\n\r\nnamespace NuiN.ScriptableVariables.Types\r\n{  
-    \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/List/List<Vector2>\",
-    fileName = \"New Vector2List Variable\")]\r\n    internal class Vector2ListSO
-    : VariableSO<List<Vector2>> { }\r\n}"
+  displayType: Float
+  actualType: float
+  scriptPreview: 
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
-  constantPath: Assets/Plugins/NuiN/ScriptableVariables/VariableTypes
-  updatedPath: Assets/Plugins/NuiN/ScriptableVariables/VariableTypes/List
+  constantPath: Assets/NuiN/ScriptableVariables/VariableTypes/Default
+  updatedPath: 
