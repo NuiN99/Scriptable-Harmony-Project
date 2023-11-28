@@ -15,7 +15,7 @@ MonoBehaviour:
   description: 
   value: 0
   onChangeEvent: 1
-  onChangeHistoryEvent: 0
+  onChangeHistoryEvent: 1
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 4
