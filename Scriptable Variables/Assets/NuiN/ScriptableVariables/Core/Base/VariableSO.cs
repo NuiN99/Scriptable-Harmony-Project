@@ -5,32 +5,33 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using System;
+using NuiN.ScriptableVariables.Editor.Attributes;
+using Component = UnityEngine.Component;
 using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.Base
 {
     public class VariableSO<T> : ScriptableObject
     {
-        T _startValue;
+        [SerializeField] [TextArea] string description; 
         
+        T _startValue;
         public T value;
         public bool invokeOnChangeEvent;
         public Action<T> onChange;
         
-        [SerializeField] bool keepValueThroughScenes;
+        [Tooltip("Should it keep its value after loading a scene?")]
+        [SerializeField] bool resetOnSceneLoad = true;
         
 #if UNITY_EDITOR
-        [SerializeField] bool keepPlayModeValue;
         
-        [Space(25)]
+        [Tooltip("Should it keep its value after exiting Playmode?")]
+        [SerializeField] bool resetOnExitPlaymode = true;
+
         
-        [Header("Prefab References")]
-        [SerializeField] List<Object> _writers;
-        [SerializeField] List<Object> _readers;
-        
-        [Header("Scene References")]
-        [SerializeField] List<Object> writers;
-        [SerializeField] List<Object> readers;
+        [Header("References")]
+        [ReadOnly] [SerializeField] int total;
+        [SerializeField] ReferenceLists objects;
         
 #endif
         
@@ -58,7 +59,7 @@ namespace NuiN.ScriptableVariables.Base
 
         void ResetValueOnSceneLoad(Scene scene, Scene scene2)
         {
-            if (keepValueThroughScenes) return;
+            if (!resetOnSceneLoad) return;
             value = _startValue;
         }
         
@@ -66,7 +67,7 @@ namespace NuiN.ScriptableVariables.Base
         
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
-            if (keepPlayModeValue) return;
+            if (!resetOnExitPlaymode) return;
             if (state == PlayModeStateChange.EnteredEditMode) value = _startValue;
         }
 
@@ -74,14 +75,12 @@ namespace NuiN.ScriptableVariables.Base
         {
             if (Selection.activeObject != this) return;
             FindObjectsAndAssignReferences();
+            total = objects.TotalReferencesCount;
         }
 
         public void FindObjectsAndAssignReferences()
         {
-            _readers.Clear();
-            _writers.Clear();
-            readers.Clear();
-            writers.Clear();
+            objects.Clear();
             
             string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
             GameObject[] allPrefabs = guids.Select(guid =>
@@ -91,16 +90,16 @@ namespace NuiN.ScriptableVariables.Base
             }).ToArray();
             
             GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
-            
-            AssignReferences(allPrefabs, ref _readers, ref _writers);
-            AssignReferences(allGameObjects, ref readers, ref writers);
+
+            AssignReferences(allPrefabs, ref objects._readers, ref objects._writers, true);
+            AssignReferences(allGameObjects, ref objects.readers, ref objects.writers, false);
         }
 
-        void AssignReferences(IEnumerable<GameObject> objects, ref List<Object> readers, ref List<Object> writers)
+        void AssignReferences(IEnumerable<GameObject> foundObjects, ref List<Component> readers, ref List<Component> writers, bool prefabs)
         {
-            foreach (var obj in objects)
+            foreach (var obj in foundObjects)
             {
-                Component[] components = obj.GetComponentsInChildren<Component>();
+                Component[] components = prefabs ? obj.GetComponentsInChildren<Component>() : obj.GetComponents<Component>();
 
                 foreach (var component in components)
                 {
@@ -121,5 +120,29 @@ namespace NuiN.ScriptableVariables.Base
             }
         }
 #endif
+    }
+    
+    [Serializable]
+    internal class ReferenceLists
+    {
+        [Header("Prefabs")]
+        // ReSharper disable once InconsistentNaming
+        public List<Component> _writers = new();
+        // ReSharper disable once InconsistentNaming
+        public List<Component> _readers = new();
+        
+        [Header("Scene")]
+        public List<Component> writers = new();
+        public List<Component> readers = new();
+        
+        public int TotalReferencesCount => _writers.Count + _readers.Count + writers.Count + readers.Count;
+
+        public void Clear()
+        {
+            _readers?.Clear();
+            _writers?.Clear();
+            readers?.Clear();
+            writers?.Clear();
+        }
     }
 }
