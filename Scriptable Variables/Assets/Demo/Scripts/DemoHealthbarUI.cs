@@ -7,10 +7,9 @@ using UnityEngine.UI;
 
 public class DemoHealthbarUI : MonoBehaviour
 {
-    [Header("Read Variable")]
+    [Header("Readers")]
     [SerializeField] ReadVariable<float> maxHealth;
     [SerializeField] ReadVariable<float> curHealth;
-    [SerializeField] WriteVariable<float> test;
     
     [Header("UI")]
     [SerializeField] Slider healthSlider;
@@ -18,15 +17,23 @@ public class DemoHealthbarUI : MonoBehaviour
     void OnEnable()
     {
         curHealth.AddOnChangeHandler(OnHealthChanged);
+        
+        curHealth.AddOnChangeHistoryHandler(OnHealthChangedHistory);
     }
     void OnDisable()
     {
         curHealth.RemoveOnChangeHandler(OnHealthChanged);
+        curHealth.RemoveOnChangeHistoryHandler(OnHealthChangedHistory);
     }
 
     void OnHealthChanged(float newHealth)
     {
         float sliderVal = newHealth / maxHealth.Val;
         healthSlider.value = sliderVal;
+    }
+
+    void OnHealthChangedHistory(float oldHealth, float newHealth)
+    {
+        Debug.Log($"Old Health: {oldHealth}\nNew Health: {newHealth}");
     }
 }
