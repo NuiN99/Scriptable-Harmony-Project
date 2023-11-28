@@ -19,8 +19,10 @@ namespace NuiN.ScriptableVariables.Base
         
         T _startValue;
         public T value;
-        public bool invokeOnChangeEvent;
+        public bool onChangeEvent;
+        public bool onChangeHistoryEvent;
         public Action<T> onChange;
+        public Action<T,T> onChangeHistory;
         
         [Tooltip("Should it keep its value after loading a scene?")]
         [SerializeField] bool resetOnSceneLoad = true;

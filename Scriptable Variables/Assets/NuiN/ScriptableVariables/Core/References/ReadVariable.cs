@@ -10,11 +10,11 @@ namespace NuiN.ScriptableVariables
         [SerializeField] VariableSO<T> readReference;
         
         public T Val => readReference.value;
-        
-        public Action<T> OnChange
-        {
-            get => readReference.onChange;
-            set => readReference.onChange = value;
-        }
+
+        public void AddOnChangeHandler(Action<T> onChange) => readReference.onChange += onChange;
+        public void RemoveOnChangeHandler(Action<T> onChange) => readReference.onChange -= onChange;
+
+        public void AddOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => readReference.onChangeHistory += onChangeWithHistory; 
+        public void RemoveOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => readReference.onChangeHistory -= onChangeWithHistory; 
     }
 }

@@ -15,9 +15,9 @@ namespace NuiN.ScriptableVariables
             get => writeReference.value;
             set
             {
+                if (writeReference.onChangeHistoryEvent) writeReference.onChangeHistory?.Invoke(writeReference.value, value);
                 writeReference.value = value;
-                if (!writeReference.invokeOnChangeEvent) return;
-                OnChange?.Invoke(writeReference.value);
+                if (writeReference.onChangeEvent) writeReference.onChange?.Invoke(writeReference.value);
                 
                 #if UNITY_EDITOR
                 // so that changes made through code are shown in version control
@@ -25,11 +25,11 @@ namespace NuiN.ScriptableVariables
                 #endif
             }
         }
+        
+        public void AddOnChangeHandler(Action<T> onChange) => writeReference.onChange += onChange;
+        public void RemoveOnChangeHandler(Action<T> onChange) => writeReference.onChange -= onChange;
 
-        public Action<T> OnChange
-        {
-            get => writeReference.onChange; 
-            set => writeReference.onChange = value;
-        }
+        public void AddOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => writeReference.onChangeHistory += onChangeWithHistory; 
+        public void RemoveOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => writeReference.onChangeHistory -= onChangeWithHistory; 
     }
 }
