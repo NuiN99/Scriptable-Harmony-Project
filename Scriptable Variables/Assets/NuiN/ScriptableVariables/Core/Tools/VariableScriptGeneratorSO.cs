@@ -3,7 +3,7 @@ using UnityEngine;
 using System.IO;
 using UnityEditor;
 
-namespace NuiN.ScriptableVariables.Generator
+namespace NuiN.ScriptableVariables.Tools
 { 
     [CreateAssetMenu(menuName = "ScriptableVariables/Tools/VariableScriptGenerator", fileName = "Variable Script Generator")]
     internal class VariableScriptGeneratorSO : ScriptableObject

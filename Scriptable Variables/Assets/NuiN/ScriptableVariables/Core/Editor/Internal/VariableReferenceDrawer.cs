@@ -2,34 +2,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using NuiN.ScriptableVariables.References;
+using NuiN.ScriptableVariables.Tools;
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Editor.Attributes
+namespace NuiN.ScriptableVariables.Editor.Internal
 {
-    internal abstract class ReferenceVariableDrawerBase : PropertyDrawer
+    internal static class VariableReferenceGUIHelper
     {
-        Color _readColor = new Color(0.7f, 0.9f, 0.95f, 1f);
-        Color _writeColor = new Color(0.9f, 0.7f, 0.7f, 1f);
+        public static Color readColor = new Color(0.7f, 0.9f, 0.95f, 1f);
+        public static Color writeColor = new Color(0.9f, 0.7f, 0.7f, 1f);
         
-        protected abstract SerializedProperty GetVariableProperty(SerializedProperty property);
+        static SerializedProperty GetVariableProperty(SerializedProperty property)
+            => property.FindPropertyRelative("variable");
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) 
-            => EditorGUIUtility.singleLineHeight;
-
-        static string GetReadableTypeName(Type type)
-        {
-            return type switch
-            {
-                not null when type == typeof(float) => "Float",
-                not null when type == typeof(bool) => "Bool",
-                not null when type == typeof(int) => "Int",
-                not null when type == typeof(long) => "Long",
-                _ => type?.Name
-            };
-        }
-
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        public static void VarRefGUI(Rect position, SerializedProperty property, GUIContent label, Color color, FieldInfo fieldInfo)
         {
             EditorGUI.BeginProperty(position, label, property);
 
@@ -49,19 +38,16 @@ namespace NuiN.ScriptableVariables.Editor.Attributes
                 typeName = $"{GetReadableTypeName(arrayType)}Array";
             }
             typeName = $"{typeName}SO";
-
+            
             if (variableProperty.objectReferenceValue == null)
             {
                 DrawLabel();
-
                 DrawFindButton();
-
                 DrawHelpBox();
             }
             else
             {
                 DrawPropertyField();
-
                 DrawFindButton();
             }
 
@@ -93,7 +79,7 @@ namespace NuiN.ScriptableVariables.Editor.Attributes
 
             void DrawLabel()
             {
-                EditorStyles.label.normal.textColor = LabelTextColor();
+                EditorStyles.label.normal.textColor = color;
                 Rect labelPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
                 EditorGUI.LabelField(labelPosition, label);
                 EditorStyles.label.normal.textColor = Color.white;
@@ -102,37 +88,40 @@ namespace NuiN.ScriptableVariables.Editor.Attributes
             void DrawPropertyField()
             {
                 Rect objectFieldPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
-                EditorStyles.label.normal.textColor = LabelTextColor();
+                EditorStyles.label.normal.textColor = color;
                 EditorGUI.BeginProperty(objectFieldPosition, GUIContent.none, variableProperty);
                 EditorGUI.PropertyField(objectFieldPosition, variableProperty, label, true);
                 EditorGUI.EndProperty();
                 EditorStyles.label.normal.textColor = Color.white;
             }
-
-            Color LabelTextColor()
+        }
+        
+        static string GetReadableTypeName(Type type)
+        {
+            return type switch
             {
-                return variableProperty.name switch
-                {
-                    "readReference" => _readColor,
-                    "writeReference" => _writeColor,
-                    _ => Color.white
-                };
-            }
+                not null when type == typeof(float) => "Float",
+                not null when type == typeof(bool) => "Bool",
+                not null when type == typeof(int) => "Int",
+                not null when type == typeof(long) => "Long",
+                _ => type?.Name
+            };
         }
     }
-
+    
     [CustomPropertyDrawer(typeof(ReadVariable<>))]
-    internal class ReadVariableDrawer : ReferenceVariableDrawerBase
+    internal class ReadVariableDrawer : PropertyDrawer
     {
-        protected override SerializedProperty GetVariableProperty(SerializedProperty property)
-            => property.FindPropertyRelative("readReference");
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) 
+            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.readColor, fieldInfo);
+        
     }
-
+    
     [CustomPropertyDrawer(typeof(WriteVariable<>))]
-    internal class WriteVariableDrawer : ReferenceVariableDrawerBase
+    internal class WriteVariableDrawer : PropertyDrawer
     {
-        protected override SerializedProperty GetVariableProperty(SerializedProperty property)
-            => property.FindPropertyRelative("writeReference");
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.writeColor, fieldInfo);
     }
 }
 

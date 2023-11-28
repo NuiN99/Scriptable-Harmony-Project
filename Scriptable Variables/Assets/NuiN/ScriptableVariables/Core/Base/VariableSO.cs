@@ -1,13 +1,14 @@
-using NuiN.ScriptableVaraibles.Lifetime;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.Reflection;
 using NuiN.ScriptableVariables.Editor.Attributes;
+using NuiN.ScriptableVariables.References;
+using NuiN.ScriptableVariables.References.Base;
 using Component = UnityEngine.Component;
-using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.Base
 {
@@ -106,20 +107,31 @@ namespace NuiN.ScriptableVariables.Base
                 {
                     if (!component) continue;
 
-                    var serializedObject = new SerializedObject(component);
-                    var serializedProperty = serializedObject.GetIterator();
-                    while (serializedProperty.NextVisible(true))
-                    {
-                        if (serializedProperty.propertyType != SerializedPropertyType.ObjectReference || serializedProperty.objectReferenceValue != this) continue;
+                    Type componentType = component.GetType();
 
-                        string propertyName = serializedProperty.name.ToUpper();
+                    FieldInfo[] fields = componentType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+                    foreach (var field in fields)
+                    {
+                        Type type = field.FieldType;
+                        if (!type.IsGenericType) continue;
                         
-                        if (propertyName.Contains("READ")) readers.Add(component);
-                        else if (propertyName.Contains("WRITE")) writers.Add(component);
+                        bool isRead = type == typeof(ReadVariable<T>);
+                        bool isWrite = type == typeof(WriteVariable<T>);
+                        
+                        if(!isRead && !isWrite) continue;
+                        
+                        if (field.GetValue(component) is not VariableReferenceParentClass<T> variableField ||
+                            variableField.variable != this) continue;
+                        
+                        if (isRead) readers.Add(component);
+                        else writers.Add(component);
                     }
                 }
             }
+
         }
+
     }
     
     [Serializable]
@@ -127,13 +139,13 @@ namespace NuiN.ScriptableVariables.Base
     {
         [Header("Prefabs")]
         // ReSharper disable once InconsistentNaming
-        public List<Component> _writers = new();
+        public List<Component> _writers;
         // ReSharper disable once InconsistentNaming
-        public List<Component> _readers = new();
+        public List<Component> _readers;
         
         [Header("Scene")]
-        public List<Component> writers = new();
-        public List<Component> readers = new();
+        public List<Component> writers;
+        public List<Component> readers;
         
         public int TotalReferencesCount => _writers.Count + _readers.Count + writers.Count + readers.Count;
 

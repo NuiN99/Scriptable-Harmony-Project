@@ -1,35 +1,26 @@
 using System;
-using UnityEngine;
-using NuiN.ScriptableVariables.Base;
+using NuiN.ScriptableVariables.References.Base;
 using UnityEditor;
 
-namespace NuiN.ScriptableVariables
+namespace NuiN.ScriptableVariables.References
 {
     [Serializable]
-    public class WriteVariable<T>
+    public class WriteVariable<T> : VariableReferenceParentClass<T>
     {
-        [SerializeField] VariableSO<T> writeReference;
-        
         public T Val 
         {
-            get => writeReference.value;
+            get => variable.value;
             set
             {
-                if (writeReference.onChangeHistoryEvent) writeReference.onChangeHistory?.Invoke(writeReference.value, value);
-                writeReference.value = value;
-                if (writeReference.onChangeEvent) writeReference.onChange?.Invoke(writeReference.value);
+                if (variable.onChangeHistoryEvent) variable.onChangeHistory?.Invoke(variable.value, value);
+                variable.value = value;
+                if (variable.onChangeEvent) variable.onChange?.Invoke(variable.value);
                 
                 #if UNITY_EDITOR
                 // so that changes made through code are shown in version control
-                EditorUtility.SetDirty(writeReference);
+                EditorUtility.SetDirty(variable);
                 #endif
             }
         }
-        
-        public void AddOnChangeHandler(Action<T> onChange) => writeReference.onChange += onChange;
-        public void RemoveOnChangeHandler(Action<T> onChange) => writeReference.onChange -= onChange;
-
-        public void AddOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => writeReference.onChangeHistory += onChangeWithHistory; 
-        public void RemoveOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => writeReference.onChangeHistory -= onChangeWithHistory; 
     }
 }

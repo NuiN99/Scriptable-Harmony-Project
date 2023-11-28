@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NuiN.ScriptableVariables;
+using NuiN.ScriptableVariables.References;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +10,7 @@ public class DemoHealthbarUI : MonoBehaviour
     [Header("Read Variable")]
     [SerializeField] ReadVariable<float> maxHealth;
     [SerializeField] ReadVariable<float> curHealth;
+    [SerializeField] WriteVariable<float> test;
     
     [Header("UI")]
     [SerializeField] Slider healthSlider;

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace NuiN.ScriptableVaraibles.Lifetime
+namespace NuiN.ScriptableVariables.Base
 {
     internal class GameLoadedEvent : MonoBehaviour
     {
