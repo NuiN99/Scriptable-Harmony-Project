@@ -6,7 +6,7 @@ using UnityEditor;
 namespace NuiN.ScriptableVariables.Generator
 { 
     [CreateAssetMenu(menuName = "ScriptableVariables/Tools/VariableScriptGenerator", fileName = "Variable Script Generator")]
-    public class VariableScriptGeneratorSO : ScriptableObject
+    internal class VariableScriptGeneratorSO : ScriptableObject
     {
 #if UNITY_EDITOR
         
@@ -34,7 +34,7 @@ namespace NuiN.ScriptableVariables.Types
         [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
         
-        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/VariableTypes";
+        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/VariableTypes/Default";
         [SerializeField] string updatedPath;
         string _suffix;
 

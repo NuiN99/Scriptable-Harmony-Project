@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Editor
 {
-    public abstract class ReferenceVariableDrawerBase : PropertyDrawer
+    internal abstract class ReferenceVariableDrawerBase : PropertyDrawer
     {
         Color _readColor = new Color(0.7f, 0.9f, 0.95f, 1f);
         Color _writeColor = new Color(0.9f, 0.7f, 0.7f, 1f);
@@ -122,14 +122,14 @@ namespace NuiN.ScriptableVariables.Editor
     }
 
     [CustomPropertyDrawer(typeof(ReadVariable<>))]
-    public class ReadVariableDrawer : ReferenceVariableDrawerBase
+    internal class ReadVariableDrawer : ReferenceVariableDrawerBase
     {
         protected override SerializedProperty GetVariableProperty(SerializedProperty property)
             => property.FindPropertyRelative("readReference");
     }
 
     [CustomPropertyDrawer(typeof(WriteVariable<>))]
-    public class WriteVariableDrawer : ReferenceVariableDrawerBase
+    internal class WriteVariableDrawer : ReferenceVariableDrawerBase
     {
         protected override SerializedProperty GetVariableProperty(SerializedProperty property)
             => property.FindPropertyRelative("writeReference");

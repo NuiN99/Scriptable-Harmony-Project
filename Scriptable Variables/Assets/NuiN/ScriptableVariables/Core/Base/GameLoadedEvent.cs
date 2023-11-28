@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Helper
 {
-    public class GameLoadedEvent : MonoBehaviour
+    internal class GameLoadedEvent : MonoBehaviour
     {
         public static event Action OnGameLoaded;
 
