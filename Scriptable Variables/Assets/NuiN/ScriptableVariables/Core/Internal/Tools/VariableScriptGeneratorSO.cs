@@ -10,7 +10,7 @@ namespace NuiN.ScriptableVariables.Tools
     {
 #if UNITY_EDITOR
         
-        enum DataType { Normal, Array, List }
+        enum DataType { Normal, List }
         
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
@@ -34,7 +34,7 @@ namespace NuiN.ScriptableVariables.Types
         [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
         
-        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/VariableTypes/Default";
+        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes/";
         [SerializeField] string updatedPath;
         string _suffix;
 
@@ -91,7 +91,7 @@ namespace NuiN.ScriptableVariables.Types
             return dataType switch
             {
                 DataType.Normal => displayType,
-                DataType.Array => $"{displayType}Array",
+                //DataType.Array => $"{displayType}Array",
                 DataType.List => $"{displayType}List",
                 _ => displayType
             };
@@ -101,7 +101,7 @@ namespace NuiN.ScriptableVariables.Types
             return dataType switch
             {
                 DataType.Normal => actualType,
-                DataType.Array => $"{actualType}[]",
+                //DataType.Array => $"{actualType}[]",
                 DataType.List => $"List<{actualType}>",
                 _ => actualType
             };
@@ -112,7 +112,7 @@ namespace NuiN.ScriptableVariables.Types
             return dataType switch
             {
                 DataType.Normal => $"{constantPath}/{suffix}",
-                DataType.Array => $"{constantPath}/{suffix}",
+                //DataType.Array => $"{constantPath}/{suffix}",
                 DataType.List => $"{constantPath}/{suffix}",
                 _ => constantPath
             };
@@ -123,7 +123,7 @@ namespace NuiN.ScriptableVariables.Types
             return dataType switch
             {
                 DataType.Normal => $"Normal",
-                DataType.Array => $"Array",
+                //DataType.Array => $"Array",
                 DataType.List => $"List",
                 _ => constantPath
             };
@@ -161,17 +161,18 @@ namespace NuiN.ScriptableVariables.Types
     [CustomEditor(typeof(VariableScriptGeneratorSO))]
     internal class VariableCreatorSOEditor : UnityEditor.Editor
     {
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
             VariableScriptGeneratorSO scriptGenerator = (VariableScriptGeneratorSO)target;
             
-            GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
-            buttonStyle.normal.textColor = new Color(1, 0.3f, 0f, 1f);
-            buttonStyle.fontSize = 15;
-            buttonStyle.fontStyle = FontStyle.Bold;
-            
+            GUIStyle buttonStyle = new GUIStyle(GUI.skin.button)
+            {
+                normal = { textColor = new Color(1, 0.3f, 0f, 1f) },
+                fontSize = 15,
+                fontStyle = FontStyle.Bold
+            };
+
             GUI.backgroundColor = new Color(0.6f, 0.9f, 1f, 1f);
             
             if (GUILayout.Button("Generate New Variable Script", buttonStyle, GUILayout.Height(50)))
