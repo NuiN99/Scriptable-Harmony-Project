@@ -82,7 +82,7 @@ namespace NuiN.ScriptableVariables.Core.Base
 
         public void FindObjectsAndAssignReferences()
         {
-            objects.Clear();
+            if (objects == null || objects.IsNull) return;
             
             string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
             GameObject[] allPrefabs = guids.Select(guid =>
@@ -152,6 +152,8 @@ namespace NuiN.ScriptableVariables.Core.Base
         public List<Component> getters;
         
         public int TotalReferencesCount => _setters.Count + _getters.Count + setters.Count + getters.Count;
+
+        public bool IsNull => _setters == null || _getters == null || setters == null || getters == null;
 
         public void Clear()
         {
