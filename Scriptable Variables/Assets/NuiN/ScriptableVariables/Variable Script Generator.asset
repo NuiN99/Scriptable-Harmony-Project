@@ -13,15 +13,14 @@ MonoBehaviour:
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
   dataType: 0
-  generateForAllTypes: 0
-  displayType: Float
-  actualType: float
-  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Base;\r\n\r\nnamespace
-    NuiN.ScriptableVariables.Types\r\n{   \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/Normal/float\",
-    fileName = \"New Float Variable\")]\r\n    internal class FloatSO : VariableSO<float>
-    { }\r\n}"
+  displayType: Vector4Int
+  actualType: Vector4Int
+  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Core.Base;\r\n\r\nnamespace
+    NuiN.ScriptableVariables.Types\r\n{   \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes//Vector4Int\",
+    fileName = \"New Vector4Int Variable\")]\r\n    internal class Vector4IntSO :
+    ScriptableVariableBaseSO<Vector4Int> { }\r\n}"
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
-  constantPath: Assets/NuiN/ScriptableVariables/VariableTypes/Default
-  updatedPath: Assets/NuiN/ScriptableVariables/VariableTypes/Default/Normal
+  constantPath: Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes/
+  updatedPath: Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes/
