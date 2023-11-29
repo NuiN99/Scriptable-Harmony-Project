@@ -16,9 +16,12 @@ MonoBehaviour:
   generateForAllTypes: 0
   displayType: Float
   actualType: float
-  scriptPreview: 
+  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Base;\r\n\r\nnamespace
+    NuiN.ScriptableVariables.Types\r\n{   \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/Normal/float\",
+    fileName = \"New Float Variable\")]\r\n    internal class FloatSO : VariableSO<float>
+    { }\r\n}"
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
   constantPath: Assets/NuiN/ScriptableVariables/VariableTypes/Default
-  updatedPath: 
+  updatedPath: Assets/NuiN/ScriptableVariables/VariableTypes/Default/Normal

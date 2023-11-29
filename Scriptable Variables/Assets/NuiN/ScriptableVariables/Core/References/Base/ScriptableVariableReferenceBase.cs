@@ -23,11 +23,15 @@ namespace NuiN.ScriptableVariables.References.Base
 #if UNITY_EDITOR
     internal static class VariableReferenceGUIHelper
     {
-        public static Color getterColor = new Color(0.7f, 0.9f, 0.95f, 1f);
-        public static Color setterColor = new Color(0.9f, 0.7f, 0.7f, 1f);
+        public static readonly Color GetterColor = new(0.7f, 0.9f, 0.95f, 1f);
+        public static readonly Color SetterColor = new(0.9f, 0.7f, 0.7f, 1f);
+        static readonly Color OverlayColor = new(0.1f, 0.1f, 0.1f, 1);
         
         static SerializedProperty GetVariableProperty(SerializedProperty property)
             => property.FindPropertyRelative("variable");
+
+        public static float GetPropertyHeight(SerializedProperty property, GUIContent label) 
+            => EditorGUIUtility.singleLineHeight;
 
         public static void VarRefGUI(Rect position, SerializedProperty property, GUIContent label, Color color, FieldInfo fieldInfo)
         {
@@ -54,6 +58,7 @@ namespace NuiN.ScriptableVariables.References.Base
             {
                 DrawLabel();
                 DrawFindButton();
+                DrawPropertyField();
                 DrawHelpBox();
             }
             else
@@ -82,9 +87,10 @@ namespace NuiN.ScriptableVariables.References.Base
             void DrawHelpBox()
             {
                 position.y += EditorGUIUtility.singleLineHeight;
-                float labelWidth = EditorGUIUtility.labelWidth;
+                float labelWidth = EditorGUIUtility.labelWidth + 2.5f;
                 float helpBoxWidth = position.width - labelWidth - EditorGUIUtility.singleLineHeight; // Adjust width to make room for the button
                 Rect helpBoxPosition = new Rect(position.x + labelWidth, position.y - EditorGUIUtility.singleLineHeight, helpBoxWidth, EditorGUIUtility.singleLineHeight);
+                EditorGUI.DrawRect(helpBoxPosition, OverlayColor);
                 EditorGUI.HelpBox(helpBoxPosition, $"None ({typeName})", MessageType.Warning);
             }
 
@@ -124,15 +130,20 @@ namespace NuiN.ScriptableVariables.References.Base
     internal class GetVarDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) 
-            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.getterColor, fieldInfo);
-        
+            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.GetterColor, fieldInfo);
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) 
+            => VariableReferenceGUIHelper.GetPropertyHeight(property, label);
     }
     
     [CustomPropertyDrawer(typeof(SetVar<>))]
     internal class SetVarDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.setterColor, fieldInfo);
+            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.SetterColor, fieldInfo);
+        
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) 
+            => VariableReferenceGUIHelper.GetPropertyHeight(property, label);
     }
     #endif
 }
