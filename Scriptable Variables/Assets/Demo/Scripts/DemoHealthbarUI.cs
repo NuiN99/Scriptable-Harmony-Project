@@ -17,7 +17,6 @@ public class DemoHealthbarUI : MonoBehaviour
     void OnEnable()
     {
         curHealth.AddOnChangeHandler(OnHealthChanged);
-        
         curHealth.AddOnChangeHistoryHandler(OnHealthChangedHistory);
     }
     void OnDisable()
