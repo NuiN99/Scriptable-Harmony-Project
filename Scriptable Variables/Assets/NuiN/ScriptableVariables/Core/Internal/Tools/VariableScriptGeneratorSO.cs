@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.IO;
+using NuiN.ScriptableVariables.Core.Base;
 using UnityEditor;
 
 namespace NuiN.ScriptableVariables.Tools
@@ -10,20 +11,19 @@ namespace NuiN.ScriptableVariables.Tools
     {
 #if UNITY_EDITOR
         
-        enum DataType { Normal, List }
+        enum DataType { All, Normal, List }
         
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
-using NuiN.ScriptableVariables.Base;<Directives>
+using NuiN.ScriptableVariables.Core.Base;{Directives}
 
 namespace NuiN.ScriptableVariables.Types
 {   
-    [CreateAssetMenu(menuName = ""ScriptableVariables/<Suffix>/<ActualType>"", fileName = ""New <DisplayType> Variable"")]
-    internal class <DisplayType>SO : VariableSO<<ActualType>> { }
+    [CreateAssetMenu(menuName = ""ScriptableVariables/{Suffix}/{ActualType}"", fileName = ""New {DisplayType} Variable"")]
+    internal class {DisplayType}SO : {BaseClass}<{ActualType}> { }
 }";
         
         [SerializeField] DataType dataType;
-        [SerializeField] bool generateForAllTypes;
     
         [SerializeField] string displayType = "Float";
         [SerializeField] string actualType = "float";
@@ -47,12 +47,8 @@ namespace NuiN.ScriptableVariables.Types
 
         public void Generate()
         {
-            if (generateForAllTypes)
-            {
-                GenerateForAllTypes();
-                return;
-            }
-            GenerateScript();
+            if (dataType == DataType.All) GenerateForAllTypes();
+            else GenerateScript();
         }
         
         public void GenerateForAllTypes()
@@ -60,6 +56,7 @@ namespace NuiN.ScriptableVariables.Types
             DataType originalType = dataType;
             foreach (DataType type in Enum.GetValues(typeof(DataType)))
             {
+                if(type == DataType.All) continue;
                 dataType = type;
                 GenerateScript();
             }
@@ -78,10 +75,11 @@ namespace NuiN.ScriptableVariables.Types
         {
             string template = SCRIPT_TEMPLATE;
             
-            template = template.Replace("<ActualType>", AdjustedActualType());
-            template = template.Replace("<DisplayType>", AdjustedDisplayType());
-            template = template.Replace("<Directives>", GetRequiredDirectives());
-            template = template.Replace("<Suffix>", GetSuffix());
+            template = template.Replace("{ActualType}", AdjustedActualType());
+            template = template.Replace("{DisplayType}", AdjustedDisplayType());
+            template = template.Replace("{Directives}", GetRequiredDirectives());
+            template = template.Replace("{Suffix}", GetSuffix());
+            template = template.Replace("{BaseClass}", nameof(ScriptableVariableBaseSO<object>));
         
             return template;
         }
