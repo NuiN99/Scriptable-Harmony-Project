@@ -93,11 +93,11 @@ namespace NuiN.ScriptableVariables.Core.Base
             
             GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
 
-            AssignReferences(allPrefabs, ref objects._readers, ref objects._writers, true);
-            AssignReferences(allGameObjects, ref objects.readers, ref objects.writers, false);
+            AssignReferences(allPrefabs, ref objects._getters, ref objects._setters, true);
+            AssignReferences(allGameObjects, ref objects.getters, ref objects.setters, false);
         }
 
-        void AssignReferences(IEnumerable<GameObject> foundObjects, ref List<Component> readers, ref List<Component> writers, bool prefabs)
+        void AssignReferences(IEnumerable<GameObject> foundObjects, ref List<Component> getters, ref List<Component> setters, bool prefabs)
         {
             foreach (var obj in foundObjects)
             {
@@ -116,10 +116,10 @@ namespace NuiN.ScriptableVariables.Core.Base
                         Type type = field.FieldType;
                         if (!type.IsGenericType) continue;
                         
-                        bool isRead = type == typeof(ReadVariable<T>);
-                        bool isWrite = type == typeof(WriteVariable<T>);
+                        bool isGetter = type == typeof(GetVar<T>);
+                        bool isSetter = type == typeof(SetVar<T>);
                         
-                        if(!isRead && !isWrite) continue;
+                        if(!isGetter && !isSetter) continue;
 
                         if (field.GetValue(component) is not ScriptableVariableReferenceBase<T> variableField) continue;
                         
@@ -127,8 +127,8 @@ namespace NuiN.ScriptableVariables.Core.Base
 
                         if (variableFieldInfo == null || !ReferenceEquals(variableFieldInfo.GetValue(variableField), this)) continue;
                         
-                        if (isRead) readers.Add(component);
-                        else writers.Add(component);
+                        if (isGetter) getters.Add(component);
+                        else setters.Add(component);
                     }
                 }
             }
@@ -141,22 +141,22 @@ namespace NuiN.ScriptableVariables.Core.Base
     {
         [Header("Prefabs")]
         // ReSharper disable once InconsistentNaming
-        public List<Component> _writers;
+        public List<Component> _setters;
         // ReSharper disable once InconsistentNaming
-        public List<Component> _readers;
+        public List<Component> _getters;
         
         [Header("Scene")]
-        public List<Component> writers;
-        public List<Component> readers;
+        public List<Component> setters;
+        public List<Component> getters;
         
-        public int TotalReferencesCount => _writers.Count + _readers.Count + writers.Count + readers.Count;
+        public int TotalReferencesCount => _setters.Count + _getters.Count + setters.Count + getters.Count;
 
         public void Clear()
         {
-            _readers?.Clear();
-            _writers?.Clear();
-            readers?.Clear();
-            writers?.Clear();
+            _getters?.Clear();
+            _setters?.Clear();
+            getters?.Clear();
+            setters?.Clear();
         }
     }
     

@@ -4,8 +4,8 @@ using UnityEngine;
 public class DemoHealth : MonoBehaviour
 {
     [Header("Writers")]
-    [SerializeField] WriteVariable<float> maxHealth;
-    [SerializeField] WriteVariable<float> curHealth;
+    [SerializeField] SetVar<float> maxHealth;
+    [SerializeField] SetVar<float> curHealth;
 
     void Start()
     {

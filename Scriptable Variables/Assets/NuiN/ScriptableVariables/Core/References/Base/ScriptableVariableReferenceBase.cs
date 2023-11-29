@@ -23,8 +23,8 @@ namespace NuiN.ScriptableVariables.References.Base
 #if UNITY_EDITOR
     internal static class VariableReferenceGUIHelper
     {
-        public static Color readColor = new Color(0.7f, 0.9f, 0.95f, 1f);
-        public static Color writeColor = new Color(0.9f, 0.7f, 0.7f, 1f);
+        public static Color getterColor = new Color(0.7f, 0.9f, 0.95f, 1f);
+        public static Color setterColor = new Color(0.9f, 0.7f, 0.7f, 1f);
         
         static SerializedProperty GetVariableProperty(SerializedProperty property)
             => property.FindPropertyRelative("variable");
@@ -120,19 +120,19 @@ namespace NuiN.ScriptableVariables.References.Base
         }
     }
     
-    [CustomPropertyDrawer(typeof(ReadVariable<>))]
-    internal class ReadVariableDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(GetVar<>))]
+    internal class GetVarDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) 
-            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.readColor, fieldInfo);
+            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.getterColor, fieldInfo);
         
     }
     
-    [CustomPropertyDrawer(typeof(WriteVariable<>))]
-    internal class WriteVariableDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(SetVar<>))]
+    internal class SetVarDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.writeColor, fieldInfo);
+            => VariableReferenceGUIHelper.VarRefGUI(position, property, label, VariableReferenceGUIHelper.setterColor, fieldInfo);
     }
     #endif
 }
