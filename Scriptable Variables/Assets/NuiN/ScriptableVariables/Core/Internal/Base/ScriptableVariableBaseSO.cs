@@ -135,9 +135,9 @@ namespace NuiN.ScriptableVariables.Core.Base
                 }
             }
         }
-
+#endif
     }
-    
+#if UNITY_EDITOR
     [Serializable]
     internal class ReferenceLists
     {
@@ -161,6 +161,5 @@ namespace NuiN.ScriptableVariables.Core.Base
             setters?.Clear();
         }
     }
-    
 #endif
 }
