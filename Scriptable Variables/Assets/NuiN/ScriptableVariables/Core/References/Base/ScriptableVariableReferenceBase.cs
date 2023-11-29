@@ -13,11 +13,11 @@ namespace NuiN.ScriptableVariables.References.Base
     {
         [SerializeField] protected ScriptableVariableBaseSO<T> variable;
         
-        public void AddOnChangeHandler(Action<T> onChange) => variable.onChange += onChange;
-        public void RemoveOnChangeHandler(Action<T> onChange) => variable.onChange -= onChange;
+        public void SubOnChange(Action<T> onChange) => variable.onChange += onChange;
+        public void UnsubOnChange(Action<T> onChange) => variable.onChange -= onChange;
 
-        public void AddOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => variable.onChangeHistory += onChangeWithHistory;
-        public void RemoveOnChangeHistoryHandler(Action<T, T> onChangeWithHistory) => variable.onChangeHistory -= onChangeWithHistory;
+        public void SubOnChangeWithOld(Action<T, T> onChangeWithOld) => variable.onChangeWithOld += onChangeWithOld;
+        public void UnsubOnChangeWithOld(Action<T, T> onChangeWithOld) => variable.onChangeWithOld -= onChangeWithOld;
     }
     
 #if UNITY_EDITOR

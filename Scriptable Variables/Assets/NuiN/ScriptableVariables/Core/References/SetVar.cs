@@ -12,9 +12,9 @@ namespace NuiN.ScriptableVariables.References
             get => variable.value;
             set
             {
-                if (variable.onChangeHistoryEvent) variable.onChangeHistory?.Invoke(variable.value, value);
+                if (variable.OnChangeWithOld) variable.onChangeWithOld?.Invoke(variable.value, value);
                 variable.value = value;
-                if (variable.onChangeEvent) variable.onChange?.Invoke(variable.value);
+                if (variable.OnChange) variable.onChange?.Invoke(variable.value);
                 
                 #if UNITY_EDITOR
                 // so that changes made through code are shown in version control

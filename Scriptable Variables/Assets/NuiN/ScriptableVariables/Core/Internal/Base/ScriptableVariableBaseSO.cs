@@ -17,21 +17,20 @@ namespace NuiN.ScriptableVariables.Core.Base
 #if UNITY_EDITOR
         [SerializeField] [TextArea] string description; 
 #endif
-        
         T _startValue;
         public T value;
-        public bool onChangeEvent;
-        public bool onChangeHistoryEvent;
+        
+        [field: SerializeField, Header("Events")] public bool OnChange { get; private set; }
+        [field: SerializeField] public bool OnChangeWithOld { get; private set; }
+        
         public Action<T> onChange;
-        public Action<T,T> onChangeHistory;
+        public Action<T,T> onChangeWithOld;
         
         [Tooltip("Should it keep its value after loading a scene?")]
-        [SerializeField] bool resetOnSceneLoad = true;
-        
+        [SerializeField, Header("Value Persistence")] bool resetOnSceneLoad = true;
 #if UNITY_EDITOR
         [Tooltip("Should it keep its value after exiting Playmode?")]
         [SerializeField] bool resetOnExitPlaymode = true;
-
         
         [Header("References")]
         [ReadOnly] [SerializeField] int total;
@@ -66,7 +65,9 @@ namespace NuiN.ScriptableVariables.Core.Base
         }
         
 #if UNITY_EDITOR
-        
+
+        void Reset() => FindObjectsAndAssignReferences();
+
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (!resetOnExitPlaymode) return;
@@ -77,7 +78,6 @@ namespace NuiN.ScriptableVariables.Core.Base
         {
             if (Selection.activeObject != this) return;
             FindObjectsAndAssignReferences();
-            total = objects.TotalReferencesCount;
         }
 
         public void FindObjectsAndAssignReferences()
@@ -95,6 +95,8 @@ namespace NuiN.ScriptableVariables.Core.Base
 
             AssignReferences(allPrefabs, ref objects._getters, ref objects._setters, true);
             AssignReferences(allGameObjects, ref objects.getters, ref objects.setters, false);
+            
+            total = objects.TotalReferencesCount;
         }
 
         void AssignReferences(IEnumerable<GameObject> foundObjects, ref List<Component> getters, ref List<Component> setters, bool prefabs)

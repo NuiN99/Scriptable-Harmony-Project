@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79409f4465a801b44a3c0ea9c415e617, type: 3}
   m_Name: Player_MaxHealtth
   m_EditorClassIdentifier: 
-  description: 
+  description: The players maximum health
   value: 100
-  onChangeEvent: 0
-  onChangeHistoryEvent: 0
+  <OnChange>k__BackingField: 0
+  <OnChangeWithOld>k__BackingField: 0
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 4
   objects:
-    _writers:
+    _setters:
     - {fileID: 1699109869603293091, guid: 7aad103259e944144a52da8f1a8e52da, type: 3}
-    _readers:
+    _getters:
     - {fileID: 3719732740253014072, guid: 8df1235b16d13714caf41085b629313c, type: 3}
-    writers:
+    setters:
     - {fileID: 0}
-    readers:
+    getters:
     - {fileID: 0}

@@ -16,13 +16,13 @@ public class DemoHealthbarUI : MonoBehaviour
 
     void OnEnable()
     {
-        curHealth.AddOnChangeHandler(OnHealthChanged);
-        curHealth.AddOnChangeHistoryHandler(OnHealthChangedHistory);
+        curHealth.SubOnChange(OnHealthChanged);
+        curHealth.SubOnChangeWithOld(OnHealthChangedHistory);
     }
     void OnDisable()
     {
-        curHealth.RemoveOnChangeHandler(OnHealthChanged);
-        curHealth.RemoveOnChangeHistoryHandler(OnHealthChangedHistory);
+        curHealth.UnsubOnChange(OnHealthChanged);
+        curHealth.UnsubOnChangeWithOld(OnHealthChangedHistory);
     }
 
     void OnHealthChanged(float newHealth)
