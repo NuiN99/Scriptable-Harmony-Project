@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_MaxHealtth
   m_EditorClassIdentifier: 
   description: 
-  value: 0
+  value: 100
   <OnChange>k__BackingField: 0
   <OnChangeWithOld>k__BackingField: 0
   resetOnSceneLoad: 1
