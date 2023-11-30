@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79409f4465a801b44a3c0ea9c415e617, type: 3}
   m_Name: Player_MaxHealtth
   m_EditorClassIdentifier: 
-  description: The players maximum health
-  value: 100
+  description: 
+  value: 0
   <OnChange>k__BackingField: 0
   <OnChangeWithOld>k__BackingField: 0
   resetOnSceneLoad: 1
