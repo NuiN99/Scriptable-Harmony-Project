@@ -39,6 +39,7 @@ namespace NuiN.ScriptableVariables.Tools
         void OnGUI()
         {
             DrawSearchBar();
+            DrawTopBar();
             
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
@@ -47,8 +48,6 @@ namespace NuiN.ScriptableVariables.Tools
                 DrawNoResults();
                 return;
             }
-
-            DrawTopBar();
 
             DrawSearchResults();
             

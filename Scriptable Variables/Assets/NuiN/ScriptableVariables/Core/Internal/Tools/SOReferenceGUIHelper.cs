@@ -16,7 +16,7 @@ using UnityEngine;
         public static float GetPropertyHeight(SerializedProperty property, GUIContent label) 
             => EditorGUIUtility.singleLineHeight;
 
-        public static void VarRefGUI(Access accessType, string propertyName, Rect position, SerializedProperty property, GUIContent label, FieldInfo fieldInfo)
+        public static void VarRefGUI(SOType soType, Access accessType, string propertyName, Rect position, SerializedProperty property, GUIContent label, FieldInfo fieldInfo)
         {
             Color color = accessType switch { Access.Getter => GetterColor, Access.Setter => SetterColor, _ => Color.white };
             
@@ -27,17 +27,26 @@ using UnityEngine;
             Type variableType = fieldInfo.FieldType.GetGenericArguments()[0];
             string typeName = GetReadableTypeName(variableType);
 
-            if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
+            switch (soType)
             {
-                Type listType = variableType.GetGenericArguments()[0];
-                typeName = $"{GetReadableTypeName(listType)}List";
+                case SOType.RuntimeSet: typeName += "RuntimeSet"; break;
+                case SOType.RuntimeSingle: typeName += "RuntimeSingle"; break;
+                case SOType.Variable:
+                {
+                    if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
+                    {
+                        Type listType = variableType.GetGenericArguments()[0];
+                        typeName = $"{GetReadableTypeName(listType)}List";
+                    }
+                    else if (variableType.IsArray)
+                    {
+                        Type arrayType = variableType.GetElementType();
+                        typeName = $"{GetReadableTypeName(arrayType)}Array";
+                    }
+                    typeName = $"{typeName}SO";
+                    break;
+                }
             }
-            else if (variableType.IsArray)
-            {
-                Type arrayType = variableType.GetElementType();
-                typeName = $"{GetReadableTypeName(arrayType)}Array";
-            }
-            typeName = $"{typeName}SO";
             
             if (variableProperty.objectReferenceValue == null)
             {

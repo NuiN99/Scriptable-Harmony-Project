@@ -1,1 +1,0 @@
-public enum Access { Getter, Setter }
