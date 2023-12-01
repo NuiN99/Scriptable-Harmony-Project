@@ -29,9 +29,9 @@ namespace NuiN.ScriptableVariables.Core.Base
         [Tooltip("Should it keep its value after exiting Playmode?")]
         [SerializeField] bool resetOnExitPlaymode = true;
         
-        [Header("Components")]
+        [Header("References")]
         [ReadOnly] [SerializeField] int total;
-        [SerializeField] ReferenceLists objects;
+        [SerializeField] ReferenceLists<ScriptableVariableReferenceBase<T>> references = new(typeof(GetVar<T>), typeof(SetVar<T>), "variable");
 #endif
         
         void OnEnable()
@@ -63,7 +63,8 @@ namespace NuiN.ScriptableVariables.Core.Base
         
 #if UNITY_EDITOR
 
-        void Reset() => FindObjectsAndAssignReferences();
+        void Reset() => references.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
+
 
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
@@ -74,65 +75,7 @@ namespace NuiN.ScriptableVariables.Core.Base
         void OnSelectedInProjectWindow()
         {
             if (Selection.activeObject != this) return;
-            FindObjectsAndAssignReferences();
-        }
-
-        public void FindObjectsAndAssignReferences()
-        {
-            if (objects == null) return;
-            objects.Clear();
-            
-            string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
-            GameObject[] allPrefabs = guids.Select(guid =>
-            {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                return AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            }).ToArray();
-            
-            GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
-
-            AssignReferences(allPrefabs, ref objects.Getters, ref objects.Setters, true);
-            AssignReferences(allGameObjects, ref objects.getters, ref objects.setters, false);
-
-            if (objects.ListsAreNull) return;
-            total = objects.TotalReferencesCount;
-        }
-
-        void AssignReferences(IEnumerable<GameObject> foundObjects, ref List<Component> getters, ref List<Component> setters, bool prefabs)
-        {
-            foreach (var obj in foundObjects)
-            {
-                Component[] components = prefabs ? obj.GetComponentsInChildren<Component>() : obj.GetComponents<Component>();
-
-                foreach (var component in components)
-                {
-                    if (!component) continue;
-
-                    Type componentType = component.GetType();
-
-                    FieldInfo[] fields = componentType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-                    foreach (var field in fields)
-                    {
-                        Type type = field.FieldType;
-                        if (!type.IsGenericType) continue;
-                        
-                        bool isGetter = type == typeof(GetVar<T>);
-                        bool isSetter = type == typeof(SetVar<T>);
-                        
-                        if(!isGetter && !isSetter) continue;
-
-                        if (field.GetValue(component) is not ScriptableVariableReferenceBase<T> variableField) continue;
-                        
-                        FieldInfo variableFieldInfo = typeof(ScriptableVariableReferenceBase<T>).GetField("variable", BindingFlags.Instance | BindingFlags.NonPublic);
-
-                        if (variableFieldInfo == null || !ReferenceEquals(variableFieldInfo.GetValue(variableField), this)) continue;
-                        
-                        if (isGetter) getters.Add(component);
-                        else setters.Add(component);
-                    }
-                }
-            }
+            references.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
         }
 #endif
     }
