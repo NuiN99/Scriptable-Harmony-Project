@@ -9,7 +9,7 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 [Serializable]
-internal class ReferenceLists<TB>
+internal class ReferencesContainer<TB>
 {
     Type _getterType;
     Type _setterType;
@@ -29,7 +29,7 @@ internal class ReferenceLists<TB>
 
     public bool ListsAreNull => Setters == null || Getters == null || setters == null || getters == null;
 
-    public ReferenceLists(Type getterType, Type setterType, string fieldName)
+    public ReferencesContainer(Type getterType, Type setterType, string fieldName)
     {
         _getterType = getterType;
         _setterType = setterType;
