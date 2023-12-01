@@ -1,16 +1,13 @@
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using System;
-using System.Reflection;
-using NuiN.ScriptableVariables.Editor.Attributes;
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.References.Base;
-using Component = UnityEngine.Component;
+using NuiN.ScriptableVariables.Core.Editor;
+using NuiN.ScriptableVariables.Core.Helpers;
+using NuiN.ScriptableVariables.Core.ScriptableVariable.References;
+using NuiN.ScriptableVariables.Core.ScriptableVariable.References.Base;
 
-namespace NuiN.ScriptableVariables.Core.Base
+namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base
 {
     public class ScriptableVariableBaseSO<T> : ScriptableObject
     {

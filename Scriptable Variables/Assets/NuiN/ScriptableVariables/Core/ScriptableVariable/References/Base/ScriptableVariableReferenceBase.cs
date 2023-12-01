@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using NuiN.ScriptableVariables.Core.Base;
-using NuiN.ScriptableVariables.Tools;
-using UnityEditor;
+using NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.References.Base
+namespace NuiN.ScriptableVariables.Core.ScriptableVariable.References.Base
 {
     [Serializable]
     public class ScriptableVariableReferenceBase<T>

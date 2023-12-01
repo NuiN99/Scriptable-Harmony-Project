@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.Tools;
+using NuiN.ScriptableVariables.Core.Tools;
 using UnityEditor;
 using UnityEngine;
 
+namespace NuiN.ScriptableVariables.Core.Helpers
+{
 #if UNITY_EDITOR
     internal static class SOReferenceGUIHelper
     {
@@ -119,4 +120,5 @@ using UnityEngine;
             };
         }
     }
-    #endif
+#endif
+}

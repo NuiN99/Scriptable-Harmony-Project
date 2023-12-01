@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Editor.Attributes
+namespace NuiN.ScriptableVariables.Core.Editor
 {
     public class ReadOnlyAttribute : PropertyAttribute { }
 

@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 using System.IO;
-using NuiN.ScriptableVariables.Core.Base;
+using NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;
 using UnityEditor;
 
-namespace NuiN.ScriptableVariables.Tools
+namespace NuiN.ScriptableVariables.Core.Tools
 { 
     [CreateAssetMenu(menuName = "ScriptableVariables/Tools/VariableScriptGenerator", fileName = "Variable Script Generator")]
     internal class ScriptableObjectClassGeneratorSO : ScriptableObject

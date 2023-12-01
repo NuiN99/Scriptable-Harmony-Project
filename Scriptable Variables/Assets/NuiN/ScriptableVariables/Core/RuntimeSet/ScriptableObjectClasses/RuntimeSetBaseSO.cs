@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
-using NuiN.ScriptableVariables.Editor.Attributes;
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.References.Base;
+using NuiN.ScriptableVariables.Core.Editor;
+using NuiN.ScriptableVariables.Core.Helpers;
+using NuiN.ScriptableVariables.Core.RuntimeSet.References;
+using NuiN.ScriptableVariables.Core.RuntimeSet.References.Base;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-public class RuntimeSetBaseSO<T> : ScriptableObject where T : Object
+namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base
+{
+    public class RuntimeSetBaseSO<T> : ScriptableObject where T : Object
 {
         [SerializeField] [TextArea] string description;
         public List<T> items;
@@ -82,4 +85,7 @@ public class RuntimeSetBaseSO<T> : ScriptableObject where T : Object
         }
 #endif
     }
+
+}
+
 

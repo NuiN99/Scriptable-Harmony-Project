@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using NuiN.ScriptableVariables.Core.Base;
-using NuiN.ScriptableVariables.Tools;
-using UnityEditor;
+using NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.References.Base
+namespace NuiN.ScriptableVariables.Core.RuntimeSet.References.Base
 {
     [Serializable]
     public class RuntimeSetReferenceBase<T> where T : Object

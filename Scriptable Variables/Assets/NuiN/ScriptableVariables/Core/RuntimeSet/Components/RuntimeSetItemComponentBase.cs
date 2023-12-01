@@ -1,43 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+using NuiN.ScriptableVariables.Core.RuntimeSet.References;
 using UnityEngine;
 
-public class RuntimeSetItemComponentBase<T> : MonoBehaviour where T : Object
+namespace NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base
 {
-    enum Type{ OnEnableOnDisable, OnAwakeOnDestroy }
-    
-    [SerializeField] T thisObject;
-    
-    [SerializeField] RuntimeSetWriter<T> runtimeSet;
-    [SerializeField] Type lifetimeType;
-
-    [SerializeField] bool invokeOnAdd = true;
-    [SerializeField] bool invokeOnRemove = true;
-    
-    void OnEnable() => AddToSet(Type.OnEnableOnDisable);
-    void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
-
-    void Awake() => AddToSet(Type.OnAwakeOnDestroy);
-    void OnDestroy() => RemoveFromSet(Type.OnAwakeOnDestroy);
-
-    void AddToSet(Type type)
+    public class RuntimeSetItemComponentBase<T> : MonoBehaviour where T : Object
     {
-        if (SelfDestructIfNullObject(thisObject)) return;
-        if (lifetimeType != type) return;
-        runtimeSet.Add(thisObject, invokeOnAdd);
-    }
-    void RemoveFromSet(Type type)
-    {
-        if (lifetimeType != type) return;
-        runtimeSet.Remove(thisObject, invokeOnRemove);
-    }
+        enum Type{ OnEnableOnDisable, OnAwakeOnDestroy }
+    
+        [SerializeField] T thisObject;
+    
+        [SerializeField] RuntimeSetWriter<T> runtimeSet;
+        [SerializeField] Type lifetimeType;
 
-    bool SelfDestructIfNullObject(T obj)
-    {
-        if (obj != null) return false;
+        [SerializeField] bool invokeOnAdd = true;
+        [SerializeField] bool invokeOnRemove = true;
+    
+        void OnEnable() => AddToSet(Type.OnEnableOnDisable);
+        void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
+
+        void Awake() => AddToSet(Type.OnAwakeOnDestroy);
+        void OnDestroy() => RemoveFromSet(Type.OnAwakeOnDestroy);
+
+        void AddToSet(Type type)
+        {
+            if (SelfDestructIfNullObject(thisObject)) return;
+            if (lifetimeType != type) return;
+            runtimeSet.Add(thisObject, invokeOnAdd);
+        }
+        void RemoveFromSet(Type type)
+        {
+            if (lifetimeType != type) return;
+            runtimeSet.Remove(thisObject, invokeOnRemove);
+        }
+
+        bool SelfDestructIfNullObject(T obj)
+        {
+            if (obj != null) return false;
         
-        Debug.LogError($"Self Destructing: Component of type {typeof(T).Name} not found on {gameObject.name}", gameObject);
-        Destroy(this);
-        return true;
+            Debug.LogError($"Self Destructing: Component of type {typeof(T).Name} not found on {gameObject.name}", gameObject);
+            Destroy(this);
+            return true;
+        }
     }
 }
+
