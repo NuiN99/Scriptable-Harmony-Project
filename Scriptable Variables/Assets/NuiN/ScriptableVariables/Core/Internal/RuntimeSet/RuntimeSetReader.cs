@@ -7,7 +7,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Serializable]
-public class ReadSet<T> : RuntimeSetReferenceBase<T> where T : Object
+public class RuntimeSetReader<T> : RuntimeSetReferenceBase<T> where T : Object
 {
     public ReadOnlyCollection<T> Items => runtimeSet.items.AsReadOnly();
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 [Serializable]
-public class WriteSet<T> : RuntimeSetReferenceBase<T> where T : Object
+public class RuntimeSetWriter<T> : RuntimeSetReferenceBase<T> where T : Object
 {
     public List<T> Items => runtimeSet.items;
     

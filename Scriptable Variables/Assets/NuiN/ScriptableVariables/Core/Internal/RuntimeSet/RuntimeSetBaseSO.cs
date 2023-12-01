@@ -29,7 +29,9 @@ public class RuntimeSetBaseSO<T> : ScriptableObject where T : Object
 #if UNITY_EDITOR
         [Header("References")]
         [ReadOnly] [SerializeField] int total;
-        [SerializeField] ReferencesContainer<ScriptableVariableReferenceBase<T>> references = new(typeof(GetVar<T>), typeof(SetVar<T>), "variable");
+
+        [SerializeField] ReferencesContainer<RuntimeSetReferenceBase<T>> references =
+            new(typeof(RuntimeSetReader<T>), typeof(RuntimeSetWriter<T>), "runtimeSet");
 #endif
         
         void OnEnable()

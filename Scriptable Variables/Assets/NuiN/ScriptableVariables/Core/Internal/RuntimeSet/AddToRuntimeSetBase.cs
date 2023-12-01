@@ -8,7 +8,7 @@ public class AddToRuntimeSetBase<T> : MonoBehaviour where T : Object
     
     [SerializeField] T thisObject;
     
-    [SerializeField] WriteSet<T> runtimeSet;
+    [SerializeField] RuntimeSetWriter<T> runtimeSet;
     [SerializeField] Type lifetimeType;
 
     [SerializeField] bool invokeOnAdd = true;
