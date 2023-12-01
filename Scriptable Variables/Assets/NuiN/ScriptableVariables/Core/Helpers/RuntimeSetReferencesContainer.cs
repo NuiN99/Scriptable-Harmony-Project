@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,39 +9,31 @@ namespace NuiN.ScriptableVariables.Core.Helpers
 {
 #if UNITY_EDITOR
     [Serializable]
-    internal class ReferencesContainer<TB>
+    internal class RuntimeSetReferencesContainer
     {
-        Type _getterType;
-        Type _setterType;
         string _fieldName;
-        
-        [Header("Prefabs")]
-        // ReSharper disable once InconsistentNaming
-        public List<Component> Setters;
-        // ReSharper disable once InconsistentNaming
-        public List<Component> Getters;
-            
-        [Header("Scene")]
-        public List<Component> setters;
-        public List<Component> getters;
-            
-        public int TotalReferencesCount => Setters.Count + Getters.Count + setters.Count + getters.Count;
 
-        public bool ListsAreNull => Setters == null || Getters == null || setters == null || getters == null;
+        public List<Component> prefabItems;
+        public List<Component> sceneItems;
 
-        public ReferencesContainer(Type getterType, Type setterType, string fieldName)
+        public int TotalReferencesCount => prefabItems.Count + sceneItems.Count;
+
+        public bool ListsAreNull => prefabItems == null || sceneItems == null;
+
+        Type _baseType;
+        Type _writerType;
+
+        public RuntimeSetReferencesContainer(string fieldName, Type writerType, Type baseType)
         {
-            _getterType = getterType;
-            _setterType = setterType;
+            _writerType = writerType;
+            _baseType = baseType;
             _fieldName = fieldName;
         }
 
         public void Clear()
         {
-            Getters?.Clear();
-            Setters?.Clear();
-            getters?.Clear();
-            setters?.Clear();
+            prefabItems?.Clear();
+            sceneItems?.Clear();
         }
         
         public void FindObjectsAndAssignReferences(object variableCaller, IEnumerable<GameObject> sceneObjs, out int count)
@@ -73,24 +65,21 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                     if (!component) continue;
 
                     Type componentType = component.GetType();
-
-                    FieldInfo[] fields =
-                        componentType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    Type baseType = componentType.BaseType;
+                    if (baseType == null || baseType != _baseType) continue;
+                    
+                    FieldInfo[] fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
                     foreach (var field in fields)
                     {
                         Type type = field.FieldType;
                         if (!type.IsGenericType) continue;
 
-                        bool isGetter = type == _getterType;
-                        bool isSetter = type == _setterType;
-
-                        if (!isGetter && !isSetter) continue;
-
-                        if (field.GetValue(component) is not TB variableField) continue;
+                        object variableField = field.GetValue(component);
+                        if (!(variableField != null && _writerType.IsInstanceOfType(variableField))) continue;
 
                         FieldInfo variableFieldInfo =
-                            typeof(TB).GetField(_fieldName,
+                            _writerType.GetField(_fieldName,
                                 BindingFlags.Instance | BindingFlags.NonPublic);
 
                         if (variableFieldInfo == null ||
@@ -98,13 +87,11 @@ namespace NuiN.ScriptableVariables.Core.Helpers
 
                         if (prefabs)
                         {
-                            if (isGetter) Getters.Add(component);
-                            else Setters.Add(component);
+                            prefabItems.Add(component);
                         }
                         else
                         {
-                            if (isGetter) getters.Add(component);
-                            else setters.Add(component);
+                            sceneItems.Add(component);
                         }
                     }
                 }

@@ -8,7 +8,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.References
     [Serializable]
     public class RuntimeSetWriter<T> : RuntimeSetReferenceBase<T> where T : Object
     {
-        public List<T> Items => runtimeSet.items;
+        public List<T> Items => runtimeSet.runtimeSet;
     
         public void Add(T item, bool invokeActions = true, bool returnIfContains = true)
         {

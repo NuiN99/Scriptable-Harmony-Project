@@ -8,6 +8,6 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.References
     [Serializable]
     public class RuntimeSetReader<T> : RuntimeSetReferenceBase<T> where T : Object
     {
-        public ReadOnlyCollection<T> Items => runtimeSet.items.AsReadOnly();
+        public ReadOnlyCollection<T> Items => runtimeSet.runtimeSet.AsReadOnly();
     }
 }

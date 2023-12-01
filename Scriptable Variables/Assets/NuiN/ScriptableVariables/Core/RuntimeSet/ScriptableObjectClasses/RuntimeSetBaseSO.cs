@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NuiN.ScriptableVariables.Core.Editor;
 using NuiN.ScriptableVariables.Core.Helpers;
+using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.Core.RuntimeSet.References;
 using NuiN.ScriptableVariables.Core.RuntimeSet.References.Base;
 using UnityEditor;
@@ -12,9 +13,10 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base
 {
     public class RuntimeSetBaseSO<T> : ScriptableObject where T : Object
-{
+    {
         [SerializeField] [TextArea] string description;
-        public List<T> items;
+        
+        public List<T> runtimeSet = new();
 
         public Action<T> onAdd;
         public Action<List<T>, T> onAddWithOld;
@@ -30,10 +32,13 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base
         [SerializeField, Header("Value Persistence")] bool resetOnSceneLoad = true;
         
 #if UNITY_EDITOR
-        [Header("References")]
+        [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
-
-        [SerializeField] ReferencesContainer<RuntimeSetReferenceBase<T>> references =
+        
+        [SerializeField] RuntimeSetReferencesContainer setItems = 
+            new("runtimeSet", typeof(RuntimeSetWriter<T>), typeof(RuntimeSetItemComponentBase<T>));
+        
+        [SerializeField] ReadWriteReferencesContainer<RuntimeSetWriter<T>> readersAndWriters = 
             new(typeof(RuntimeSetReader<T>), typeof(RuntimeSetWriter<T>), "runtimeSet");
 #endif
         
@@ -63,25 +68,35 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base
             }
             
             if (!resetOnSceneLoad) return;
-            items.Clear();
+            runtimeSet.Clear();
         }
         
 #if UNITY_EDITOR
-
-        void Reset() => references.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
         
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (state != PlayModeStateChange.EnteredEditMode) return;
                 
-            items.Clear();
+            runtimeSet.Clear();
             _loadedFirstScene = false;
         }
 
+        void Reset() => AssignDebugReferences();
+        
         void OnSelectedInProjectWindow()
         {
             if (Selection.activeObject != this) return;
-            references.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
+            AssignDebugReferences();
+        }
+
+        void AssignDebugReferences()
+        {
+            GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+            readersAndWriters.FindObjectsAndAssignReferences(this, sceneObjs, out int readWriteCount);
+            setItems.FindObjectsAndAssignReferences(this, sceneObjs, out int setItemsCount);
+            
+            total = readWriteCount + setItemsCount;
         }
 #endif
     }
