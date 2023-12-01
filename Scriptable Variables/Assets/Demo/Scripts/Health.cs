@@ -2,7 +2,7 @@ using System;
 using NuiN.ScriptableVariables.References;
 using UnityEngine;
 
-public class DemoHealth : MonoBehaviour
+public class Health : MonoBehaviour
 {
     [Header("Writers")]
     [SerializeField] SetVar<float> maxHealth;

@@ -5,7 +5,7 @@ using NuiN.ScriptableVariables.References;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DemoHealthbarUI : MonoBehaviour
+public class HealthbarUI : MonoBehaviour
 {
     [Header("Readers")]
     [SerializeField] GetVar<float> maxHealth;
