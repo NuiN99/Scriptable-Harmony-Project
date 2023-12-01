@@ -9,8 +9,9 @@ namespace NuiN.ScriptableVariables.Core.Helpers
 {
 #if UNITY_EDITOR
     [Serializable]
-    internal class ReadWriteReferencesContainer<TB>
+    internal class ReadWriteReferencesContainer
     {
+        Type _baseType;
         Type _getterType;
         Type _setterType;
         string _fieldName;
@@ -29,8 +30,9 @@ namespace NuiN.ScriptableVariables.Core.Helpers
 
         public bool ListsAreNull => Setters == null || Getters == null || setters == null || getters == null;
 
-        public ReadWriteReferencesContainer(Type getterType, Type setterType, string fieldName)
+        public ReadWriteReferencesContainer(Type baseType, Type getterType, Type setterType, string fieldName)
         {
+            _baseType = baseType;
             _getterType = getterType;
             _setterType = setterType;
             _fieldName = fieldName;
@@ -86,11 +88,12 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                         bool isSetter = type == _setterType;
 
                         if (!isGetter && !isSetter) continue;
-
-                        if (field.GetValue(component) is not TB variableField) continue;
+                        
+                        object variableField = field.GetValue(component);
+                        if (variableField == null || (!_getterType.IsInstanceOfType(variableField) && !_setterType.IsInstanceOfType(variableField))) continue;
 
                         FieldInfo variableFieldInfo =
-                            typeof(TB).GetField(_fieldName,
+                            _baseType.GetField(_fieldName,
                                 BindingFlags.Instance | BindingFlags.NonPublic);
 
                         if (variableFieldInfo == null ||

@@ -76,7 +76,7 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                         if (!type.IsGenericType) continue;
 
                         object variableField = field.GetValue(component);
-                        if (!(variableField != null && _writerType.IsInstanceOfType(variableField))) continue;
+                        if (variableField == null || !_writerType.IsInstanceOfType(variableField)) continue;
 
                         FieldInfo variableFieldInfo =
                             _writerType.GetField(_fieldName,

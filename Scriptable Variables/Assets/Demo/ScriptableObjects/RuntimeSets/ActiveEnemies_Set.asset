@@ -13,10 +13,20 @@ MonoBehaviour:
   m_Name: ActiveEnemies_Set
   m_EditorClassIdentifier: 
   description: 
-  items: []
+  runtimeSet: []
   resetOnSceneLoad: 1
-  total: 0
-  references:
+  total: 7
+  setItems:
+    prefabItems:
+    - {fileID: 94546063273982706, guid: 2f574bdb8ba5f12448c4045694130848, type: 3}
+    sceneItems:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  readersAndWriters:
     Setters: []
     Getters: []
     setters: []
