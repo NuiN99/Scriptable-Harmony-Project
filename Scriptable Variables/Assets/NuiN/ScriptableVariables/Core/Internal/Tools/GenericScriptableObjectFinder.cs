@@ -10,20 +10,20 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.Tools
 {
-    internal class ScriptableVariableFinder : EditorWindow
+    internal class GenericScriptableObjectFinder : EditorWindow
     {
         List<Object> _foundObjects = new();
         Vector2 _scrollPosition;
         static string _typeName;
         static SerializedProperty _property;
         string _searchFilter;
-        static ScriptableVariableFinder _windowInstance;
+        static GenericScriptableObjectFinder _windowInstance;
 
         public static void OpenFindWindow(string typeName, SerializedProperty property)
         {
             _property = property;
             _typeName = typeName;
-            _windowInstance = GetWindow<ScriptableVariableFinder>("Scriptable Variable Finder");
+            _windowInstance = GetWindow<GenericScriptableObjectFinder>("Scriptable Object Finder");
 
             _windowInstance.FindObjects();
         }
@@ -98,7 +98,7 @@ namespace NuiN.ScriptableVariables.Tools
                     fontSize = 14,
                     fontStyle = FontStyle.Bold
                 };
-                EditorGUI.LabelField(messageRect, $"No {_typeName} Variables Found", messageStyle);
+                EditorGUI.LabelField(messageRect, $"No {_typeName} Objects Found", messageStyle);
                 EditorGUILayout.EndScrollView();
             }
 

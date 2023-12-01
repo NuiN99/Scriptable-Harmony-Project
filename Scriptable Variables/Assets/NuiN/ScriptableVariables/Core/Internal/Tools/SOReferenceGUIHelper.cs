@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
-    internal static class VariableReferenceGUIHelper
+    internal static class SOReferenceGUIHelper
     {
         static readonly Color GetterColor = new(0.7f, 0.9f, 0.95f, 1f);
         static readonly Color SetterColor = new(0.9f, 0.7f, 0.7f, 1f);
@@ -64,7 +64,7 @@ using UnityEngine;
                 GUI.backgroundColor = new Color(0.4f,0.4f,0.4f, 1);
                 if (GUI.Button(buttonPosition, buttonText, buttonStyle))
                 {
-                    ScriptableVariableFinder.OpenFindWindow(typeName, variableProperty);
+                    GenericScriptableObjectFinder.OpenFindWindow(typeName, variableProperty);
                 }
                 GUI.backgroundColor = originalColor;
             }
