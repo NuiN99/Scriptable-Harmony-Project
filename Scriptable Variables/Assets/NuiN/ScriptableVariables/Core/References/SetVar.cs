@@ -9,7 +9,7 @@ namespace NuiN.ScriptableVariables.References
     {
         public T Val => variable.value;
 
-        public void Set(T value, bool invokeEvents = true)
+        public void Set(T value, bool invokeActions = true)
         {
             T oldValue = variable.value;
             variable.value = value;
@@ -18,7 +18,7 @@ namespace NuiN.ScriptableVariables.References
             EditorUtility.SetDirty(variable);
             #endif
 
-            if (!invokeEvents) return;
+            if (!invokeActions) return;
             
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
