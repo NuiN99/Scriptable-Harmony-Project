@@ -7,20 +7,21 @@ namespace NuiN.ScriptableVariables.References
     [Serializable]
     public class SetVar<T> : ScriptableVariableReferenceBase<T>
     {
-        public T Val 
+        public T Val => variable.value;
+
+        public void Set(T value, bool invokeEvents = true)
         {
-            get => variable.value;
-            set
-            {
-                if (variable.OnChangeWithOld) variable.onChangeWithOld?.Invoke(variable.value, value);
-                variable.value = value;
-                if (variable.OnChange) variable.onChange?.Invoke(variable.value);
-                
-                #if UNITY_EDITOR
-                // so that changes made through code are shown in version control
-                EditorUtility.SetDirty(variable);
-                #endif
-            }
+            T oldValue = variable.value;
+            variable.value = value;
+            
+            #if UNITY_EDITOR
+            EditorUtility.SetDirty(variable);
+            #endif
+
+            if (!invokeEvents) return;
+            
+            variable.onChangeWithOld?.Invoke(oldValue, value);
+            variable.onChange?.Invoke(value);
         }
     }
 }

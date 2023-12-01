@@ -20,9 +20,6 @@ namespace NuiN.ScriptableVariables.Core.Base
         T _startValue;
         public T value;
         
-        [field: SerializeField, Header("Events")] public bool OnChange { get; private set; }
-        [field: SerializeField] public bool OnChangeWithOld { get; private set; }
-        
         public Action<T> onChange;
         public Action<T,T> onChangeWithOld;
         

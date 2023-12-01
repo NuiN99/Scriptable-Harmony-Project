@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: The players current health
   value: 0
-  <OnChange>k__BackingField: 1
-  <OnChangeWithOld>k__BackingField: 1
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 4

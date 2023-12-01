@@ -17,22 +17,15 @@ public class DemoHealthbarUI : MonoBehaviour
     void OnEnable()
     {
         curHealth.SubOnChange(OnHealthChanged);
-        curHealth.SubOnChangeWithOld(OnHealthChangedHistory);
     }
     void OnDisable()
     {
         curHealth.UnsubOnChange(OnHealthChanged);
-        curHealth.UnsubOnChangeWithOld(OnHealthChangedHistory);
     }
 
     void OnHealthChanged(float newHealth)
     {
         float sliderVal = newHealth / maxHealth.Val;
         healthSlider.value = sliderVal;
-    }
-
-    void OnHealthChangedHistory(float oldHealth, float newHealth)
-    {
-        Debug.Log($"Old Health: {oldHealth}\nNew Health: {newHealth}");
     }
 }

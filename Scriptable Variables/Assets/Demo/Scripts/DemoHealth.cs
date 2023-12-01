@@ -9,12 +9,12 @@ public class DemoHealth : MonoBehaviour
 
     void Start()
     {
-        curHealth.Val = maxHealth.Val;
+        curHealth.Set(maxHealth.Val);
     }
 
     public void TakeDamage(float amount)
     {
-        curHealth.Val = Mathf.Max(curHealth.Val - amount, 0);
+        curHealth.Set(Mathf.Max(curHealth.Val - amount, 0));
     }
 
     // temp for testing
