@@ -29,7 +29,7 @@ namespace NuiN.ScriptableVariables.Core.Base
         [Tooltip("Should it keep its value after exiting Playmode?")]
         [SerializeField] bool resetOnExitPlaymode = true;
         
-        [Header("References")]
+        [Header("Components")]
         [ReadOnly] [SerializeField] int total;
         [SerializeField] ReferenceLists objects;
 #endif
@@ -91,7 +91,7 @@ namespace NuiN.ScriptableVariables.Core.Base
             
             GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
 
-            AssignReferences(allPrefabs, ref objects._getters, ref objects._setters, true);
+            AssignReferences(allPrefabs, ref objects.Getters, ref objects.Setters, true);
             AssignReferences(allGameObjects, ref objects.getters, ref objects.setters, false);
 
             if (objects.ListsAreNull) return;
@@ -136,31 +136,4 @@ namespace NuiN.ScriptableVariables.Core.Base
         }
 #endif
     }
-#if UNITY_EDITOR
-    [Serializable]
-    internal class ReferenceLists
-    {
-        [Header("Prefabs")]
-        // ReSharper disable once InconsistentNaming
-        public List<Component> _setters;
-        // ReSharper disable once InconsistentNaming
-        public List<Component> _getters;
-        
-        [Header("Scene")]
-        public List<Component> setters;
-        public List<Component> getters;
-        
-        public int TotalReferencesCount => _setters.Count + _getters.Count + setters.Count + getters.Count;
-
-        public bool ListsAreNull => _setters == null || _getters == null || setters == null || getters == null;
-
-        public void Clear()
-        {
-            _getters?.Clear();
-            _setters?.Clear();
-            getters?.Clear();
-            setters?.Clear();
-        }
-    }
-#endif
 }
