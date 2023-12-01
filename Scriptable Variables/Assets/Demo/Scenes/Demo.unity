@@ -485,7 +485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySet:
     runtimeSet: {fileID: 11400000, guid: 08be0a693be88fb46af239925ed022e5, type: 2}
-  mousePos:
+  mousePosition:
     variable: {fileID: 11400000, guid: 86785aa3398081d41a2afbdbb8f6109d, type: 2}
 --- !u!4 &1254136631
 Transform:

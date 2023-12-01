@@ -31,7 +31,7 @@ using UnityEngine;
             {
                 case SOType.RuntimeSet: typeName += "RuntimeSet"; break;
                 case SOType.RuntimeSingle: typeName += "RuntimeSingle"; break;
-                case SOType.Variable:
+                case SOType.ScriptableVariable:
                 {
                     if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
                     {
@@ -73,7 +73,7 @@ using UnityEngine;
                 GUI.backgroundColor = new Color(0.4f,0.4f,0.4f, 1);
                 if (GUI.Button(buttonPosition, buttonText, buttonStyle))
                 {
-                    GenericScriptableObjectFinder.OpenFindWindow(typeName, variableProperty);
+                    ScriptableObjectFindWindow.OpenFindWindow(typeName, variableProperty);
                 }
                 GUI.backgroundColor = originalColor;
             }

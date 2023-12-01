@@ -9,14 +9,14 @@ public class ClosestEnemyToMouseSetter : MonoBehaviour
     GameObject _closestEnemy;
 
     [SerializeField] RuntimeSetWriter<GameObject> enemySet;
-    [SerializeField] VariableReader<Vector2> mousePos;
+    [SerializeField] VariableReader<Vector2> mousePosition;
 
     void Update()
     {
         float closestDist = float.MaxValue;
         foreach (GameObject enemy in enemySet.Items)
         {
-            float distFromMouse = Vector3.Distance(mousePos.Val, enemy.transform.position);
+            float distFromMouse = Vector3.Distance(mousePosition.Val, enemy.transform.position);
             if (distFromMouse >= closestDist) continue;
             
             closestDist = distFromMouse;

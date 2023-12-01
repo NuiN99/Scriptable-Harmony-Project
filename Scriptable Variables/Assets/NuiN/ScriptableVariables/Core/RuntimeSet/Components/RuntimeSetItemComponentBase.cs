@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddToRuntimeSetBase<T> : MonoBehaviour where T : Object
+public class RuntimeSetItemComponentBase<T> : MonoBehaviour where T : Object
 {
     enum Type{ OnEnableOnDisable, OnAwakeOnDestroy }
     

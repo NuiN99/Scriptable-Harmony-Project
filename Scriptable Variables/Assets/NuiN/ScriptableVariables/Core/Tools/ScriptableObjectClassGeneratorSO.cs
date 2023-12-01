@@ -7,7 +7,7 @@ using UnityEditor;
 namespace NuiN.ScriptableVariables.Tools
 { 
     [CreateAssetMenu(menuName = "ScriptableVariables/Tools/VariableScriptGenerator", fileName = "Variable Script Generator")]
-    internal class VariableScriptGeneratorSO : ScriptableObject
+    internal class ScriptableObjectClassGeneratorSO : ScriptableObject
     {
 #if UNITY_EDITOR
         
@@ -156,13 +156,13 @@ namespace NuiN.ScriptableVariables.Types
 #endif
     }
 #if UNITY_EDITOR
-    [CustomEditor(typeof(VariableScriptGeneratorSO))]
+    [CustomEditor(typeof(ScriptableObjectClassGeneratorSO))]
     internal class VariableCreatorSOEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            VariableScriptGeneratorSO scriptGenerator = (VariableScriptGeneratorSO)target;
+            ScriptableObjectClassGeneratorSO scriptGenerator = (ScriptableObjectClassGeneratorSO)target;
             
             GUIStyle buttonStyle = new GUIStyle(GUI.skin.button)
             {
