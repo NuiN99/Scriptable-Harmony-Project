@@ -100,4 +100,6 @@ MonoBehaviour:
   thisObject: {fileID: 8798248756940286048}
   runtimeSet:
     runtimeSet: {fileID: 11400000, guid: 08be0a693be88fb46af239925ed022e5, type: 2}
-  lifetimeType: 1
+  lifetimeType: 0
+  invokeOnAdd: 1
+  invokeOnRemove: 1

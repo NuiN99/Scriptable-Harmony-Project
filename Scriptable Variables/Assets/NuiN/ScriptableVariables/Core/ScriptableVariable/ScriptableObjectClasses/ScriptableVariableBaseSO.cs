@@ -61,9 +61,8 @@ namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClass
         
 #if UNITY_EDITOR
 
-        void Reset() => readersAndWriters.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
-
-
+        void Reset() => AssignDebugReferences();
+        
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (!resetOnExitPlaymode) return;
@@ -72,8 +71,15 @@ namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClass
 
         void OnSelectedInProjectWindow()
         {
+            readersAndWriters?.Clear();
             if (Selection.activeObject != this) return;
-            readersAndWriters.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
+            AssignDebugReferences();
+        }
+        
+        void AssignDebugReferences()
+        {
+            GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+            readersAndWriters.FindObjectsAndAssignReferences(this, sceneObjs, out total);
         }
 #endif
     }

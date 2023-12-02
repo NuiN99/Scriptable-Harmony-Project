@@ -12,6 +12,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base
         [SerializeField] RuntimeSetWriter<T> runtimeSet;
         [SerializeField] Type lifetimeType;
 
+        [Header("Actions")]
         [SerializeField] bool invokeOnAdd = true;
         [SerializeField] bool invokeOnRemove = true;
     

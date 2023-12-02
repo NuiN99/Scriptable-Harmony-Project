@@ -17,12 +17,8 @@ MonoBehaviour:
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 4
-  references:
-    Setters:
-    - {fileID: 1699109869603293091, guid: 7aad103259e944144a52da8f1a8e52da, type: 3}
-    Getters:
-    - {fileID: 3719732740253014072, guid: 8df1235b16d13714caf41085b629313c, type: 3}
-    setters:
-    - {fileID: 0}
-    getters:
-    - {fileID: 0}
+  readersAndWriters:
+    Readers: []
+    Writers: []
+    readers: []
+    writers: []

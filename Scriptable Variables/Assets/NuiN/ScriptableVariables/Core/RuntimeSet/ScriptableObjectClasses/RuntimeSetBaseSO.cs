@@ -85,6 +85,8 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base
         
         void OnSelectedInProjectWindow()
         {
+            readersAndWriters?.Clear();
+            setItems?.Clear();
             if (Selection.activeObject != this) return;
             AssignDebugReferences();
         }

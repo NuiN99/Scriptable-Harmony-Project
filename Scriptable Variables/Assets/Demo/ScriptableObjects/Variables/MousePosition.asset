@@ -17,11 +17,11 @@ MonoBehaviour:
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 3
-  references:
-    Setters: []
-    Getters:
+  readersAndWriters:
+    Readers:
     - {fileID: 8374975215262088032, guid: 7460790150a2f65499d38182f15d47b2, type: 3}
-    setters:
+    Writers: []
+    readers:
     - {fileID: 0}
-    getters:
+    writers:
     - {fileID: 0}
