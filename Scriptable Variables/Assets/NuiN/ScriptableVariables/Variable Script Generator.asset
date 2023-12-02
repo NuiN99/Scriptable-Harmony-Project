@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
   dataType: 0
-  displayType: Vector4Int
-  actualType: Vector4Int
-  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Core.Base;\r\n\r\nnamespace
-    NuiN.ScriptableVariables.Types\r\n{   \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes//Vector4Int\",
-    fileName = \"New Vector4Int Variable\")]\r\n    internal class Vector4IntSO :
-    ScriptableVariableBaseSO<Vector4Int> { }\r\n}"
+  displayType: PhysicsMaterial
+  actualType: PhysicsMaterial
+  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;\r\n\r\nnamespace
+    NuiN.ScriptableVariables.Types\r\n{   \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes/PhysicsMaterial\",
+    fileName = \"New PhysicsMaterial Variable\")]\r\n    internal class PhysicsMaterialSO
+    : ScriptableVariableBaseSO<PhysicsMaterial> { }\r\n}"
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
-  constantPath: Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes/
-  updatedPath: Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes/
+  constantPath: Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes
+  updatedPath: Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes
