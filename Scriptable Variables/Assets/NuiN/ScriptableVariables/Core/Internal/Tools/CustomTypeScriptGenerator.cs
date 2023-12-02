@@ -33,7 +33,7 @@ namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
         [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
         
-        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes";
+        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/Default";
         [SerializeField] string updatedPath;
         string _suffix;
 
