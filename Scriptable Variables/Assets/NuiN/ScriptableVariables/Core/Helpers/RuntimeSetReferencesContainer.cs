@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.Helpers
+namespace NuiN.ScriptableVariables.Core.InternalHelpers
 {
 #if UNITY_EDITOR
     [Serializable]

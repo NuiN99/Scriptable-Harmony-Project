@@ -1,8 +1,8 @@
 ﻿using System;
-using NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;
+using NuiN.ScriptableVariables.Core.Variable.SOClasses.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.ScriptableVariable.References.Base
+namespace NuiN.ScriptableVariables.Variable.References.Base
 {
     [Serializable]
     public class ScriptableVariableReferenceBase<T>

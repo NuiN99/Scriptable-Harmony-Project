@@ -1,5 +1,5 @@
-using NuiN.ScriptableVariables.Core.RuntimeSet.References;
-using NuiN.ScriptableVariables.Core.ScriptableVariable.References;
+using NuiN.ScriptableVariables.RuntimeSet.References;
+using NuiN.ScriptableVariables.Variable.References;
 using UnityEngine;
 
 public class ClosestEnemyToMouseSetter : MonoBehaviour

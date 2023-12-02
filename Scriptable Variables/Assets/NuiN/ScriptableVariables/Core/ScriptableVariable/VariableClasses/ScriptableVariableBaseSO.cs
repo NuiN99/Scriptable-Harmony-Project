@@ -2,12 +2,12 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEngine;
 using System;
-using NuiN.ScriptableVariables.Core.Editor;
-using NuiN.ScriptableVariables.Core.Helpers;
-using NuiN.ScriptableVariables.Core.ScriptableVariable.References;
-using NuiN.ScriptableVariables.Core.ScriptableVariable.References.Base;
+using NuiN.ScriptableVariables.Core.Attributes;
+using NuiN.ScriptableVariables.Core.InternalHelpers;
+using NuiN.ScriptableVariables.Variable.References;
+using NuiN.ScriptableVariables.Variable.References.Base;
 
-namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base
+namespace NuiN.ScriptableVariables.Core.Variable.SOClasses.Base
 {
     public class ScriptableVariableBaseSO<T> : ScriptableObject
     {

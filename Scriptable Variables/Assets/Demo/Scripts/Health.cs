@@ -1,4 +1,4 @@
-using NuiN.ScriptableVariables.Core.ScriptableVariable.References;
+using NuiN.ScriptableVariables.Variable.References;
 using UnityEngine;
 
 public class Health : MonoBehaviour

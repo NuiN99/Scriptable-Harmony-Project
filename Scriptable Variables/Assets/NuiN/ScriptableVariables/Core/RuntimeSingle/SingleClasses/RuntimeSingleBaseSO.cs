@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
-using NuiN.ScriptableVariables.Core.Editor;
-using NuiN.ScriptableVariables.Core.Helpers;
-using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
-using NuiN.ScriptableVariables.Core.RuntimeSet.References;
-using NuiN.ScriptableVariables.Core.RuntimeSet.References.Base;
+using NuiN.ScriptableVariables.Core.Attributes;
+using NuiN.ScriptableVariables.Core.InternalHelpers;
+using NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.References;
+using NuiN.ScriptableVariables.RuntimeSingle.References.Base;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base
+namespace NuiN.ScriptableVariables.Core.RuntimeSingle.SOClasses.Base
 {
     public class RuntimeSingleBaseSO<T> : ScriptableObject where T : Object
     {

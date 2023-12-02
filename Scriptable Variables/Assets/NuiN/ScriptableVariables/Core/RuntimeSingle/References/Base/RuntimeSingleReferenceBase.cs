@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
-using NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSingle.SOClasses.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSet.References.Base
+namespace NuiN.ScriptableVariables.RuntimeSingle.References.Base
 {
     [Serializable]
     public class RuntimeSingleReferenceBase<T> where T : Object

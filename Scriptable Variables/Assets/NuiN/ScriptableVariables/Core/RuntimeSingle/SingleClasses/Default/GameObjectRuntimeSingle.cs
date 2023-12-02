@@ -1,7 +1,7 @@
-using NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSingle.SOClasses.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses
+namespace NuiN.ScriptableVariables.Core.RuntimeSingle.SOClasses
 {
     [CreateAssetMenu(menuName = "ScriptableVariables/RuntimeSingle/GameObject", fileName = "New GameObject RuntimeSingle")]
     public class GameObjectRuntimeSingle : RuntimeSingleBaseSO<GameObject> { }

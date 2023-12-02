@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
-using NuiN.ScriptableVariables.Core.RuntimeSet.References.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.References.Base;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSet.References
+namespace NuiN.ScriptableVariables.RuntimeSingle.References
 {
     [Serializable]
     public class RuntimeSingleWriter<T> : RuntimeSingleReferenceBase<T> where T : Object

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.Helpers
+namespace NuiN.ScriptableVariables.Core.InternalHelpers
 {
     internal class GameLoadedEvent : MonoBehaviour
     {

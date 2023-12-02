@@ -1,4 +1,4 @@
-using NuiN.ScriptableVariables.Core.RuntimeSet.References;
+using NuiN.ScriptableVariables.RuntimeSet.References;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base

@@ -1,7 +1,7 @@
 using System;
-using NuiN.ScriptableVariables.Core.ScriptableVariable.References.Base;
+using NuiN.ScriptableVariables.Variable.References.Base;
 
-namespace NuiN.ScriptableVariables.Core.ScriptableVariable.References
+namespace NuiN.ScriptableVariables.Variable.References
 {
     [Serializable]
     public class VariableReader<T> : ScriptableVariableReferenceBase<T>

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
-using NuiN.ScriptableVariables.Core.RuntimeSet.References.Base;
+using NuiN.ScriptableVariables.RuntimeSet.References.Base;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSet.References
+namespace NuiN.ScriptableVariables.RuntimeSingle.References
 {
     [Serializable]
     public class RuntimeSingleReader<T> : RuntimeSetReferenceBase<T> where T : Object

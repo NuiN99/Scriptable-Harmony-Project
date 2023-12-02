@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using System.IO;
-using NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;
+using NuiN.ScriptableVariables.Core.Variable.SOClasses.Base;
 using UnityEditor;
 
 namespace NuiN.ScriptableVariables.Core.Tools
@@ -14,9 +14,9 @@ namespace NuiN.ScriptableVariables.Core.Tools
         
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
-using NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;{Directives}
+using NuiN.ScriptableVariables.Core.Variable.SOClasses.Base;{Directives}
 
-namespace NuiN.ScriptableVariables.Types
+namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
 {   
     [CreateAssetMenu(menuName = ""ScriptableVariables/{Suffix}/{ActualType}"", fileName = ""New {DisplayType} Variable"")]
     internal class {DisplayType}SO : {BaseClass}<{ActualType}> { }
