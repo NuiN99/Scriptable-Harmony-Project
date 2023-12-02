@@ -9,91 +9,60 @@ namespace NuiN.ScriptableVariables.Core.Helpers
 {
 #if UNITY_EDITOR
     [Serializable]
-    internal class RuntimeSetReferencesContainer
+    internal class RuntimeSetReferencesContainer : ReferencesContainerBase
     {
-        string _fieldName;
-
         public List<Component> prefabItems;
         public List<Component> sceneItems;
 
-        public int TotalReferencesCount => prefabItems.Count + sceneItems.Count;
+        public override int TotalReferencesCount() => prefabItems.Count + sceneItems.Count;
 
-        public bool ListsAreNull => prefabItems == null || sceneItems == null;
-
-        Type _baseType;
+        public override bool ListsAreNull() => prefabItems == null || sceneItems == null;
+        
         Type _writerType;
 
-        public RuntimeSetReferencesContainer(string fieldName, Type writerType, Type baseType)
+        public RuntimeSetReferencesContainer(string fieldName, Type baseType, Type writerType) : base(fieldName, baseType)
         {
             _writerType = writerType;
-            _baseType = baseType;
-            _fieldName = fieldName;
         }
 
-        public void Clear()
+        public override void Clear()
         {
             prefabItems?.Clear();
             sceneItems?.Clear();
         }
         
-        public void FindObjectsAndAssignReferences(object variableCaller, IEnumerable<GameObject> sceneObjs, out int count)
+        public override void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs)
         {
-            Clear();
-                
-            string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
-            GameObject[] allPrefabs = guids.Select(guid =>
-            {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                return AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            }).ToArray();
-
-            AssignReferences(variableCaller, allPrefabs, true);
-            AssignReferences(variableCaller, sceneObjs, false);
+            Type componentType = component.GetType();
             
-            count = ListsAreNull ? 0 : TotalReferencesCount;
-        }
-        
-        void AssignReferences(object variableCaller, IEnumerable<GameObject> foundObjects, bool prefabs)
-        {
-            foreach (var obj in foundObjects)
+            Type componentBaseType = componentType.BaseType;
+            if (componentBaseType == null || componentBaseType != baseType) return;
+            
+            FieldInfo[] fields =
+                baseType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            foreach (var field in fields)
             {
-                Component[] components =
-                    prefabs ? obj.GetComponentsInChildren<Component>() : obj.GetComponents<Component>();
+                Type type = field.FieldType;
+                if (!type.IsGenericType) continue;
 
-                foreach (var component in components)
+                object variableField = field.GetValue(component);
+                if (variableField == null || !_writerType.IsInstanceOfType(variableField)) continue;
+
+                FieldInfo variableFieldInfo =
+                    _writerType.GetField(fieldName,
+                        BindingFlags.Instance | BindingFlags.NonPublic);
+
+                if (variableFieldInfo == null ||
+                    !ReferenceEquals(variableFieldInfo.GetValue(variableField), variableCaller)) continue;
+
+                if (prefabs)
                 {
-                    if (!component) continue;
-
-                    Type componentType = component.GetType();
-                    Type baseType = componentType.BaseType;
-                    if (baseType == null || baseType != _baseType) continue;
-                    
-                    FieldInfo[] fields = baseType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-                    foreach (var field in fields)
-                    {
-                        Type type = field.FieldType;
-                        if (!type.IsGenericType) continue;
-
-                        object variableField = field.GetValue(component);
-                        if (variableField == null || !_writerType.IsInstanceOfType(variableField)) continue;
-
-                        FieldInfo variableFieldInfo =
-                            _writerType.GetField(_fieldName,
-                                BindingFlags.Instance | BindingFlags.NonPublic);
-
-                        if (variableFieldInfo == null ||
-                            !ReferenceEquals(variableFieldInfo.GetValue(variableField), variableCaller)) continue;
-
-                        if (prefabs)
-                        {
-                            prefabItems.Add(component);
-                        }
-                        else
-                        {
-                            sceneItems.Add(component);
-                        }
-                    }
+                    prefabItems.Add(component);
+                }
+                else
+                {
+                    sceneItems.Add(component);
                 }
             }
         }

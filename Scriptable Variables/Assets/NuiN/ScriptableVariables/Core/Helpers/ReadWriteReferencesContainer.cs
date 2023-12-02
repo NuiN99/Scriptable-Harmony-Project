@@ -9,12 +9,10 @@ namespace NuiN.ScriptableVariables.Core.Helpers
 {
 #if UNITY_EDITOR
     [Serializable]
-    internal class ReadWriteReferencesContainer
+    internal class ReadWriteReferencesContainer : ReferencesContainerBase
     {
-        Type _baseType;
         Type _getterType;
         Type _setterType;
-        string _fieldName;
         
         [Header("Prefabs")]
         // ReSharper disable once InconsistentNaming
@@ -26,90 +24,60 @@ namespace NuiN.ScriptableVariables.Core.Helpers
         public List<Component> setters;
         public List<Component> getters;
             
-        public int TotalReferencesCount => Setters.Count + Getters.Count + setters.Count + getters.Count;
+        public override int TotalReferencesCount() => Setters.Count + Getters.Count + setters.Count + getters.Count;
 
-        public bool ListsAreNull => Setters == null || Getters == null || setters == null || getters == null;
+        public override bool ListsAreNull() => Setters == null || Getters == null || setters == null || getters == null;
 
-        public ReadWriteReferencesContainer(Type baseType, Type getterType, Type setterType, string fieldName)
+        public ReadWriteReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)
         {
-            _baseType = baseType;
-            _getterType = getterType;
             _setterType = setterType;
-            _fieldName = fieldName;
+            _getterType = getterType;
         }
 
-        public void Clear()
+        public override void Clear()
         {
             Getters?.Clear();
             Setters?.Clear();
             getters?.Clear();
             setters?.Clear();
         }
+
         
-        public void FindObjectsAndAssignReferences(object variableCaller, IEnumerable<GameObject> sceneObjs, out int count)
+        public override void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs)
         {
-            Clear();
-                
-            string[] guids = AssetDatabase.FindAssets( "t:Prefab" );
-            GameObject[] allPrefabs = guids.Select(guid =>
+            Type componentType = component.GetType();
+            FieldInfo[] fields =
+                componentType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+            foreach (var field in fields)
             {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                return AssetDatabase.LoadAssetAtPath<GameObject>(path);
-            }).ToArray();
+                Type type = field.FieldType;
+                if (!type.IsGenericType) continue;
 
-            AssignReferences(variableCaller, allPrefabs, true);
-            AssignReferences(variableCaller, sceneObjs, false);
-            
-            count = ListsAreNull ? 0 : TotalReferencesCount;
-        }
-        
-        void AssignReferences(object variableCaller, IEnumerable<GameObject> foundObjects, bool prefabs)
-        {
-            foreach (var obj in foundObjects)
-            {
-                Component[] components =
-                    prefabs ? obj.GetComponentsInChildren<Component>() : obj.GetComponents<Component>();
+                bool isGetter = type == _getterType;
+                bool isSetter = type == _setterType;
 
-                foreach (var component in components)
-                {
-                    if (!component) continue;
-
-                    Type componentType = component.GetType();
-
-                    FieldInfo[] fields =
-                        componentType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-                    foreach (var field in fields)
-                    {
-                        Type type = field.FieldType;
-                        if (!type.IsGenericType) continue;
-
-                        bool isGetter = type == _getterType;
-                        bool isSetter = type == _setterType;
-
-                        if (!isGetter && !isSetter) continue;
+                if (!isGetter && !isSetter) continue;
                         
-                        object variableField = field.GetValue(component);
-                        if (variableField == null || (!_getterType.IsInstanceOfType(variableField) && !_setterType.IsInstanceOfType(variableField))) continue;
+                object variableField = field.GetValue(component);
+                if (variableField == null || (!_getterType.IsInstanceOfType(variableField) && !_setterType.IsInstanceOfType(variableField))) return;
 
-                        FieldInfo variableFieldInfo =
-                            _baseType.GetField(_fieldName,
-                                BindingFlags.Instance | BindingFlags.NonPublic);
+                FieldInfo variableFieldInfo =
+                    baseType.GetField(fieldName,
+                        BindingFlags.Instance | BindingFlags.NonPublic);
 
-                        if (variableFieldInfo == null ||
-                            !ReferenceEquals(variableFieldInfo.GetValue(variableField), variableCaller)) continue;
+                if (variableFieldInfo == null ||
+                    !ReferenceEquals(variableFieldInfo.GetValue(variableField), variableCaller)) continue;
 
-                        if (prefabs)
-                        {
-                            if (isGetter) Getters.Add(component);
-                            else Setters.Add(component);
-                        }
-                        else
-                        {
-                            if (isGetter) getters.Add(component);
-                            else setters.Add(component);
-                        }
-                    }
+                if (prefabs)
+                {
+                    if (isGetter) Getters.Add(component);
+                    else Setters.Add(component);
+                }
+                else
+                {
+                    if (isGetter) getters.Add(component);
+                    else setters.Add(component);
                 }
             }
         }
