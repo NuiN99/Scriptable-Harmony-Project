@@ -10,12 +10,11 @@ namespace NuiN.ScriptableVariables.Core.Tools
     internal class ScriptableObjectClassGeneratorSO : ScriptableObject
     {
 #if UNITY_EDITOR
-        
         enum DataType { All, Normal, List }
         
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
-using NuiN.ScriptableVariables.Core.Base;{Directives}
+using NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;{Directives}
 
 namespace NuiN.ScriptableVariables.Types
 {   
@@ -34,7 +33,7 @@ namespace NuiN.ScriptableVariables.Types
         [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
         
-        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/Core/Internal/DefaultTypes/";
+        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes";
         [SerializeField] string updatedPath;
         string _suffix;
 
