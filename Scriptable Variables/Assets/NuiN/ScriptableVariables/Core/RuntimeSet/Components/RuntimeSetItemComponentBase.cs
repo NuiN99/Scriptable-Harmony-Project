@@ -20,7 +20,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base
         void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
 
         void Awake() => AddToSet(Type.OnAwakeOnDestroy);
-        void OnDestroy() => RemoveFromSet(Type.OnAwakeOnDestroy);
+        void OnDestroy() => RemoveFromSet(lifetimeType);
 
         void AddToSet(Type type)
         {
