@@ -9,38 +9,36 @@ namespace NuiN.ScriptableVariables.Core.Helpers
     [Serializable]
     internal class ReadWriteReferencesContainer : ReferencesContainerBase
     {
-        Type _getterType;
-        Type _setterType;
+        Type _readerType;
+        Type _writerType;
         
         [Header("Prefabs")]
-        // ReSharper disable once InconsistentNaming
-        public List<Component> Setters;
-        // ReSharper disable once InconsistentNaming
-        public List<Component> Getters;
+        public List<Component> Readers;
+        public List<Component> Writers;
             
         [Header("Scene")]
-        public List<Component> setters;
-        public List<Component> getters;
+        public List<Component> readers;
+        public List<Component> writers;
         
-        public ReadWriteReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)
+        public ReadWriteReferencesContainer(string fieldName, Type baseType, Type readerType, Type writerType) : base(fieldName, baseType)
         {
-            _setterType = setterType;
-            _getterType = getterType;
+            _writerType = writerType;
+            _readerType = readerType;
         }
         
-        public override int TotalReferencesCount() => Setters.Count + Getters.Count + setters.Count + getters.Count;
+        public override int TotalReferencesCount() => Writers.Count + Readers.Count + writers.Count + readers.Count;
 
-        public override bool ListsAreNull() => Setters == null || Getters == null || setters == null || getters == null;
+        public override bool ListsAreNull() => Writers == null || Readers == null || writers == null || readers == null;
 
         public override void Clear()
         {
-            Getters?.Clear();
-            Setters?.Clear();
-            getters?.Clear();
-            setters?.Clear();
+            Readers?.Clear();
+            Writers?.Clear();
+            readers?.Clear();
+            writers?.Clear();
         }
         
-        public override void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs)
+        protected override void CheckComponentAndAssign(object variableCaller, Component component, ObjectsToSearch objectsToSearch)
         {
             Type componentType = component.GetType();
             FieldInfo[] fields =
@@ -51,13 +49,13 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                 Type type = field.FieldType;
                 if (!type.IsGenericType) continue;
 
-                bool isGetter = type == _getterType;
-                bool isSetter = type == _setterType;
+                bool isGetter = type == _readerType;
+                bool isSetter = type == _writerType;
 
                 if (!isGetter && !isSetter) continue;
                         
                 object variableField = field.GetValue(component);
-                if (variableField == null || (!_getterType.IsInstanceOfType(variableField) && !_setterType.IsInstanceOfType(variableField))) return;
+                if (variableField == null || (!_readerType.IsInstanceOfType(variableField) && !_writerType.IsInstanceOfType(variableField))) return;
 
                 FieldInfo variableFieldInfo =
                     baseType.GetField(fieldName,
@@ -66,15 +64,12 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                 if (variableFieldInfo == null ||
                     !ReferenceEquals(variableFieldInfo.GetValue(variableField), variableCaller)) continue;
 
-                if (prefabs)
+                switch (objectsToSearch)
                 {
-                    if (isGetter) Getters.Add(component);
-                    else Setters.Add(component);
-                }
-                else
-                {
-                    if (isGetter) getters.Add(component);
-                    else setters.Add(component);
+                    case ObjectsToSearch.Prefabs when isGetter:Readers?.Add(component); break;
+                    case ObjectsToSearch.Prefabs: Writers?.Add(component); break;
+                    case ObjectsToSearch.Scene when isGetter: readers?.Add(component); break;
+                    case ObjectsToSearch.Scene: writers?.Add(component); break;
                 }
             }
         }

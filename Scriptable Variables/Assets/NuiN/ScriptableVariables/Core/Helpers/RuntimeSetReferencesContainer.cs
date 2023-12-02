@@ -29,7 +29,7 @@ namespace NuiN.ScriptableVariables.Core.Helpers
             sceneItems?.Clear();
         }
         
-        public override void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs)
+        protected override void CheckComponentAndAssign(object variableCaller, Component component, ObjectsToSearch objectsToSearch)
         {
             Type componentType = component.GetType();
             
@@ -54,13 +54,10 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                 if (variableFieldInfo == null ||
                     !ReferenceEquals(variableFieldInfo.GetValue(variableField), variableCaller)) continue;
 
-                if (prefabs)
+                switch (objectsToSearch)
                 {
-                    prefabItems.Add(component);
-                }
-                else
-                {
-                    sceneItems.Add(component);
+                    case ObjectsToSearch.Prefabs: prefabItems?.Add(component); break;
+                    case ObjectsToSearch.Scene: sceneItems?.Add(component); break;
                 }
             }
         }

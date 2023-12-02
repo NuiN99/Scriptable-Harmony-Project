@@ -9,13 +9,15 @@ namespace NuiN.ScriptableVariables.Core.Helpers
     [Serializable]
     public abstract class ReferencesContainerBase
     {
+        public enum ObjectsToSearch { Scene, Prefabs }
+        
         protected Type baseType;
         protected string fieldName;
 
         public abstract void Clear();
         public abstract int TotalReferencesCount();
         public abstract bool ListsAreNull();
-        public abstract void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs);
+        protected abstract void CheckComponentAndAssign(object variableCaller, Component component, ObjectsToSearch objectsToSearch);
 
         protected ReferencesContainerBase(string fieldName, Type baseType)
         {
@@ -34,23 +36,28 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                 return AssetDatabase.LoadAssetAtPath<GameObject>(path);
             }).ToArray();
 
-            AssignReferences(variableCaller, allPrefabs, true);
-            AssignReferences(variableCaller, sceneObjs, false);
+            AssignReferences(variableCaller, allPrefabs, ObjectsToSearch.Prefabs);
+            AssignReferences(variableCaller, sceneObjs, ObjectsToSearch.Scene);
             
             count = ListsAreNull() ? 0 : TotalReferencesCount();
         }
         
-        void AssignReferences(object variableCaller, IEnumerable<GameObject> foundObjects, bool prefabs)
+        void AssignReferences(object variableCaller, IEnumerable<GameObject> foundObjects, ObjectsToSearch objectsToSearch)
         {
             foreach (var obj in foundObjects)
             {
                 Component[] components =
-                    prefabs ? obj.GetComponentsInChildren<Component>() : obj.GetComponents<Component>();
+                    objectsToSearch switch
+                    {
+                        ObjectsToSearch.Prefabs => obj.GetComponentsInChildren<Component>(),
+                        ObjectsToSearch.Scene => obj.GetComponents<Component>(),
+                        _ => Array.Empty<Component>()
+                    };
 
                 foreach (var component in components)
                 {
                     if (!component) continue;
-                    CheckComponentAndAssign(variableCaller, component, prefabs);
+                    CheckComponentAndAssign(variableCaller, component, objectsToSearch);
                 }
             }
         }

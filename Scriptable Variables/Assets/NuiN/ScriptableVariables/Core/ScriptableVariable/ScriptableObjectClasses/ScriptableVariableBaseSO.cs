@@ -26,9 +26,9 @@ namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClass
         [Tooltip("Should it keep its value after exiting Playmode?")]
         [SerializeField] bool resetOnExitPlaymode = true;
         
-        [Header("References")]
+        [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
-        [SerializeField] ReadWriteReferencesContainer references = 
+        [SerializeField] ReadWriteReferencesContainer readersAndWriters = 
             new("variable", typeof(ScriptableVariableReferenceBase<T>), typeof(VariableReader<T>), typeof(VariableWriter<T>));
 #endif
         
@@ -61,7 +61,7 @@ namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClass
         
 #if UNITY_EDITOR
 
-        void Reset() => references.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
+        void Reset() => readersAndWriters.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
 
 
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
@@ -73,7 +73,7 @@ namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClass
         void OnSelectedInProjectWindow()
         {
             if (Selection.activeObject != this) return;
-            references.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
+            readersAndWriters.FindObjectsAndAssignReferences(this, FindObjectsByType<GameObject>(FindObjectsSortMode.None), out total);
         }
 #endif
     }
