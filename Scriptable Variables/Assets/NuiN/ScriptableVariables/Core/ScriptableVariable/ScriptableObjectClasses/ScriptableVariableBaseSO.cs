@@ -20,10 +20,9 @@ namespace NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClass
         public Action<T> onChange;
         public Action<T,T> onChangeWithOld;
         
-        [Tooltip("Should it keep its value after loading a scene?")]
-        [SerializeField, Header("Value Persistence")] bool resetOnSceneLoad = true;
+        [Header("Value Persistence")]
+        [SerializeField] bool resetOnSceneLoad = true;
 #if UNITY_EDITOR
-        [Tooltip("Should it keep its value after exiting Playmode?")]
         [SerializeField] bool resetOnExitPlaymode = true;
         
         [Header("References In Project")]

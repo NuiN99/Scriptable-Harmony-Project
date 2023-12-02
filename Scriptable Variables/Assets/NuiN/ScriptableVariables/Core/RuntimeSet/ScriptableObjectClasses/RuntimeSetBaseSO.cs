@@ -29,7 +29,8 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.ScriptableObjectClasses.Base
 
         bool _loadedFirstScene;
         
-        [SerializeField, Header("Value Persistence")] bool resetOnSceneLoad = true;
+        [Header("Value Persistence")]
+        [SerializeField] bool resetOnSceneLoad = true;
         
 #if UNITY_EDITOR
         [Header("References In Project")]

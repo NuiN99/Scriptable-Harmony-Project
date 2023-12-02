@@ -9,6 +9,7 @@ namespace NuiN.ScriptableVariables.Core.Helpers
     [Serializable]
     public abstract class ReferencesContainerBase
     {
+#if UNITY_EDITOR
         public enum ObjectsToSearch { Scene, Prefabs }
         
         protected Type baseType;
@@ -61,5 +62,6 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                 }
             }
         }
+#endif
     }
 }
