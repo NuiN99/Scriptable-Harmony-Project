@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using UnityEditor;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Core.Helpers
@@ -23,16 +21,16 @@ namespace NuiN.ScriptableVariables.Core.Helpers
         [Header("Scene")]
         public List<Component> setters;
         public List<Component> getters;
-            
-        public override int TotalReferencesCount() => Setters.Count + Getters.Count + setters.Count + getters.Count;
-
-        public override bool ListsAreNull() => Setters == null || Getters == null || setters == null || getters == null;
-
+        
         public ReadWriteReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)
         {
             _setterType = setterType;
             _getterType = getterType;
         }
+        
+        public override int TotalReferencesCount() => Setters.Count + Getters.Count + setters.Count + getters.Count;
+
+        public override bool ListsAreNull() => Setters == null || Getters == null || setters == null || getters == null;
 
         public override void Clear()
         {
@@ -41,7 +39,6 @@ namespace NuiN.ScriptableVariables.Core.Helpers
             getters?.Clear();
             setters?.Clear();
         }
-
         
         public override void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs)
         {

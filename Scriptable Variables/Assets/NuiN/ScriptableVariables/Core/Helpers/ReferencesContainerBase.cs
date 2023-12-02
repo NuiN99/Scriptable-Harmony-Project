@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,6 +15,7 @@ namespace NuiN.ScriptableVariables.Core.Helpers
         public abstract void Clear();
         public abstract int TotalReferencesCount();
         public abstract bool ListsAreNull();
+        public abstract void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs);
 
         protected ReferencesContainerBase(string fieldName, Type baseType)
         {
@@ -54,7 +54,5 @@ namespace NuiN.ScriptableVariables.Core.Helpers
                 }
             }
         }
-        
-        public abstract void CheckComponentAndAssign(object variableCaller, Component component, bool prefabs);
     }
 }

@@ -2,10 +2,8 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 using NuiN.ScriptableVariables.Core.Editor;
 using NuiN.ScriptableVariables.Core.Helpers;
-using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.Core.ScriptableVariable.References;
 using NuiN.ScriptableVariables.Core.ScriptableVariable.References.Base;
 

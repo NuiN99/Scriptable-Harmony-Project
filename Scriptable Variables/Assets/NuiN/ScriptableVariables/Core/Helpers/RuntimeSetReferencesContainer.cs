@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using UnityEditor;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Core.Helpers
@@ -13,10 +11,6 @@ namespace NuiN.ScriptableVariables.Core.Helpers
     {
         public List<Component> prefabItems;
         public List<Component> sceneItems;
-
-        public override int TotalReferencesCount() => prefabItems.Count + sceneItems.Count;
-
-        public override bool ListsAreNull() => prefabItems == null || sceneItems == null;
         
         Type _writerType;
 
@@ -24,6 +18,10 @@ namespace NuiN.ScriptableVariables.Core.Helpers
         {
             _writerType = writerType;
         }
+        
+        public override int TotalReferencesCount() => prefabItems.Count + sceneItems.Count;
+
+        public override bool ListsAreNull() => prefabItems == null || sceneItems == null;
 
         public override void Clear()
         {
