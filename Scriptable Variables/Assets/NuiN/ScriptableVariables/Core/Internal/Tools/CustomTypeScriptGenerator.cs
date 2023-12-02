@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 using System.IO;
-using NuiN.ScriptableVariables.Core.Variable.SOClasses.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSet.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSingle.Base;
+using NuiN.ScriptableVariables.Core.Variable.Base;
 using UnityEditor;
+using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.Core.Tools
 { 
@@ -10,22 +13,21 @@ namespace NuiN.ScriptableVariables.Core.Tools
     internal class CustomTypeScriptGenerator : ScriptableObject
     {
 #if UNITY_EDITOR
-        enum DataType { All, Normal, List }
+        enum ObjectType { Variable, RuntimeSet, RuntimeSingle }
         
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
-using NuiN.ScriptableVariables.Core.Variable.SOClasses.Base;{Directives}
+using NuiN.ScriptableVariables.Core.{SingularSuffix}.Base;
 
-namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
+namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}
 {   
-    [CreateAssetMenu(menuName = ""ScriptableVariables/{Suffix}/{ActualType}"", fileName = ""New {DisplayType} Variable"")]
-    internal class {DisplayType}SO : {BaseClass}<{ActualType}> { }
+    [CreateAssetMenu(menuName = ""ScriptableVariables/Custom/{Suffix}/{Type}"", fileName = ""{FileName}"")]
+    internal class {TypedType}SO : {BaseClass}<{Type}> { }
 }";
-        
-        [SerializeField] DataType dataType;
+
+        [SerializeField] ObjectType objectType = ObjectType.RuntimeSet;
     
-        [SerializeField] string displayType = "Float";
-        [SerializeField] string actualType = "float";
+        [SerializeField] string displayType = "GameObject";
 
         [TextArea(10, 10)] [SerializeField] string scriptPreview;
 
@@ -33,107 +35,94 @@ namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
         [SerializeField] bool autoUpdatePath = true;
         [SerializeField] bool overwriteExisting;
         
-        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/Default";
+        [SerializeField] string constantPath = "Assets/NuiN/ScriptableVariables/CustomTypes";
         [SerializeField] string updatedPath;
-        string _suffix;
 
         void OnValidate()
         {
-            updatedPath = constantPath;
             if (autoUpdateTemplate) scriptPreview = AdjustedScriptPreview();
             if (autoUpdatePath) updatedPath = AdjustedPath();
         }
 
-        public void Generate()
+        void Reset()
         {
-            if (dataType == DataType.All) GenerateForAllTypes();
-            else GenerateScript();
-        }
-        
-        public void GenerateForAllTypes()
-        {
-            DataType originalType = dataType;
-            foreach (DataType type in Enum.GetValues(typeof(DataType)))
-            {
-                if(type == DataType.All) continue;
-                dataType = type;
-                GenerateScript();
-            }
-            dataType = originalType;
+            scriptPreview = AdjustedScriptPreview();
+            updatedPath = AdjustedPath();
         }
 
-        void GenerateScript()
+        public void GenerateScript()
         {
             scriptPreview = AdjustedScriptPreview();
             if(autoUpdatePath) updatedPath = AdjustedPath();
-            string newDisplayType = AdjustedDisplayType();
-            GenerateCSharpFile($"{newDisplayType}SO", scriptPreview);
+            GenerateCSharpFile($"{TypedType()}SO", scriptPreview);
         }
 
         string AdjustedScriptPreview()
         {
             string template = SCRIPT_TEMPLATE;
-            
-            template = template.Replace("{ActualType}", AdjustedActualType());
-            template = template.Replace("{DisplayType}", AdjustedDisplayType());
-            template = template.Replace("{Directives}", GetRequiredDirectives());
-            template = template.Replace("{Suffix}", GetSuffix());
-            template = template.Replace("{BaseClass}", nameof(ScriptableVariableBaseSO<object>));
+
+            template = template.Replace("{Type}", displayType);
+            template = template.Replace("{TypedType}", TypedType());
+            template = template.Replace("{BaseClass}", BaseClass());
+            template = template.Replace("{Suffix}", Suffix());
+            template = template.Replace("{SingularSuffix}", SingularSuffix());
+            template = template.Replace("{FileName}", FileName());
         
             return template;
         }
-
-        string AdjustedDisplayType()
+        
+        string TypedType()
         {
-            return dataType switch
+            return objectType switch
             {
-                DataType.Normal => displayType,
-                //DataType.Array => $"{displayType}Array",
-                DataType.List => $"{displayType}List",
+                ObjectType.Variable => $"{displayType}Variable",
+                ObjectType.RuntimeSet => $"{displayType}RuntimeSet",
+                ObjectType.RuntimeSingle => $"{displayType}RuntimeSingle",
                 _ => displayType
             };
         }
-        string AdjustedActualType()
-        {
-            return dataType switch
-            {
-                DataType.Normal => actualType,
-                //DataType.Array => $"{actualType}[]",
-                DataType.List => $"List<{actualType}>",
-                _ => actualType
-            };
-        }
+
         string AdjustedPath()
         {
-            string suffix = GetSuffix();
-            return dataType switch
+            return $"{constantPath}/{Suffix()}";
+        }
+
+        string SingularSuffix()
+        {
+            return objectType switch
             {
-                DataType.Normal => $"{constantPath}/{suffix}",
-                //DataType.Array => $"{constantPath}/{suffix}",
-                DataType.List => $"{constantPath}/{suffix}",
-                _ => constantPath
+                ObjectType.Variable => "Variable",
+                ObjectType.RuntimeSet => "RuntimeSet",
+                ObjectType.RuntimeSingle => "RuntimeSingle",
+                _ => ""
             };
         }
 
-        string GetSuffix()
+        string Suffix()
         {
-            return dataType switch
+            return objectType switch
             {
-                DataType.Normal => $"Normal",
-                //DataType.Array => $"Array",
-                DataType.List => $"List",
-                _ => constantPath
+                ObjectType.Variable => "Variables",
+                ObjectType.RuntimeSet => "RuntimeSets",
+                ObjectType.RuntimeSingle => "RuntimeSingles",
+                _ => ""
             };
         }
-        
-        string GetRequiredDirectives()
+
+        string BaseClass()
         {
-            return dataType switch
+            return objectType switch
             {
-                DataType.List => 
-                "\nusing System.Collections.Generic;",
-                _ => null
+                ObjectType.Variable => nameof(ScriptableVariableBaseSO<object>),
+                ObjectType.RuntimeSet => nameof(RuntimeSetBaseSO<Object>),
+                ObjectType.RuntimeSingle => nameof(RuntimeSingleBaseSO<Object>),
+                _ => ""
             };
+        }
+
+        string FileName()
+        {
+            return $"New {displayType} {SingularSuffix()}";
         }
 
         void GenerateCSharpFile(string fileName, string fileContents)
@@ -174,7 +163,7 @@ namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
             
             if (GUILayout.Button("Generate New Variable Script", buttonStyle, GUILayout.Height(50)))
             {
-                scriptGenerator.Generate();
+                scriptGenerator.GenerateScript();
             }
         }
     }

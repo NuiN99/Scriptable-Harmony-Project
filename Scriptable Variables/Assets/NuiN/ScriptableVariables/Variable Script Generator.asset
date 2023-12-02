@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2174405833c76d49bb5799a2da3e8cf, type: 3}
   m_Name: Variable Script Generator
   m_EditorClassIdentifier: 
-  dataType: 0
-  displayType: PhysicsMaterial
-  actualType: PhysicsMaterial
-  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Core.ScriptableVariable.ScriptableObjectClasses.Base;\r\n\r\nnamespace
-    NuiN.ScriptableVariables.Types\r\n{   \r\n    [CreateAssetMenu(menuName = \"ScriptableVariables/Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes/PhysicsMaterial\",
-    fileName = \"New PhysicsMaterial Variable\")]\r\n    internal class PhysicsMaterialSO
-    : ScriptableVariableBaseSO<PhysicsMaterial> { }\r\n}"
+  objectType: 1
+  displayType: GameObject
+  scriptPreview: "using UnityEngine;\r\nusing NuiN.ScriptableVariables.Core.RuntimeSet.Base;\r\n\r\nnamespace
+    NuiN.ScriptableVariables.CustomTypes.RuntimeSets\r\n{   \r\n    [CreateAssetMenu(menuName
+    = \"ScriptableVariables/Custom/RuntimeSets/GameObject\", fileName = \"New GameObject
+    RuntimeSet\")]\r\n    internal class GameObjectRuntimeSetSO : RuntimeSetBaseSO<GameObject>
+    { }\r\n}"
   autoUpdateTemplate: 1
   autoUpdatePath: 1
   overwriteExisting: 0
-  constantPath: Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes
-  updatedPath: Assets/NuiN/ScriptableVariables/Core/ScriptableVariable/VariableClasses/DefaultTypes
+  constantPath: Assets/NuiN/ScriptableVariables/CustomTypes
+  updatedPath: Assets/NuiN/ScriptableVariables/CustomTypes/RuntimeSets

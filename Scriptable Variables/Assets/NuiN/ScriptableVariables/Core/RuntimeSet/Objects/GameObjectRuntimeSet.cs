@@ -1,4 +1,4 @@
-using NuiN.ScriptableVariables.Core.RuntimeSet.SOClasses.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSet.Base;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Core.RuntimeSet.SOClasses

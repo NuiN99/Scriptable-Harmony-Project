@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSingle.SOClasses.Base
+namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
 {
     public class RuntimeSingleBaseSO<T> : ScriptableObject where T : Object
     {

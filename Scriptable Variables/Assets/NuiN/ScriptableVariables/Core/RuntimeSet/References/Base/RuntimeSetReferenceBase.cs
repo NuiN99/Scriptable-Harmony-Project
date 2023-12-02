@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using NuiN.ScriptableVariables.Core.RuntimeSet.SOClasses.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSet.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

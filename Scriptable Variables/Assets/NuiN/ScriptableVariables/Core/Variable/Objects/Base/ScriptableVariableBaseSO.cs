@@ -7,7 +7,7 @@ using NuiN.ScriptableVariables.Core.InternalHelpers;
 using NuiN.ScriptableVariables.Variable.References;
 using NuiN.ScriptableVariables.Variable.References.Base;
 
-namespace NuiN.ScriptableVariables.Core.Variable.SOClasses.Base
+namespace NuiN.ScriptableVariables.Core.Variable.Base
 {
     public class ScriptableVariableBaseSO<T> : ScriptableObject
     {

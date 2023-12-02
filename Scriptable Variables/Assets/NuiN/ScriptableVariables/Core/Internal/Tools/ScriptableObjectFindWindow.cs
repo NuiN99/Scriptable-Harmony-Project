@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
-using NuiN.ScriptableVariables.Core.Variable.SOClasses.Base;
+using NuiN.ScriptableVariables.Core.Variable.Base;
 using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.Core.Tools
