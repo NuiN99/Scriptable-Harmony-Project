@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 using System.IO;
 using NuiN.ScriptableVariables.Core.RuntimeSet.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.Core.RuntimeSingle.Base;
+using NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base;
 using NuiN.ScriptableVariables.Core.Variable.Base;
 using UnityEditor;
 using Object = UnityEngine.Object;
@@ -24,12 +26,23 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}
     [CreateAssetMenu(menuName = ""ScriptableVariables/Custom/{Suffix}/{Type}"", fileName = ""{FileName}"")]
     internal class {TypedType}SO : {BaseClass}<{Type}> { }
 }";
+        
+        const string COMPONENT_SCRIPT_TEMPLATE = 
+@"using UnityEngine;
+using NuiN.ScriptableVariables.Core.{SingularSuffix}.Components.Base;
+
+namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
+{   
+    public class {TypedType}Item : {BaseClass}<{Type}> { }
+}";
 
         [SerializeField] ObjectType objectType = ObjectType.RuntimeSet;
     
         [SerializeField] string displayType = "GameObject";
 
         [TextArea(10, 10)] [SerializeField] string scriptPreview;
+
+        bool _isComponent;
 
         [SerializeField] bool autoUpdateTemplate = true;
         [SerializeField] bool autoUpdatePath = true;
@@ -40,35 +53,40 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}
 
         void OnValidate()
         {
-            if (autoUpdateTemplate) scriptPreview = AdjustedScriptPreview();
+            if (autoUpdateTemplate) scriptPreview = AdjustedScriptPreview(SCRIPT_TEMPLATE);
             if (autoUpdatePath) updatedPath = AdjustedPath();
         }
 
         void Reset()
         {
-            scriptPreview = AdjustedScriptPreview();
+            scriptPreview = AdjustedScriptPreview(SCRIPT_TEMPLATE);
             updatedPath = AdjustedPath();
         }
 
         public void GenerateScript()
         {
-            scriptPreview = AdjustedScriptPreview();
+            scriptPreview = AdjustedScriptPreview(SCRIPT_TEMPLATE);
             if(autoUpdatePath) updatedPath = AdjustedPath();
             GenerateCSharpFile($"{TypedType()}SO", scriptPreview);
+
+            if (objectType is not (ObjectType.RuntimeSet or ObjectType.RuntimeSingle)) return;
+
+            _isComponent = true;
+            scriptPreview = AdjustedScriptPreview(COMPONENT_SCRIPT_TEMPLATE);
+            GenerateCSharpFile($"{TypedType()}Item", scriptPreview);
+            _isComponent = false;
         }
 
-        string AdjustedScriptPreview()
+        string AdjustedScriptPreview(string constTemplate)
         {
-            string template = SCRIPT_TEMPLATE;
-
-            template = template.Replace("{Type}", displayType);
-            template = template.Replace("{TypedType}", TypedType());
-            template = template.Replace("{BaseClass}", BaseClass());
-            template = template.Replace("{Suffix}", Suffix());
-            template = template.Replace("{SingularSuffix}", SingularSuffix());
-            template = template.Replace("{FileName}", FileName());
+            constTemplate = constTemplate.Replace("{Type}", displayType);
+            constTemplate = constTemplate.Replace("{TypedType}", TypedType());
+            constTemplate = constTemplate.Replace("{BaseClass}", BaseClass());
+            constTemplate = constTemplate.Replace("{Suffix}", Suffix());
+            constTemplate = constTemplate.Replace("{SingularSuffix}", SingularSuffix());
+            constTemplate = constTemplate.Replace("{FileName}", FileName());
         
-            return template;
+            return constTemplate;
         }
         
         string TypedType()
@@ -111,6 +129,16 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}
 
         string BaseClass()
         {
+            if (_isComponent)
+            {
+                return objectType switch
+                {
+                    ObjectType.RuntimeSet => nameof(RuntimeSetItemComponentBase<Object>),
+                    ObjectType.RuntimeSingle => nameof(RuntimeSingleItemComponentBase<Object>),
+                    ObjectType.Variable => null,
+                    _ => null
+                };
+            }
             return objectType switch
             {
                 ObjectType.Variable => nameof(ScriptableVariableBaseSO<object>),

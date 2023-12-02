@@ -31,19 +31,14 @@ namespace NuiN.ScriptableVariables.Core.Editor.Helpers
 
             switch (soType)
             {
-                case SOType.RuntimeSet: typeName += "RuntimeSet"; break;
-                case SOType.RuntimeSingle: typeName += "RuntimeSingle"; break;
+                case SOType.RuntimeSet: typeName += "RuntimeSetSO"; break;
+                case SOType.RuntimeSingle: typeName += "RuntimeSingleSO"; break;
                 case SOType.ScriptableVariable:
                 {
                     if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
                     {
                         Type listType = variableType.GetGenericArguments()[0];
                         typeName = $"{GetReadableTypeName(listType)}List";
-                    }
-                    else if (variableType.IsArray)
-                    {
-                        Type arrayType = variableType.GetElementType();
-                        typeName = $"{GetReadableTypeName(arrayType)}Array";
                     }
                     typeName = $"{typeName}SO";
                     break;

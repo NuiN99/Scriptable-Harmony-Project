@@ -40,7 +40,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base
         {
             if (obj != null) return false;
         
-            Debug.LogError($"Self Destructing: Component of type {typeof(T).Name} not found on {gameObject.name}", gameObject);
+            Debug.LogError($"Self Destructing: {typeof(T).Name} object not assigned in {gameObject.name}'s RuntimeSingle Component", gameObject);
             Destroy(this);
             return true;
         }
