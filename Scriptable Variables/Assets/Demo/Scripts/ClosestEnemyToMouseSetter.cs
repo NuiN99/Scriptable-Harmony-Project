@@ -1,18 +1,19 @@
+using System.Collections.ObjectModel;
 using NuiN.ScriptableVariables.RuntimeSet.References;
 using NuiN.ScriptableVariables.Variable.References;
 using UnityEngine;
 
 public class ClosestEnemyToMouseSetter : MonoBehaviour
 {
-    GameObject _closestEnemy;
+    Enemy _closestEnemy;
 
-    [SerializeField] SetRuntimeSet<GameObject> enemySet;
+    [SerializeField] SetRuntimeSet<Enemy> enemySet;
     [SerializeField] GetVariable<Vector2> mousePosition;
 
     void Update()
     {
         float closestDist = float.MaxValue;
-        foreach (GameObject enemy in enemySet.Items)
+        foreach (Enemy enemy in enemySet.Items)
         {
             float distFromMouse = Vector3.Distance(mousePosition.Val, enemy.transform.position);
             if (distFromMouse >= closestDist) continue;
@@ -21,10 +22,13 @@ public class ClosestEnemyToMouseSetter : MonoBehaviour
             _closestEnemy = enemy;
         }
 
-        foreach (GameObject enemy in enemySet.Items)
+        foreach (Enemy enemy in enemySet.Items)
         {
-            SpriteRenderer enemySR = enemy.GetComponent<SpriteRenderer>();
-            enemySR.color = enemy == _closestEnemy ? Color.red : Color.blue;
+            Color enemyColor = enemy == _closestEnemy
+                ? Color.red
+                : Color.blue;
+            
+            enemy.SetColor(enemyColor);
         }
     }
 }

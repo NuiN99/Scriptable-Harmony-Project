@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1430226759091275441}
+  - component: {fileID: 9111862131094405729}
+  - component: {fileID: 450335135464177955}
   - component: {fileID: 6093131480009090453}
-  - component: {fileID: 94546063273982706}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -33,6 +34,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9111862131094405729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8798248756940286048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e875633851a744e95b175af2da320e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sr: {fileID: 6093131480009090453}
+--- !u!114 &450335135464177955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8798248756940286048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb2b47e95eb3904389f894e16d574f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisObject: {fileID: 9111862131094405729}
+  runtimeSet:
+    runtimeSet: {fileID: 11400000, guid: 328c7d3c657dfa24e8b1e7c9e1ea87d3, type: 2}
+  lifetimeType: 0
+  invokeOnAdd: 1
+  invokeOnRemove: 1
 --- !u!212 &6093131480009090453
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -85,21 +117,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &94546063273982706
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8798248756940286048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c597642d276c2e2468885a7d7d5143b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisObject: {fileID: 8798248756940286048}
-  runtimeSet:
-    runtimeSet: {fileID: 11400000, guid: 08be0a693be88fb46af239925ed022e5, type: 2}
-  lifetimeType: 0
-  invokeOnAdd: 1
-  invokeOnRemove: 1
