@@ -16,6 +16,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Base
     {
         [SerializeField] [TextArea] string description;
         
+        [TypeMismatchFix]
         public List<T> runtimeSet = new();
 
         public Action<T> onAdd;

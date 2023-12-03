@@ -15,6 +15,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
     {
         [SerializeField] [TextArea] string description;
 
+        [TypeMismatchFix]
         public T runtimeSingle;
 
         public Action<T> onSet;
