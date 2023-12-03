@@ -14,13 +14,12 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        curHealth.SubtractClamped(amount, min: 0);
+        curHealth.SubtractClamped(amount, min: 0, max: maxHealth.Val);
     }
 
     // temp for testing
     void Update()
     {
         if(Input.GetMouseButtonDown(0)) TakeDamage(10);
-        if(Input.GetMouseButtonDown(1)) TakeDamage(-10);
     }
 }
