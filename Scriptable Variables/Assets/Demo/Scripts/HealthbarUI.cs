@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class HealthbarUI : MonoBehaviour
 {
-    [Header("Readers")]
+    [Header("Getters")]
     [SerializeField] GetVariable<float> maxHealth;
     [SerializeField] GetVariable<float> curHealth;
     

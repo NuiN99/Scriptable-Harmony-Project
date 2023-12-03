@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Player_Single
   m_EditorClassIdentifier: 
   description: 
-  runtimeSet: []
+  item: {fileID: 0}
   resetOnSceneLoad: 1
   total: 0
-  setItems:
-    prefabItems: []
-    sceneItems: []
-  readersAndWriters:
-    Readers: []
-    Writers: []
-    readers: []
-    writers: []
+  componentHolders:
+    prefabs: []
+    scene: []
+  gettersAndSetters:
+    Getters: []
+    Setters: []
+    getters: []
+    setters: []

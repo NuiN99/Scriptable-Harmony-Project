@@ -32,10 +32,10 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
         
-        [SerializeField] RuntimeSetReferencesContainer setItems = 
+        [SerializeField] RuntimeSetReferencesContainer componentHolders = 
             new("item", typeof(RuntimeSingleItemComponentBase<T>), typeof(SetRuntimeSingle<T>));
         
-        [SerializeField] ReadWriteReferencesContainer readersAndWriters = 
+        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
             new("item", typeof(ReferenceRuntimeSingleBase<T>), typeof(GetRuntimeSingle<T>), typeof(SetRuntimeSingle<T>));
 #endif
         
@@ -82,8 +82,8 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         
         void OnSelectedInProjectWindow()
         {
-            readersAndWriters?.Clear();
-            setItems?.Clear();
+            gettersAndSetters?.Clear();
+            componentHolders?.Clear();
             if (Selection.activeObject != this) return;
             AssignDebugReferences();
         }
@@ -92,8 +92,8 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         {
             GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
 
-            readersAndWriters.FindObjectsAndAssignReferences(this, sceneObjs, out int readWriteCount);
-            setItems.FindObjectsAndAssignReferences(this, sceneObjs, out int setItemsCount);
+            gettersAndSetters.FindObjectsAndAssignReferences(this, sceneObjs, out int readWriteCount);
+            componentHolders.FindObjectsAndAssignReferences(this, sceneObjs, out int setItemsCount);
             
             total = readWriteCount + setItemsCount;
         }

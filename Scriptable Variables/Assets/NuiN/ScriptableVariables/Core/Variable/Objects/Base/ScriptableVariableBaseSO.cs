@@ -27,7 +27,7 @@ namespace NuiN.ScriptableVariables.Core.Variable.Base
         
         [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
-        [SerializeField] ReadWriteReferencesContainer readersAndWriters = 
+        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
             new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
 #endif
         
@@ -70,7 +70,7 @@ namespace NuiN.ScriptableVariables.Core.Variable.Base
 
         void OnSelectedInProjectWindow()
         {
-            readersAndWriters?.Clear();
+            gettersAndSetters?.Clear();
             if (Selection.activeObject != this) return;
             AssignDebugReferences();
         }
@@ -78,7 +78,7 @@ namespace NuiN.ScriptableVariables.Core.Variable.Base
         void AssignDebugReferences()
         {
             GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-            readersAndWriters.FindObjectsAndAssignReferences(this, sceneObjs, out total);
+            gettersAndSetters.FindObjectsAndAssignReferences(this, sceneObjs, out total);
         }
 #endif
     }
