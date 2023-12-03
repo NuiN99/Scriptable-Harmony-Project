@@ -9,8 +9,8 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
     [Serializable]
     internal class RuntimeSetReferencesContainer : ReferencesContainerBase
     {
-        public List<Component> prefabItems;
-        public List<Component> sceneItems;
+        public List<Component> prefabs;
+        public List<Component> scene;
         
         Type _writerType;
 
@@ -19,14 +19,14 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
             _writerType = writerType;
         }
         
-        public override int TotalReferencesCount() => prefabItems.Count + sceneItems.Count;
+        public override int TotalReferencesCount() => prefabs.Count + scene.Count;
 
-        public override bool ListsAreNull() => prefabItems == null || sceneItems == null;
+        public override bool ListsAreNull() => prefabs == null || scene == null;
 
         public override void Clear()
         {
-            prefabItems?.Clear();
-            sceneItems?.Clear();
+            prefabs?.Clear();
+            scene?.Clear();
         }
         
         protected override void CheckComponentAndAssign(object variableCaller, Component component, ObjectsToSearch objectsToSearch)
@@ -56,8 +56,8 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
 
                 switch (objectsToSearch)
                 {
-                    case ObjectsToSearch.Prefabs: prefabItems?.Add(component); break;
-                    case ObjectsToSearch.Scene: sceneItems?.Add(component); break;
+                    case ObjectsToSearch.Prefabs: prefabs?.Add(component); break;
+                    case ObjectsToSearch.Scene: scene?.Add(component); break;
                 }
             }
         }
