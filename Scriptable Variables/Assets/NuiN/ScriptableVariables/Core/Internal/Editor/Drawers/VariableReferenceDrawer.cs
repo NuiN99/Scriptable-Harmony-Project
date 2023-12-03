@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NuiN.ScriptableVariables.Core.Editor
 {
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(VariableReader<>))]
+    [CustomPropertyDrawer(typeof(GetVariable<>))]
     internal class VariableReaderDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) 
@@ -17,7 +17,7 @@ namespace NuiN.ScriptableVariables.Core.Editor
             => SOReferenceGUIHelper.GetPropertyHeight(property, label);
     }
 
-    [CustomPropertyDrawer(typeof(VariableWriter<>))]
+    [CustomPropertyDrawer(typeof(SetVariable<>))]
     internal class VariableWriterDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

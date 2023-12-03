@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableVariables.RuntimeSingle.References
 {
     [Serializable]
-    public class RuntimeSingleWriter<T> : RuntimeSingleReferenceBase<T> where T : Object
+    public class SetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T> where T : Object
     {
         public T Item
         {

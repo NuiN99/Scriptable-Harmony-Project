@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableVariables.RuntimeSet.References
 {
     [Serializable]
-    public class RuntimeSetWriter<T> : RuntimeSetReferenceBase<T> where T : Object
+    public class SetRuntimeSet<T> : ReferenceRuntimeSetBase<T> where T : Object
     {
         public List<T> Items => runtimeSet.runtimeSet;
     

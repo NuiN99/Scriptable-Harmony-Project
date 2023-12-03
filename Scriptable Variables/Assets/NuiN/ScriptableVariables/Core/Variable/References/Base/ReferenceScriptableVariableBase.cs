@@ -5,7 +5,7 @@ using UnityEngine;
 namespace NuiN.ScriptableVariables.Variable.References.Base
 {
     [Serializable]
-    public class ScriptableVariableReferenceBase<T>
+    public class ReferenceScriptableVariableBase<T>
     {
         [SerializeField] protected ScriptableVariableBaseSO<T> variable;
         

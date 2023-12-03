@@ -5,7 +5,7 @@ public class MousePositionSetter : MonoBehaviour
 {
     Camera _cam;
     
-    [SerializeField] VariableWriter<Vector2> mousePos;
+    [SerializeField] SetVariable<Vector2> mousePos;
 
     void Awake() => _cam = FindFirstObjectByType<Camera>();
     

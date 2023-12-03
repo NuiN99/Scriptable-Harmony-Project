@@ -28,7 +28,7 @@ namespace NuiN.ScriptableVariables.Core.Variable.Base
         [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
         [SerializeField] ReadWriteReferencesContainer readersAndWriters = 
-            new("variable", typeof(ScriptableVariableReferenceBase<T>), typeof(VariableReader<T>), typeof(VariableWriter<T>));
+            new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
 #endif
         
         void OnEnable()

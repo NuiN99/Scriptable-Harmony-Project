@@ -6,8 +6,8 @@ public class ClosestEnemyToMouseSetter : MonoBehaviour
 {
     GameObject _closestEnemy;
 
-    [SerializeField] RuntimeSetWriter<GameObject> enemySet;
-    [SerializeField] VariableReader<Vector2> mousePosition;
+    [SerializeField] SetRuntimeSet<GameObject> enemySet;
+    [SerializeField] GetVariable<Vector2> mousePosition;
 
     void Update()
     {

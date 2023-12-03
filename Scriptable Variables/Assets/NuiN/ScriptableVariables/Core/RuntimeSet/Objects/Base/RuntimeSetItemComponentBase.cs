@@ -9,7 +9,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base
     
         [SerializeField] T thisObject;
     
-        [SerializeField] RuntimeSetWriter<T> runtimeSet;
+        [SerializeField] SetRuntimeSet<T> runtimeSet;
         [SerializeField] Type lifetimeType;
 
         [Header("Actions")]

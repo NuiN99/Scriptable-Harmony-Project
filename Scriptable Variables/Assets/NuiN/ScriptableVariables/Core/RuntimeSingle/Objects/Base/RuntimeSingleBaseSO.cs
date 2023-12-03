@@ -33,10 +33,10 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         [ReadOnly] [SerializeField] int total;
         
         [SerializeField] RuntimeSetReferencesContainer setItems = 
-            new("item", typeof(RuntimeSingleItemComponentBase<T>), typeof(RuntimeSingleWriter<T>));
+            new("item", typeof(RuntimeSingleItemComponentBase<T>), typeof(SetRuntimeSingle<T>));
         
         [SerializeField] ReadWriteReferencesContainer readersAndWriters = 
-            new("item", typeof(RuntimeSingleReferenceBase<T>), typeof(RuntimeSingleReader<T>), typeof(RuntimeSingleWriter<T>));
+            new("item", typeof(ReferenceRuntimeSingleBase<T>), typeof(GetRuntimeSingle<T>), typeof(SetRuntimeSingle<T>));
 #endif
         
         void OnEnable()

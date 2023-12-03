@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class HealthbarUI : MonoBehaviour
 {
     [Header("Readers")]
-    [SerializeField] VariableReader<float> maxHealth;
-    [SerializeField] VariableReader<float> curHealth;
+    [SerializeField] GetVariable<float> maxHealth;
+    [SerializeField] GetVariable<float> curHealth;
     
     [Header("UI")]
     [SerializeField] Slider healthSlider;

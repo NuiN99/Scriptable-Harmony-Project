@@ -9,33 +9,33 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
     [Serializable]
     internal class ReadWriteReferencesContainer : ReferencesContainerBase
     {
-        Type _readerType;
-        Type _writerType;
+        Type _getterType;
+        Type _setterType;
         
         [Header("Prefabs")]
-        public List<Component> Readers;
-        public List<Component> Writers;
+        public List<Component> Getters;
+        public List<Component> Setters;
             
         [Header("Scene")]
-        public List<Component> readers;
-        public List<Component> writers;
+        public List<Component> getters;
+        public List<Component> setters;
         
-        public ReadWriteReferencesContainer(string fieldName, Type baseType, Type readerType, Type writerType) : base(fieldName, baseType)
+        public ReadWriteReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)
         {
-            _writerType = writerType;
-            _readerType = readerType;
+            _setterType = setterType;
+            _getterType = getterType;
         }
         
-        public override int TotalReferencesCount() => Writers.Count + Readers.Count + writers.Count + readers.Count;
+        public override int TotalReferencesCount() => Setters.Count + Getters.Count + setters.Count + getters.Count;
 
-        public override bool ListsAreNull() => Writers == null || Readers == null || writers == null || readers == null;
+        public override bool ListsAreNull() => Setters == null || Getters == null || setters == null || getters == null;
 
         public override void Clear()
         {
-            Readers?.Clear();
-            Writers?.Clear();
-            readers?.Clear();
-            writers?.Clear();
+            Getters?.Clear();
+            Setters?.Clear();
+            getters?.Clear();
+            setters?.Clear();
         }
         
         protected override void CheckComponentAndAssign(object variableCaller, Component component, ObjectsToSearch objectsToSearch)
@@ -49,13 +49,13 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
                 Type type = field.FieldType;
                 if (!type.IsGenericType) continue;
 
-                bool isGetter = type == _readerType;
-                bool isSetter = type == _writerType;
+                bool isGetter = type == _getterType;
+                bool isSetter = type == _setterType;
 
                 if (!isGetter && !isSetter) continue;
                         
                 object variableField = field.GetValue(component);
-                if (variableField == null || (!_readerType.IsInstanceOfType(variableField) && !_writerType.IsInstanceOfType(variableField))) return;
+                if (variableField == null || (!_getterType.IsInstanceOfType(variableField) && !_setterType.IsInstanceOfType(variableField))) return;
 
                 FieldInfo variableFieldInfo =
                     baseType.GetField(fieldName,
@@ -66,10 +66,10 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
 
                 switch (objectsToSearch)
                 {
-                    case ObjectsToSearch.Prefabs when isGetter:Readers?.Add(component); break;
-                    case ObjectsToSearch.Prefabs: Writers?.Add(component); break;
-                    case ObjectsToSearch.Scene when isGetter: readers?.Add(component); break;
-                    case ObjectsToSearch.Scene: writers?.Add(component); break;
+                    case ObjectsToSearch.Prefabs when isGetter:Getters?.Add(component); break;
+                    case ObjectsToSearch.Prefabs: Setters?.Add(component); break;
+                    case ObjectsToSearch.Scene when isGetter: getters?.Add(component); break;
+                    case ObjectsToSearch.Scene: setters?.Add(component); break;
                 }
             }
         }

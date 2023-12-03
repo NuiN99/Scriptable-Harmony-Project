@@ -9,7 +9,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base
     
         [SerializeField] T thisObject;
     
-        [SerializeField] RuntimeSingleWriter<T> runtimeSingle;
+        [SerializeField] SetRuntimeSingle<T> runtimeSingle;
         [SerializeField] Type lifetimeType;
 
         [SerializeField] bool overwriteExisting;

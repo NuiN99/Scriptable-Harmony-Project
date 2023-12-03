@@ -5,7 +5,7 @@ using UnityEditor;
 namespace NuiN.ScriptableVariables.Variable.References
 {
     [Serializable]
-    public class VariableWriter<T> : ScriptableVariableReferenceBase<T>
+    public class SetVariable<T> : ReferenceScriptableVariableBase<T>
     {
         public T Val => variable.value;
 

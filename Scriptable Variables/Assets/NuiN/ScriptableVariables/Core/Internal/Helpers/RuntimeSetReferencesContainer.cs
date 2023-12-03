@@ -12,11 +12,11 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
         public List<Component> prefabs;
         public List<Component> scene;
         
-        Type _writerType;
+        Type _setterType;
 
-        public RuntimeSetReferencesContainer(string fieldName, Type baseType, Type writerType) : base(fieldName, baseType)
+        public RuntimeSetReferencesContainer(string fieldName, Type baseType, Type setterType) : base(fieldName, baseType)
         {
-            _writerType = writerType;
+            _setterType = setterType;
         }
         
         public override int TotalReferencesCount() => prefabs.Count + scene.Count;
@@ -45,10 +45,10 @@ namespace NuiN.ScriptableVariables.Core.InternalHelpers
                 if (!type.IsGenericType) continue;
 
                 object variableField = field.GetValue(component);
-                if (variableField == null || !_writerType.IsInstanceOfType(variableField)) continue;
+                if (variableField == null || !_setterType.IsInstanceOfType(variableField)) continue;
 
                 FieldInfo variableFieldInfo =
-                    _writerType.GetField(fieldName,
+                    _setterType.GetField(fieldName,
                         BindingFlags.Instance | BindingFlags.NonPublic);
 
                 if (variableFieldInfo == null ||
