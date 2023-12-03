@@ -9,8 +9,8 @@ namespace NuiN.ScriptableVariables.RuntimeSingle.References
     {
         public T Item
         {
-            get => runtimeSingle.item;
-            private set => runtimeSingle.item = value;
+            get => runtimeSingle.runtimeSingle;
+            private set => runtimeSingle.runtimeSingle = value;
         }
 
         public void Set(T newItem, bool invokeActions = true, bool overrideExisting = true)

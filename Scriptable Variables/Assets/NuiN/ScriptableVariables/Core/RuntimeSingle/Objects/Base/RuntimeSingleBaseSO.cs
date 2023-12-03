@@ -15,7 +15,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
     {
         [SerializeField] [TextArea] string description;
 
-        public T item;
+        public T runtimeSingle;
 
         public Action<T> onSet;
         public Action<T, T> onSetWithOld;
@@ -33,10 +33,10 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         [ReadOnly] [SerializeField] int total;
         
         [SerializeField] RuntimeSetReferencesContainer componentHolders = 
-            new("item", typeof(RuntimeSingleItemComponentBase<T>), typeof(SetRuntimeSingle<T>));
+            new("runtimeSingle", typeof(RuntimeSingleItemComponentBase<T>), typeof(SetRuntimeSingle<T>));
         
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
-            new("item", typeof(ReferenceRuntimeSingleBase<T>), typeof(GetRuntimeSingle<T>), typeof(SetRuntimeSingle<T>));
+            new("runtimeSingle", typeof(ReferenceRuntimeSingleBase<T>), typeof(GetRuntimeSingle<T>), typeof(SetRuntimeSingle<T>));
 #endif
         
         void OnEnable()
@@ -65,7 +65,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
             }
             
             if (!resetOnSceneLoad) return;
-            item = null;
+            runtimeSingle = null;
         }
         
 #if UNITY_EDITOR
@@ -74,7 +74,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         {
             if (state != PlayModeStateChange.EnteredEditMode) return;
                 
-            item = null;
+            runtimeSingle = null;
             _loadedFirstScene = false;
         }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Single
   m_EditorClassIdentifier: 
   description: 
-  item: {fileID: 0}
+  runtimeSingle: {fileID: 0}
   resetOnSceneLoad: 1
   total: 0
   componentHolders:

@@ -17,8 +17,8 @@ MonoBehaviour:
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 4
-  readersAndWriters:
-    Readers: []
-    Writers: []
-    readers: []
-    writers: []
+  gettersAndSetters:
+    Getters: []
+    Setters: []
+    getters: []
+    setters: []
