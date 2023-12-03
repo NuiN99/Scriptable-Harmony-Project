@@ -100,11 +100,10 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
             };
         }
 
-        string AdjustedPath()
-        {
-            return $"{constantPath}/{Suffix()}";
-        }
-
+        string AdjustedPath() => $"{constantPath}/{Suffix()}";
+        string Suffix() => SingularSuffix() + "s";
+        string FileName() => $"New {displayType} {SingularSuffix()}";
+        
         string SingularSuffix()
         {
             return objectType switch
@@ -115,18 +114,7 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
                 _ => ""
             };
         }
-
-        string Suffix()
-        {
-            return objectType switch
-            {
-                ObjectType.Variable => "Variables",
-                ObjectType.RuntimeSet => "RuntimeSets",
-                ObjectType.RuntimeSingle => "RuntimeSingles",
-                _ => ""
-            };
-        }
-
+        
         string BaseClass()
         {
             if (_isComponent)
@@ -148,10 +136,6 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
             };
         }
 
-        string FileName()
-        {
-            return $"New {displayType} {SingularSuffix()}";
-        }
 
         void GenerateCSharpFile(string fileName, string fileContents)
         {
