@@ -1,3 +1,4 @@
+using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.RuntimeSingle.References;
 using UnityEngine;
 
@@ -21,7 +22,11 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base
         void OnEnable() => SetItem(Type.OnEnableOnDisable);
         void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
 
-        void Awake() => SetItem(Type.OnAwakeOnDestroy);
+        void Awake()
+        {
+            SetItem(Type.OnAwakeOnDestroy);
+        }
+
         void OnDestroy() => RemoveFromSet(lifetimeType);
 
         void SetItem(Type type)
