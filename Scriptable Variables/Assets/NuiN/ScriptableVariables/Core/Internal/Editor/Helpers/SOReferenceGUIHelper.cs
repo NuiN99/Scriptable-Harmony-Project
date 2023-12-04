@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using NuiN.ScriptableVariables.Core.Tools;
+using NuiN.ScriptableVariables.Core.Editor.Tools;
 using NuiN.ScriptableVariables.Internal.Helpers;
 using UnityEditor;
 using UnityEngine;

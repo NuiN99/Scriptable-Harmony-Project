@@ -8,7 +8,7 @@ using System.Linq;
 using NuiN.ScriptableVariables.Core.Variable.Base;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.Tools
+namespace NuiN.ScriptableVariables.Core.Editor.Tools
 {
     internal class ScriptableObjectFindWindow : EditorWindow
     {

@@ -9,18 +9,16 @@ using NuiN.ScriptableVariables.Core.Variable.Base;
 using NuiN.ScriptableVariables.Internal.Helpers;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.Tools
+namespace NuiN.ScriptableVariables.Core.Editor.Tools
 {
-    public class CustomTypeScriptGeneratorWindow : EditorWindow
+    internal class CustomTypeScriptGeneratorWindow : EditorWindow
     {
-        SOType _objectType = SOType.RuntimeSet;
-        string _displayType = "GameObject";
-        string _constantPath = "Assets/NuiN/ScriptableVariables/CustomTypes";
-        string _updatedPath;
-        string _scriptPreview;
-        bool _autoUpdateTemplate = true;
-        bool _autoUpdatePath = true;
-        bool _overwriteExisting;
+        SOType _dataType = SOType.RuntimeSet;
+        static string _type = "SomeClass";
+        string _path;
+        static string _scriptPreview;
+        static bool _lockPreview = true;
+        static bool _overwriteExisting;
 
         bool _isComponent;
         
@@ -30,7 +28,10 @@ using NuiN.ScriptableVariables.Core.{SingularSuffix}.Base;
 
 namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}
 {   
-    [CreateAssetMenu(menuName = ""ScriptableVariables/Custom/{Suffix}/{Type}"", fileName = ""{FileName}"")]
+    [CreateAssetMenu(
+        menuName = ""ScriptableVariables/Custom/{Suffix}/{Type}"", 
+        fileName = ""{FileName}"")]
+
     internal class {TypeWithSuffix}SO : {BaseClass}<{Type}> { }
 }";
         
@@ -42,54 +43,89 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
 {   
     public class {TypeWithSuffix}Item : {BaseClass}<{Type}> { }
 }";
-
-        [MenuItem("ScriptableVariables/Custom Type Script Generator")]
-        static void ShowWindow()
+        
+        static CustomTypeScriptGeneratorWindow _windowInstance;
+        
+        [MenuItem("Assets/Create/ScriptableVariables/Custom Type Script", false, 0)]
+        static void OpenWindow()
         {
-            CustomTypeScriptGeneratorWindow window = GetWindow<CustomTypeScriptGeneratorWindow>();
-            window.titleContent = new GUIContent("Script Generator");
-            window.Show();
+            string selectedPath = GetSelectedFolderPath();
+            if (!string.IsNullOrEmpty(selectedPath))
+            {
+                _windowInstance = GetWindow<CustomTypeScriptGeneratorWindow>();
+                _windowInstance.titleContent = new GUIContent("Script Generator");
+                _windowInstance.Show();
+
+                _windowInstance._path = selectedPath;
+            }
+            else
+            {
+                Debug.LogWarning("Please select a valid folder in the project view.");
+            }
+
+            return;
+            
+            string GetSelectedFolderPath()
+            {
+                Object[] selectedObjects = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
+                if (selectedObjects.Length <= 0) return null;
+            
+                string path = AssetDatabase.GetAssetPath(selectedObjects[0]);
+                if (File.Exists(path))
+                {
+                    path = Path.GetDirectoryName(path);
+                }
+                return path;
+            }
         }
 
         Vector2 _scrollPosition;
         void OnGUI()
         {
-            _objectType = (SOType)EditorGUILayout.EnumPopup("Object Type", _objectType);
-            _displayType = EditorGUILayout.TextField("Display Type", _displayType);
-            _constantPath = EditorGUILayout.TextField("Constant Path", _constantPath);
-            _autoUpdateTemplate = EditorGUILayout.Toggle("Auto Update Template", _autoUpdateTemplate);
-            _autoUpdatePath = EditorGUILayout.Toggle("Auto Update Path", _autoUpdatePath);
+            GUILayout.Space(10);
+            _dataType = (SOType)EditorGUILayout.EnumPopup("Data Type", _dataType);
+            _type = EditorGUILayout.TextField("Type", _type);
             _overwriteExisting = EditorGUILayout.Toggle("Overwrite Existing", _overwriteExisting);
 
             GUILayout.Space(10);
 
-            if (GUILayout.Button("Generate New Variable Script", GUILayout.Height(30)))
+            EditorGUILayout.LabelField("Preview:");
+
+            using (var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition, GUILayout.Height(position.height - 200)))  // Adjusted the height here
+            {
+                _scrollPosition = scrollView.scrollPosition;
+                if (_lockPreview) EditorGUI.BeginDisabledGroup(true);
+                _scriptPreview = EditorGUILayout.TextArea(_scriptPreview, GUILayout.ExpandHeight(true));
+                if (_lockPreview) EditorGUI.EndDisabledGroup();
+            }
+            _lockPreview = EditorGUILayout.Toggle("Lock Preview", _lockPreview);
+
+            GUIStyle buttonStyle = new GUIStyle(GUI.skin.button)
+            {
+                normal = { textColor = new Color(1, 0.3f, 0f, 1f) },
+                fontSize = 17,
+                fontStyle = FontStyle.Bold,
+                fixedHeight = 75 
+            };
+            Color ogColor = GUI.backgroundColor;
+            GUI.backgroundColor = new Color(0.6f, 0.9f, 1f, 1f);
+
+            if (GUILayout.Button("Generate Script", buttonStyle, GUILayout.ExpandWidth(true), GUILayout.Height(30)))  // Adjusted the height here
             {
                 GenerateScript();
             }
 
-            GUILayout.Space(10);
+            GUI.backgroundColor = ogColor;
 
-            EditorGUILayout.LabelField("Script Preview:");
-
-            using (var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition, GUILayout.Height(200)))
-            {
-                _scrollPosition = scrollView.scrollPosition;
-                _scriptPreview = EditorGUILayout.TextArea(_scriptPreview, GUILayout.ExpandHeight(true));
-            }
-
-            if (_autoUpdateTemplate) _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
-            if (_autoUpdatePath) _updatedPath = Path();
+            if (_lockPreview) _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
         }
-
 
         public void GenerateScript()
         {
             _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
-            if(_autoUpdatePath) _updatedPath = Path();
             GenerateCSharpFile($"{TypeWithSuffix()}SO", _scriptPreview);
 
-            if (_objectType is not (SOType.RuntimeSet or SOType.RuntimeSingle)) return;
+            if (_dataType is not (SOType.RuntimeSet or SOType.RuntimeSingle)) return;
 
             _isComponent = true;
             _scriptPreview = ScriptPreview(COMPONENT_SCRIPT_TEMPLATE);
@@ -99,7 +135,7 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
 
         string ScriptPreview(string constTemplate)
         {
-            constTemplate = constTemplate.Replace("{Type}", _displayType);
+            constTemplate = constTemplate.Replace("{Type}", _type);
             constTemplate = constTemplate.Replace("{TypeWithSuffix}", TypeWithSuffix());
             constTemplate = constTemplate.Replace("{BaseClass}", BaseClass());
             constTemplate = constTemplate.Replace("{Suffix}", Suffix());
@@ -111,22 +147,20 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
 
         string TypeWithSuffix()
         {
-            return _objectType switch
+            return _dataType switch
             {
-                SOType.ScriptableVariable => $"{_displayType}{SingularSuffix()}",
-                _ => $"{_displayType}{SingularSuffix()}"
+                SOType.ScriptableVariable => $"{_type}{SingularSuffix()}",
+                _ => $"{_type}{SingularSuffix()}"
             };
         }
 
-        string Path() => $"{_constantPath}/{Suffix()}";
-
         string Suffix() => SingularSuffix() + "s";
 
-        string FileName() => $"New {_displayType} {SingularSuffix()}";
+        string FileName() => $"New {_type} {SingularSuffix()}";
 
         string SingularSuffix()
         {
-            return _objectType switch
+            return _dataType switch
             {
                 SOType.ScriptableVariable => "Variable",
                 SOType.RuntimeSet => "RuntimeSet",
@@ -139,7 +173,7 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
         {
             if (_isComponent)
             {
-                return _objectType switch
+                return _dataType switch
                 {
                     SOType.RuntimeSet => nameof(RuntimeSetItemComponentBase<Object>),
                     SOType.RuntimeSingle => nameof(RuntimeSingleItemComponentBase<Object>),
@@ -147,7 +181,7 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
                     _ => null
                 };
             }
-            return _objectType switch
+            return _dataType switch
             {
                 SOType.ScriptableVariable => nameof(ScriptableVariableBaseSO<object>),
                 SOType.RuntimeSet => nameof(RuntimeSetBaseSO<Object>),
@@ -158,7 +192,7 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
 
         void GenerateCSharpFile(string fileName, string fileContents)
         {
-            string filePath = System.IO.Path.Combine(_updatedPath, $"{fileName}.cs");
+            string filePath = Path.Combine(_path, $"{fileName}.cs");
 
             if (File.Exists(filePath) && !_overwriteExisting)
             {
