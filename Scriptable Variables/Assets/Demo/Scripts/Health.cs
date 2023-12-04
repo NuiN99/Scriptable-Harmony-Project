@@ -1,4 +1,3 @@
-using System;
 using NuiN.ScriptableVariables.Variable.References;
 using UnityEngine;
 using UnityEngine.SceneManagement;

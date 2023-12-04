@@ -1,5 +1,5 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.Core.RuntimeSet.Base;
+using NuiN.ScriptableVariables.RuntimeSet.Base;
 
 namespace NuiN.ScriptableVariables.CustomTypes.RuntimeSets
 {   
