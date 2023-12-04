@@ -16,6 +16,8 @@ namespace NuiN.ScriptableVariables.Core.Tools
         Vector2 _scrollPosition;
         static string _typeName;
 
+        int _resultCount;
+
         string TypeName
         {
             get => _typeName;
@@ -32,6 +34,9 @@ namespace NuiN.ScriptableVariables.Core.Tools
         string _searchFilter;
         static ScriptableObjectFindWindow _windowInstance;
 
+        [MenuItem("ScriptableVariables/Object Finder")]
+        static void OpenFindWindowMenuItem() => OpenFindWindow(string.Empty, null);
+        
         public static void OpenFindWindow(string typeName, SerializedProperty property)
         {
             _property = property;
@@ -98,9 +103,9 @@ namespace NuiN.ScriptableVariables.Core.Tools
             {
                 GUILayout.BeginHorizontal();
             
-                EditorGUILayout.LabelField($"Search Results: {_foundObjects.Count}");
+                EditorGUILayout.LabelField($"Search Results: {_resultCount}");
 
-                if (_property.objectReferenceValue != null)
+                if (_property != null && _property.objectReferenceValue != null)
                 {
                     GUIStyle emptyFieldButtonStyle = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.white } };
                     Color ogColor = GUI.color;
@@ -128,14 +133,21 @@ namespace NuiN.ScriptableVariables.Core.Tools
                     fontSize = 14,
                     fontStyle = FontStyle.Bold
                 };
-                EditorGUI.LabelField(messageRect, $"No {_typeName} Objects Found", messageStyle);
+                string noResultsMessage =
+                    _typeName != string.Empty 
+                        ? $"No {_typeName} Objects Found" 
+                        : "No Type Specified";
+                
+                EditorGUI.LabelField(messageRect, noResultsMessage, messageStyle);
                 EditorGUILayout.EndScrollView();
             }
 
             void DrawSearchResults()
             {
+                _resultCount = 0;
                 foreach (Object obj in _foundObjects.Where(obj => string.IsNullOrEmpty(_searchFilter) || obj.name.Contains(_searchFilter, StringComparison.OrdinalIgnoreCase)))
                 {
+                    _resultCount++;
                     EditorGUILayout.BeginHorizontal();
 
                     Rect labelRect = GUILayoutUtility.GetRect(new GUIContent(obj.name), EditorStyles.label);
