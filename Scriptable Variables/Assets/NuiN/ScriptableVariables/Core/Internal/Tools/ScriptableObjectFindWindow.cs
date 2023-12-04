@@ -85,7 +85,6 @@ namespace NuiN.ScriptableVariables.Core.Tools
             void DrawTypeSearchBar()
             {
                 EditorGUILayout.BeginHorizontal();
-                
                 GUIContent searchIcon = EditorGUIUtility.IconContent("Search Icon");
                 GUILayout.Space(5);
                 EditorGUILayout.LabelField(searchIcon, GUILayout.Width(20));
@@ -100,19 +99,22 @@ namespace NuiN.ScriptableVariables.Core.Tools
                 GUILayout.BeginHorizontal();
             
                 EditorGUILayout.LabelField($"Search Results: {_foundObjects.Count}");
-            
-                GUIStyle emptyFieldButtonStyle = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.white } };
-                Color ogColor = GUI.color;
-                GUI.color = Color.red;
-            
-                GUILayout.FlexibleSpace();
-                if (GUILayout.Button("Remove", emptyFieldButtonStyle, GUILayout.Width(60)) && _property != null)
+
+                if (_property.objectReferenceValue != null)
                 {
-                    _property.objectReferenceValue = null;
-                    _property.serializedObject.ApplyModifiedProperties();
-                    Close();
+                    GUIStyle emptyFieldButtonStyle = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.white } };
+                    Color ogColor = GUI.color;
+                    GUI.color = Color.red;
+            
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("Remove", emptyFieldButtonStyle, GUILayout.Width(60)) && _property != null)
+                    {
+                        _property.objectReferenceValue = null;
+                        _property.serializedObject.ApplyModifiedProperties();
+                        Close();
+                    }
+                    GUI.color = ogColor;
                 }
-                GUI.color = ogColor;
                 
                 GUILayout.EndHorizontal();
             }
@@ -149,12 +151,9 @@ namespace NuiN.ScriptableVariables.Core.Tools
                     GUIStyle style = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.black } };
                     if (GUILayout.Button("Assign", style, GUILayout.Width(60)) && _property != null)
                     {
-                        if (_property.objectReferenceValue.GetType() == obj.GetType())
-                        {
-                            _property.objectReferenceValue = obj;
-                            _property.serializedObject.ApplyModifiedProperties();
-                            Close();
-                        }
+                        _property.objectReferenceValue = obj;
+                        _property.serializedObject.ApplyModifiedProperties();
+                        Close();
                     }
 
                     EditorGUILayout.EndHorizontal();
