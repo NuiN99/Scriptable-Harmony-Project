@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.InternalHelpers
+namespace NuiN.ScriptableVariables.Internal.Helpers
 {
     [Serializable]
     public abstract class ReferencesContainerBase

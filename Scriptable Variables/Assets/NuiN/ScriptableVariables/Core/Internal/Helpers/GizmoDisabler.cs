@@ -1,8 +1,7 @@
 using System;
 using System.Reflection;
-using UnityEditor;
 
-namespace NuiN.ScriptableVariables.Core.InternalHelpers
+namespace NuiN.ScriptableVariables.Internal.Helpers
 {
     public static class GizmoDisabler
     {

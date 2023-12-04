@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.InternalHelpers
+namespace NuiN.ScriptableVariables.Internal.Helpers
 {
     internal static class GameLoadedEvent
     {

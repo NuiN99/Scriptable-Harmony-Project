@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using System.IO;
 using NuiN.ScriptableVariables.Core.RuntimeSet.Base;

@@ -1,7 +1,7 @@
 using System;
 using NuiN.ScriptableVariables.Core.Attributes;
-using NuiN.ScriptableVariables.Core.InternalHelpers;
 using NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base;
+using NuiN.ScriptableVariables.Internal.Helpers;
 using NuiN.ScriptableVariables.RuntimeSingle.References;
 using NuiN.ScriptableVariables.RuntimeSingle.References.Base;
 using UnityEditor;

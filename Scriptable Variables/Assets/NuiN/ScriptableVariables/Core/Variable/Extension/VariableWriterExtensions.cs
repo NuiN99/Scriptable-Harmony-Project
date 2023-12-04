@@ -1,5 +1,4 @@
 using System;
-using NuiN.ScriptableVariables.Variable.References;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Variable.References

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using NuiN.ScriptableVariables.Core.Attributes;
-using NuiN.ScriptableVariables.Core.InternalHelpers;
+using NuiN.ScriptableVariables.Internal.Helpers;
 using NuiN.ScriptableVariables.Variable.References;
 using NuiN.ScriptableVariables.Variable.References.Base;
 
