@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
 {   
-    [CreateAssetMenu(menuName = "ScriptableVariables/Normal/bool", fileName = "New Bool Variable")]
+    [CreateAssetMenu(
+        menuName = "ScriptableVariables/Common/Variables/bool", 
+        fileName = "New Bool Variable")]
     internal class BoolSO : ScriptableVariableBaseSO<bool> { }
 }

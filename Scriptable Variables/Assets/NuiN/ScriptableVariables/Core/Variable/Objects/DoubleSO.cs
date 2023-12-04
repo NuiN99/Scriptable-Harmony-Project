@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
 {   
-    [CreateAssetMenu(menuName = "ScriptableVariables/Normal/double", fileName = "New Double Variable")]
+    [CreateAssetMenu(
+        menuName = "ScriptableVariables/Common/Variables/double", 
+        fileName = "New Double Variable")]
     internal class DoubleSO : ScriptableVariableBaseSO<double> { }
 }

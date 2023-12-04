@@ -14,7 +14,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
     internal class CustomTypeScriptGeneratorWindow : EditorWindow
     {
         SOType _dataType = SOType.RuntimeSet;
-        static string _type = "SomeClass";
+        static string _type;
         string _path;
         static string _scriptPreview;
         static bool _lockPreview = true;
