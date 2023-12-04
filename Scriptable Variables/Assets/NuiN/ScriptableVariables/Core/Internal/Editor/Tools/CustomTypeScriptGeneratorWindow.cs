@@ -93,7 +93,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
 
             EditorGUILayout.LabelField("Preview:");
 
-            using (var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition, GUILayout.Height(position.height - 200)))  // Adjusted the height here
+            using (var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition, GUILayout.Height(position.height - 200)))
             {
                 _scrollPosition = scrollView.scrollPosition;
                 if (_lockPreview) EditorGUI.BeginDisabledGroup(true);
@@ -112,7 +112,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
             Color ogColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(0.6f, 0.9f, 1f, 1f);
 
-            if (GUILayout.Button("Generate Script", buttonStyle, GUILayout.ExpandWidth(true), GUILayout.Height(30)))  // Adjusted the height here
+            if (GUILayout.Button("Generate Script", buttonStyle, GUILayout.ExpandWidth(true)))
             {
                 GenerateScript();
             }
