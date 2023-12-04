@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.Attributes
+namespace NuiN.ScriptableVariables.Internal.Attributes
 {
     public class TypeMismatchFixAttribute : PropertyAttribute { }
 

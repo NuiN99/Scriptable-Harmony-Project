@@ -4,7 +4,7 @@ using NuiN.ScriptableVariables.Variable.References;
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.Editor
+namespace NuiN.ScriptableVariables.Internal.Editor
 {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(GetVariable<>))]

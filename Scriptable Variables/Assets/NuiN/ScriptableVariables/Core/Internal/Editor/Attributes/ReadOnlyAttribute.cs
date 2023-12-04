@@ -1,13 +1,13 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.Attributes
+namespace NuiN.ScriptableVariables.Internal.Attributes
 {
     public class ReadOnlyAttribute : PropertyAttribute { }
 
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
-    public class ReadOnlyDrawer : PropertyDrawer
+    internal class ReadOnlyDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

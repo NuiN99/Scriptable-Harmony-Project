@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NuiN.ScriptableVariables.Internal.Helpers
 {
     [Serializable]
-    public abstract class ReferencesContainerBase
+    internal abstract class ReferencesContainerBase
     {
 #if UNITY_EDITOR
         public enum ObjectsToSearch { Scene, Prefabs }

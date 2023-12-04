@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace NuiN.ScriptableVariables.Internal.Helpers
 {
-    public static class GizmoDisabler
+    internal static class GizmoDisabler
     {
 #if UNITY_EDITOR
         static MethodInfo _setIconEnabled;
