@@ -15,6 +15,19 @@ namespace NuiN.ScriptableVariables.Core.Tools
         List<Object> _foundObjects = new();
         Vector2 _scrollPosition;
         static string _typeName;
+
+        string TypeName
+        {
+            get => _typeName;
+            set
+            {
+                string ogValue = _typeName;
+                _typeName = value;
+                
+                if(_typeName != ogValue) FindObjects();
+            }
+        }
+        
         static SerializedProperty _property;
         string _searchFilter;
         static ScriptableObjectFindWindow _windowInstance;
@@ -38,7 +51,9 @@ namespace NuiN.ScriptableVariables.Core.Tools
 
         void OnGUI()
         {
+            DrawTypeSearchBar();
             DrawSearchBar();
+            
             DrawTopBar();
             
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
@@ -57,11 +72,25 @@ namespace NuiN.ScriptableVariables.Core.Tools
             void DrawSearchBar()
             {
                 EditorGUILayout.BeginHorizontal();
+
+                GUIContent searchIcon = EditorGUIUtility.IconContent("Search Icon");
+                GUILayout.Space(5);
+                EditorGUILayout.LabelField(searchIcon, GUILayout.Width(20));
+                EditorGUILayout.LabelField("Filter:", GUILayout.Width(35));
+                _searchFilter = EditorGUILayout.TextField(_searchFilter);
+
+                EditorGUILayout.EndHorizontal();
+            }
+            
+            void DrawTypeSearchBar()
+            {
+                EditorGUILayout.BeginHorizontal();
                 
                 GUIContent searchIcon = EditorGUIUtility.IconContent("Search Icon");
                 GUILayout.Space(5);
                 EditorGUILayout.LabelField(searchIcon, GUILayout.Width(20));
-                _searchFilter = EditorGUILayout.TextField(_searchFilter);
+                EditorGUILayout.LabelField("Type:", GUILayout.Width(35));
+                TypeName = EditorGUILayout.TextField(TypeName);
                 
                 EditorGUILayout.EndHorizontal();
             }
@@ -120,9 +149,12 @@ namespace NuiN.ScriptableVariables.Core.Tools
                     GUIStyle style = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.black } };
                     if (GUILayout.Button("Assign", style, GUILayout.Width(60)) && _property != null)
                     {
-                        _property.objectReferenceValue = obj;
-                        _property.serializedObject.ApplyModifiedProperties();
-                        Close();
+                        if (_property.objectReferenceValue.GetType() == obj.GetType())
+                        {
+                            _property.objectReferenceValue = obj;
+                            _property.serializedObject.ApplyModifiedProperties();
+                            Close();
+                        }
                     }
 
                     EditorGUILayout.EndHorizontal();
