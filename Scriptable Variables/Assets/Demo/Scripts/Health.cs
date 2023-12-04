@@ -9,6 +9,16 @@ public class Health : MonoBehaviour
     [SerializeField] SetVariable<float> maxHealth;
     [SerializeField] SetVariable<float> curHealth;
 
+    static Health instance;
+
+    void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+        
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void TakeDamage(float amount)
     {
         curHealth.SubtractClamped(amount, min: 0, max: maxHealth.Val);

@@ -28,8 +28,6 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Base
         public Action onClear;
         public Action<List<T>> onClearWithOld;
 
-        bool _loadedFirstScene;
-        
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad = true;
         
@@ -46,7 +44,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Base
         
         void OnEnable()
         {
-            SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
+            SceneManager.sceneUnloaded += ResetValuesOnSceneUnloaded;
 #if UNITY_EDITOR
             Selection.selectionChanged += OnSelectedInProjectWindow;
             EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
@@ -54,22 +52,18 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Base
         }
         void OnDisable()
         {
-            SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
+            SceneManager.sceneUnloaded -= ResetValuesOnSceneUnloaded;
+
 #if UNITY_EDITOR
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
             Selection.selectionChanged -= OnSelectedInProjectWindow;
 #endif
         }
         
-        void ResetValueOnSceneLoad(Scene scene, Scene scene2)
+        void ResetValuesOnSceneUnloaded(Scene scene)
         {
-            if (!_loadedFirstScene)
-            {
-                _loadedFirstScene = true;
-                return;
-            }
-            
             if (!resetOnSceneLoad) return;
+            
             runtimeSet.Clear();
         }
         
@@ -78,9 +72,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Base
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (state != PlayModeStateChange.EnteredEditMode) return;
-                
             runtimeSet.Clear();
-            _loadedFirstScene = false;
         }
 
         void Reset() => AssignDebugReferences();
