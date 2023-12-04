@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth:
-    variable: {fileID: 11400000, guid: a3c0bcc312ab773419e971dce8159a71, type: 2}
+    variable: {fileID: 11400000, guid: f7d0b865de3082e4d9d52d6472064416, type: 2}
   curHealth:
     variable: {fileID: 11400000, guid: a3c0bcc312ab773419e971dce8159a71, type: 2}
 --- !u!114 &6679494176011856133
