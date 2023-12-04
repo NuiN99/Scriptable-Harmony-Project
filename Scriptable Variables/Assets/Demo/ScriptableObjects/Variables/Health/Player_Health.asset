@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Player_Health
   m_EditorClassIdentifier: 
   description: 
-  value: 0
-  resetOnSceneLoad: 1
+  value: 100
+  resetOnSceneLoad: 0
   resetOnExitPlaymode: 1
   total: 4
   gettersAndSetters:

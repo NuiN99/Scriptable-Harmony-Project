@@ -1,16 +1,13 @@
+using System;
 using NuiN.ScriptableVariables.Variable.References;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
     [Header("Writers")]
     [SerializeField] SetVariable<float> maxHealth;
     [SerializeField] SetVariable<float> curHealth;
-
-    void Start()
-    {
-        curHealth.Set(maxHealth.Val);
-    }
 
     public void TakeDamage(float amount)
     {
@@ -20,6 +17,7 @@ public class Health : MonoBehaviour
     // temp for testing
     void Update()
     {
+        if (Input.GetMouseButtonDown(1)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if(Input.GetMouseButtonDown(0)) TakeDamage(10);
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   description: 
   runtimeSingle: {fileID: 0}
   resetOnSceneLoad: 1
-  total: 0
+  total: 2
   componentHolders:
     prefabs: []
     scene: []

@@ -15,12 +15,21 @@ MonoBehaviour:
   description: 
   runtimeSet: []
   resetOnSceneLoad: 1
-  total: 0
+  total: 9
   componentHolders:
-    prefabs: []
-    scene: []
+    prefabs:
+    - {fileID: 450335135464177955, guid: 2f574bdb8ba5f12448c4045694130848, type: 3}
+    scene:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   gettersAndSetters:
     Getters: []
-    Setters: []
+    Setters:
+    - {fileID: 8374975215262088032, guid: 7460790150a2f65499d38182f15d47b2, type: 3}
     getters: []
-    setters: []
+    setters:
+    - {fileID: 0}
