@@ -21,7 +21,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
         static bool _lockPreview = true;
         static bool _overwriteExisting;
 
-        bool _isComponent;
+        static bool _isComponent;
 
         // remove this functionality when created all commons
         const bool IS_COMMON = true;
@@ -55,6 +55,18 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
             _windowInstance = GetWindow<CustomTypeScriptGeneratorWindow>();
             _windowInstance.titleContent = new GUIContent("Script Generator");
             _windowInstance.Show();
+        }
+        
+        void OnEnable() => Selection.selectionChanged += UpdatePath;
+        void OnDisable() => Selection.selectionChanged -= UpdatePath;
+        
+        void UpdatePath()
+        {
+            string selectedPath = GetSelectedFolderPath();
+            if (string.IsNullOrEmpty(selectedPath)) return;
+            
+            _path = selectedPath;
+            Repaint();
         }
 
         static string GetSelectedFolderPath()
@@ -132,66 +144,47 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
 
             if (_lockPreview) _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
         }
-        
-        void UpdatePathField()
-        {
-            string selectedPath = GetSelectedFolderPath();
-            if (string.IsNullOrEmpty(selectedPath)) return;
-            
-            _path = selectedPath;
-            Repaint();
-        }
-        
-        void OnEnable()
-        {
-            Selection.selectionChanged += UpdatePathField;
-        }
-
-        void OnDisable()
-        {
-            Selection.selectionChanged -= UpdatePathField;
-        }
 
         public void GenerateScript()
         {
             _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
-            GenerateCSharpFile($"{TypeWithSuffix()}SO", _scriptPreview);
+            GenerateScriptFile($"{GetTypeWithSuffix()}SO", _scriptPreview);
 
             if (_dataType is not (SOType.RuntimeSet or SOType.RuntimeSingle)) return;
 
             _isComponent = true;
             _scriptPreview = ScriptPreview(COMPONENT_SCRIPT_TEMPLATE);
-            GenerateCSharpFile($"{TypeWithSuffix()}Item", _scriptPreview);
+            GenerateScriptFile($"{GetTypeWithSuffix()}Item", _scriptPreview);
             _isComponent = false;
         }
 
-        string ScriptPreview(string template)
+        static string ScriptPreview(string template)
         {
             template = template.Replace("{Type}", _type);
-            template = template.Replace("{TypeWithSuffix}", TypeWithSuffix());
-            template = template.Replace("{BaseClass}", BaseClass());
-            template = template.Replace("{Suffix}", Suffix());
-            template = template.Replace("{SingularSuffix}", SingularSuffix());
-            template = template.Replace("{FileName}", FileName());
+            template = template.Replace("{TypeWithSuffix}", GetTypeWithSuffix());
+            template = template.Replace("{BaseClass}", GetBaseClass());
+            template = template.Replace("{Suffix}", GetPluralSuffix());
+            template = template.Replace("{SingularSuffix}", GetSingularSuffix());
+            template = template.Replace("{FileName}", GetFileName());
             template = template.Replace("{CustomOrCommon}", IS_COMMON ? "Common" : "Custom");
         
             return template;
         }
 
-        string TypeWithSuffix()
+        static string GetTypeWithSuffix()
         {
             return _dataType switch
             {
-                SOType.ScriptableVariable => $"{_type}{SingularSuffix()}",
-                _ => $"{_type}{SingularSuffix()}"
+                SOType.ScriptableVariable => $"{_type}{GetSingularSuffix()}",
+                _ => $"{_type}{GetSingularSuffix()}"
             };
         }
 
-        string Suffix() => SingularSuffix() + "s";
+        static string GetPluralSuffix() => GetSingularSuffix() + "s";
 
-        string FileName() => $"New {_type} {SingularSuffix()}";
+        static string GetFileName() => $"New {_type} {GetSingularSuffix()}";
 
-        string SingularSuffix()
+        static string GetSingularSuffix()
         {
             return _dataType switch
             {
@@ -202,7 +195,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
             };
         }
 
-        string BaseClass()
+        static string GetBaseClass()
         {
             if (_isComponent)
             {
@@ -223,7 +216,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
             };
         }
 
-        void GenerateCSharpFile(string fileName, string fileContents)
+        void GenerateScriptFile(string fileName, string fileContents)
         {
             string folderName = _type;
             string folderPath = Path.Combine(_path, folderName);
@@ -257,6 +250,5 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
 
             Debug.Log("Script Generated: " + fileName);
         }
-
     }
 }
