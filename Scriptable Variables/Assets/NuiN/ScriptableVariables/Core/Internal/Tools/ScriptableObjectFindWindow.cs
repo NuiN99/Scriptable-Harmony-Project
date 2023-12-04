@@ -62,14 +62,14 @@ namespace NuiN.ScriptableVariables.Core.Tools
             DrawTopBar();
             
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
-
-            if (_foundObjects.Count == 0)
+            
+            DrawSearchResults();
+            
+            if (_resultCount == 0)
             {
                 DrawNoResults();
                 return;
             }
-
-            DrawSearchResults();
             
             EditorGUILayout.EndScrollView();
             return;
@@ -161,11 +161,15 @@ namespace NuiN.ScriptableVariables.Core.Tools
                 
                     EditorGUI.ObjectField(objectFieldRect, GUIContent.none, obj, typeof(ScriptableVariableBaseSO<>), true);
                     GUIStyle style = new GUIStyle(GUI.skin.button) { normal = { textColor = Color.black } };
-                    if (GUILayout.Button("Assign", style, GUILayout.Width(60)) && _property != null)
+
+                    if (_property != null)
                     {
-                        _property.objectReferenceValue = obj;
-                        _property.serializedObject.ApplyModifiedProperties();
-                        Close();
+                        if (GUILayout.Button("Assign", style, GUILayout.Width(60)) && _property != null)
+                        {
+                            _property.objectReferenceValue = obj;
+                            _property.serializedObject.ApplyModifiedProperties();
+                            Close();
+                        }
                     }
 
                     EditorGUILayout.EndHorizontal();
