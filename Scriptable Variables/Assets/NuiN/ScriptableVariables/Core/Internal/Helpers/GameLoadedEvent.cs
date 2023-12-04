@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Core.InternalHelpers
 {
-    internal class GameLoadedEvent
+    internal static class GameLoadedEvent
     {
         public static event Action OnGameLoaded;
 
