@@ -1,7 +1,7 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.Core.RuntimeSingle.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.Base;
 
-namespace NuiN.ScriptableVariables.CustomTypes.RuntimeSingles
+namespace NuiN.ScriptableVariables.RuntimeSingle.Common
 {   
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/RuntimeSingles/Transform", 

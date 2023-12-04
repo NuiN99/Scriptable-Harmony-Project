@@ -1,5 +1,5 @@
 using System;
-using NuiN.ScriptableVariables.Core.RuntimeSingle.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

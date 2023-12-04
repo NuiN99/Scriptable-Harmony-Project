@@ -1,7 +1,7 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.Components.Base;
 
-namespace NuiN.ScriptableVariables.CustomTypes.RuntimeSingles.Components
+namespace NuiN.ScriptableVariables.RuntimeSingle.Components.Common
 {   
     public class Rigidbody2DRuntimeSingleItem : RuntimeSingleItemComponentBase<Rigidbody2D> { }
 }

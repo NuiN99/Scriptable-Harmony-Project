@@ -1,7 +1,7 @@
-using NuiN.ScriptableVariables.Core.RuntimeSet.Base;
+using NuiN.ScriptableVariables.RuntimeSet.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.RuntimeSet.SOClasses
+namespace NuiN.ScriptableVariables.RuntimeSet.Common
 {
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/RuntimeSets/GameObject", 

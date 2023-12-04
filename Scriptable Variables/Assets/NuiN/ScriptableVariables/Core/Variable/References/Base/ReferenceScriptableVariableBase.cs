@@ -1,5 +1,5 @@
 ﻿using System;
-using NuiN.ScriptableVariables.Core.Variable.Base;
+using NuiN.ScriptableVariables.Variable.Base;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Variable.References.Base

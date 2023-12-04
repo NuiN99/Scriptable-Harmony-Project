@@ -1,7 +1,7 @@
-using NuiN.ScriptableVariables.Core.Variable.Base;
+using NuiN.ScriptableVariables.Variable.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.Variable.SOClasses
+namespace NuiN.ScriptableVariables.Variable.Common
 {   
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/Sprite", 

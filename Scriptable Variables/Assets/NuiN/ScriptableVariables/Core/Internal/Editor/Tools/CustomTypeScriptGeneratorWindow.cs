@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
-using NuiN.ScriptableVariables.Core.RuntimeSet.Base;
-using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
-using NuiN.ScriptableVariables.Core.RuntimeSingle.Base;
-using NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base;
-using NuiN.ScriptableVariables.Core.Variable.Base;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.RuntimeSet.Base;
+using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.Components.Base;
+using NuiN.ScriptableVariables.Variable.Base;
 using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.Core.Editor.Tools
@@ -24,9 +24,9 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
         
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
-using NuiN.ScriptableVariables.Core.{SingularSuffix}.Base;
+using NuiN.ScriptableVariables.{SingularSuffix}.Base;
 
-namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}
+namespace NuiN.ScriptableVariables.{SingularSuffix}.Custom
 {   
     [CreateAssetMenu(
         menuName = ""ScriptableVariables/Custom/{Suffix}/{Type}"", 
@@ -37,9 +37,9 @@ namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}
         
         const string COMPONENT_SCRIPT_TEMPLATE = 
 @"using UnityEngine;
-using NuiN.ScriptableVariables.Core.{SingularSuffix}.Components.Base;
+using NuiN.ScriptableVariables.{SingularSuffix}.Components.Base;
 
-namespace NuiN.ScriptableVariables.CustomTypes.{Suffix}.Components
+namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.Custom
 {   
     public class {TypeWithSuffix}Item : {BaseClass}<{Type}> { }
 }";

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using NuiN.ScriptableVariables.Core.Attributes;
-using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.RuntimeSet.References;
 using NuiN.ScriptableVariables.RuntimeSet.References.Base;
 using UnityEditor;
@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSet.Base
+namespace NuiN.ScriptableVariables.RuntimeSet.Base
 {
     public class RuntimeSetBaseSO<T> : ScriptableObject where T : Object
     {

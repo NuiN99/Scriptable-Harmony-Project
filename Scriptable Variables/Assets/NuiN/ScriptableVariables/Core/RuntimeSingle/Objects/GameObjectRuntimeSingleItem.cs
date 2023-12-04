@@ -1,7 +1,7 @@
-using NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base;
 using UnityEngine;
+using NuiN.ScriptableVariables.RuntimeSingle.Components.Base;
 
-namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Components
+namespace NuiN.ScriptableVariables.RuntimeSingle.Components.Common
 {
     public class GameObjectRuntimeSingleItem : RuntimeSingleItemComponentBase<GameObject> { }
 }

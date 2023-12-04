@@ -1,7 +1,7 @@
+using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
 using UnityEngine;
-using NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base;
 
-namespace NuiN.ScriptableVariables.CustomTypes.RuntimeSets.Components
+namespace NuiN.ScriptableVariables.RuntimeSet.Components.Common
 {   
     public class Rigidbody2DRuntimeSetItem : RuntimeSetItemComponentBase<Rigidbody2D> { }
 }
