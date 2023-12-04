@@ -21,17 +21,19 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
         static bool _overwriteExisting;
 
         bool _isComponent;
-        
+
+        // disable when created all commons
+        const bool IS_COMMON = true;
+
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
 using NuiN.ScriptableVariables.{SingularSuffix}.Base;
 
-namespace NuiN.ScriptableVariables.{SingularSuffix}.Custom
+namespace NuiN.ScriptableVariables.{SingularSuffix}.{CustomOrCommon}
 {   
     [CreateAssetMenu(
         menuName = ""ScriptableVariables/Custom/{Suffix}/{Type}"", 
         fileName = ""{FileName}"")]
-
     internal class {TypeWithSuffix}SO : {BaseClass}<{Type}> { }
 }";
         
@@ -39,7 +41,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Custom
 @"using UnityEngine;
 using NuiN.ScriptableVariables.{SingularSuffix}.Components.Base;
 
-namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.Custom
+namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
 {   
     public class {TypeWithSuffix}Item : {BaseClass}<{Type}> { }
 }";
@@ -133,16 +135,17 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.Custom
             _isComponent = false;
         }
 
-        string ScriptPreview(string constTemplate)
+        string ScriptPreview(string template)
         {
-            constTemplate = constTemplate.Replace("{Type}", _type);
-            constTemplate = constTemplate.Replace("{TypeWithSuffix}", TypeWithSuffix());
-            constTemplate = constTemplate.Replace("{BaseClass}", BaseClass());
-            constTemplate = constTemplate.Replace("{Suffix}", Suffix());
-            constTemplate = constTemplate.Replace("{SingularSuffix}", SingularSuffix());
-            constTemplate = constTemplate.Replace("{FileName}", FileName());
+            template = template.Replace("{Type}", _type);
+            template = template.Replace("{TypeWithSuffix}", TypeWithSuffix());
+            template = template.Replace("{BaseClass}", BaseClass());
+            template = template.Replace("{Suffix}", Suffix());
+            template = template.Replace("{SingularSuffix}", SingularSuffix());
+            template = template.Replace("{FileName}", FileName());
+            template = template.Replace("{CustomOrCommon}", IS_COMMON ? "Common" : "Custom");
         
-            return constTemplate;
+            return template;
         }
 
         string TypeWithSuffix()

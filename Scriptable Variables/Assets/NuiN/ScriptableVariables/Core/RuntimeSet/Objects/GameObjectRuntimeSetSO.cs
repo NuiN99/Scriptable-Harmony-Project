@@ -6,6 +6,6 @@ namespace NuiN.ScriptableVariables.RuntimeSet.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/RuntimeSets/GameObject", 
         fileName = "New GameObject RuntimeSet")]
-    public class GameObjectRuntimeSetSO : RuntimeSetBaseSO<GameObject> { }
+    internal class GameObjectRuntimeSetSO : RuntimeSetBaseSO<GameObject> { }
 }
 

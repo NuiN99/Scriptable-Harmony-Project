@@ -6,6 +6,6 @@ namespace NuiN.ScriptableVariables.RuntimeSingle.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/RuntimeSingles/GameObject", 
         fileName = "New GameObject RuntimeSingle")]
-    public class GameObjectRuntimeSingleSO : RuntimeSingleBaseSO<GameObject> { }
+    internal class GameObjectRuntimeSingleSO : RuntimeSingleBaseSO<GameObject> { }
 }
 
