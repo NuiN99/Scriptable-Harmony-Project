@@ -24,9 +24,6 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         public Action onRemove;
         public Action<T> onRemoveWithOld;
         
-        [Header("Value Persistence")]
-        [SerializeField] bool resetOnSceneLoad = true;
-        
 #if UNITY_EDITOR
         [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
@@ -40,7 +37,7 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         
         void OnEnable()
         {
-            SceneManager.sceneUnloaded += ResetValuesOnSceneUnloaded;
+            SceneManager.sceneUnloaded += ResetOnSceneUnloaded;
 #if UNITY_EDITOR
             Selection.selectionChanged += OnSelectedInProjectWindow;
             EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
@@ -48,18 +45,14 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Base
         }
         void OnDisable()
         {
-            SceneManager.sceneUnloaded -= ResetValuesOnSceneUnloaded;
+            SceneManager.sceneUnloaded -= ResetOnSceneUnloaded;
 #if UNITY_EDITOR
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
             Selection.selectionChanged -= OnSelectedInProjectWindow;
 #endif
         }
         
-        void ResetValuesOnSceneUnloaded(Scene scene)
-        {
-            if (!resetOnSceneLoad) return;
-            runtimeSingle = null;
-        }
+        void ResetOnSceneUnloaded(Scene scene) => runtimeSingle = null;
         
 #if UNITY_EDITOR
         
