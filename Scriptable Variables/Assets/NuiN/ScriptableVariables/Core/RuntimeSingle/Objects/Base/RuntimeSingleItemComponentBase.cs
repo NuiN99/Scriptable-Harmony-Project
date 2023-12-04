@@ -16,8 +16,8 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base
         [SerializeField] bool overwriteExisting;
         
         [Header("Actions")]
-        [SerializeField] bool invokeOnSet = true;
-        [SerializeField] bool invokeOnRemove = true;
+        [SerializeField] bool dontInvokeOnSet;
+        [SerializeField] bool dontInvokeOnRemove;
     
         void OnEnable() => SetItem(Type.OnEnableOnDisable);
         void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
@@ -33,12 +33,12 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSingle.Components.Base
         {
             if (SelfDestructIfNullObject(thisObject)) return;
             if (lifetimeType != type) return;
-            runtimeSingle.Set(thisObject, invokeOnSet, overwriteExisting);
+            runtimeSingle.Set(thisObject, !dontInvokeOnSet, overwriteExisting);
         }
         void RemoveFromSet(Type type)
         {
             if (lifetimeType != type) return;
-            runtimeSingle.Remove(invokeOnRemove);
+            runtimeSingle.Remove(!dontInvokeOnRemove);
         }
 
         bool SelfDestructIfNullObject(T obj)

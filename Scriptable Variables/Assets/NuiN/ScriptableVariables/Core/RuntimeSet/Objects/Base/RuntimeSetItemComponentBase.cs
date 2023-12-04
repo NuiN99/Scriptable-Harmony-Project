@@ -11,10 +11,10 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base
     
         [SerializeField] SetRuntimeSet<T> runtimeSet;
         [SerializeField] Type lifetimeType;
-
+        
         [Header("Actions")]
-        [SerializeField] bool invokeOnAdd = true;
-        [SerializeField] bool invokeOnRemove = true;
+        [SerializeField] bool dontInvokeOnAdd;
+        [SerializeField] bool dontInvokeOnRemove;
     
         void OnEnable() => AddToSet(Type.OnEnableOnDisable);
         void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
@@ -26,12 +26,12 @@ namespace NuiN.ScriptableVariables.Core.RuntimeSet.Components.Base
         {
             if (SelfDestructIfNullObject(thisObject)) return;
             if (lifetimeType != type) return;
-            runtimeSet.Add(thisObject, invokeOnAdd);
+            runtimeSet.Add(thisObject, !dontInvokeOnAdd);
         }
         void RemoveFromSet(Type type)
         {
             if (lifetimeType != type) return;
-            runtimeSet.Remove(thisObject, invokeOnRemove);
+            runtimeSet.Remove(thisObject, !dontInvokeOnRemove);
         }
 
         bool SelfDestructIfNullObject(T obj)
