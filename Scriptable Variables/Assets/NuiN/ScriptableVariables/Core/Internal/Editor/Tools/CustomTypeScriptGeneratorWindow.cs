@@ -13,7 +13,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
 {
     internal class CustomTypeScriptGeneratorWindow : EditorWindow
     {
-        SOType _dataType = SOType.RuntimeSet;
+        static SOType _dataType;
         static string _type;
         string _path;
         static string _scriptPreview;
@@ -22,7 +22,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
 
         bool _isComponent;
 
-        // disable when created all commons
+        // remove this functionality when created all commons
         const bool IS_COMMON = true;
 
         const string SCRIPT_TEMPLATE =
@@ -195,7 +195,22 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
 
         void GenerateCSharpFile(string fileName, string fileContents)
         {
-            string filePath = Path.Combine(_path, $"{fileName}.cs");
+            string folderName = _type;
+            string folderPath = Path.Combine(_path, folderName);
+
+            if (_dataType is SOType.RuntimeSet or SOType.RuntimeSingle)
+            {
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+            }
+            else
+            {
+                folderPath = _path;
+            }
+
+            string filePath = Path.Combine(folderPath, $"{fileName}.cs");
 
             if (File.Exists(filePath) && !_overwriteExisting)
             {
@@ -203,11 +218,15 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
                 return;
             }
 
-            using (StreamWriter writer = new StreamWriter(filePath)) writer.Write(fileContents);
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.Write(fileContents);
+            }
 
             AssetDatabase.Refresh();
 
             Debug.Log("Script Generated: " + fileName);
         }
+
     }
 }
