@@ -15,6 +15,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
     {
         static SOType _dataType;
         static string _type;
+        const string EMPTY_PATH_MESSAGE = "Please select a folder in the Project panel";
         string _path;
         static string _scriptPreview;
         static bool _lockPreview = true;
@@ -48,45 +49,38 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
         
         static CustomTypeScriptGeneratorWindow _windowInstance;
         
-        [MenuItem("Assets/Create/ScriptableVariables/Custom Type Script", false, 0)]
+        [MenuItem("ScriptableVariables/Custom Type Generator")]
         static void OpenWindow()
         {
-            string selectedPath = GetSelectedFolderPath();
-            if (!string.IsNullOrEmpty(selectedPath))
-            {
-                _windowInstance = GetWindow<CustomTypeScriptGeneratorWindow>();
-                _windowInstance.titleContent = new GUIContent("Script Generator");
-                _windowInstance.Show();
-
-                _windowInstance._path = selectedPath;
-            }
-            else
-            {
-                Debug.LogWarning("Please select a valid folder in the project view.");
-            }
-
-            return;
-            
-            string GetSelectedFolderPath()
-            {
-                Object[] selectedObjects = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
-                if (selectedObjects.Length <= 0) return null;
-            
-                string path = AssetDatabase.GetAssetPath(selectedObjects[0]);
-                if (File.Exists(path))
-                {
-                    path = Path.GetDirectoryName(path);
-                }
-                return path;
-            }
+            _windowInstance = GetWindow<CustomTypeScriptGeneratorWindow>();
+            _windowInstance.titleContent = new GUIContent("Script Generator");
+            _windowInstance.Show();
         }
 
+        static string GetSelectedFolderPath()
+        {
+            Object[] selectedObjects = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
+            if (selectedObjects.Length <= 0) return null;
+            
+            string path = AssetDatabase.GetAssetPath(selectedObjects[0]);
+            if (File.Exists(path))
+            {
+                path = Path.GetDirectoryName(path);
+            }
+            return path;
+        }
+        
         Vector2 _scrollPosition;
         void OnGUI()
         {
             GUILayout.Space(10);
             _dataType = (SOType)EditorGUILayout.EnumPopup("Data Type", _dataType);
-            _type = EditorGUILayout.TextField("Type", _type);
+            _type = EditorGUILayout.TextField("Type Name", _type);
+            
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.TextField("Path", string.IsNullOrEmpty(_path) ? EMPTY_PATH_MESSAGE : _path);
+            EditorGUI.EndDisabledGroup();
+            
             _overwriteExisting = EditorGUILayout.Toggle("Overwrite Existing", _overwriteExisting);
 
             GUILayout.Space(10);
@@ -107,19 +101,55 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
                 normal = { textColor = new Color(1, 0.3f, 0f, 1f) },
                 fontSize = 17,
                 fontStyle = FontStyle.Bold,
-                fixedHeight = 75 
+                fixedHeight = 55 
             };
             Color ogColor = GUI.backgroundColor;
             GUI.backgroundColor = new Color(0.6f, 0.9f, 1f, 1f);
 
             if (GUILayout.Button("Generate Script", buttonStyle, GUILayout.ExpandWidth(true)))
             {
-                GenerateScript();
+                bool emptyPath = string.IsNullOrEmpty(_path);
+                bool emptyType = string.IsNullOrEmpty(_type);
+                if (!emptyPath && !emptyType)
+                {
+                    GenerateScript();
+                }
+                else
+                {
+                    string warningMessage = "Empty {string} when attempting to create a new Custom Type Script";
+                    warningMessage = emptyPath switch
+                    {
+                        true when emptyType => warningMessage.Replace("{string}", "Path and Type Name"),
+                        true => warningMessage.Replace("{string}", "Path"),
+                        _ => warningMessage.Replace("{string}", "Type Name")
+                    };
+
+                    Debug.LogWarning(warningMessage);
+                }
             }
 
             GUI.backgroundColor = ogColor;
 
             if (_lockPreview) _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
+        }
+        
+        void UpdatePathField()
+        {
+            string selectedPath = GetSelectedFolderPath();
+            if (string.IsNullOrEmpty(selectedPath)) return;
+            
+            _path = selectedPath;
+            Repaint();
+        }
+        
+        void OnEnable()
+        {
+            Selection.selectionChanged += UpdatePathField;
+        }
+
+        void OnDisable()
+        {
+            Selection.selectionChanged -= UpdatePathField;
         }
 
         public void GenerateScript()
