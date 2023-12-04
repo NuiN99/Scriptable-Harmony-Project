@@ -86,39 +86,62 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
         void OnGUI()
         {
             GUILayout.Space(10);
-            _dataType = (SOType)EditorGUILayout.EnumPopup("Data Type", _dataType);
-            _type = EditorGUILayout.TextField("Type Name", _type);
             
-            EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField("Path", string.IsNullOrEmpty(_path) ? EMPTY_PATH_MESSAGE : _path);
-            EditorGUI.EndDisabledGroup();
+            DisplayOptions();
             
-            _overwriteExisting = EditorGUILayout.Toggle("Overwrite Existing", _overwriteExisting);
-
             GUILayout.Space(10);
 
-            EditorGUILayout.LabelField("Preview:");
+            DisplayScriptPreview();
 
-            using (var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition, GUILayout.Height(position.height - 200)))
+            DisplayGenerateButton();
+
+            return;
+
+            void DisplayOptions()
             {
-                _scrollPosition = scrollView.scrollPosition;
-                if (_lockPreview) EditorGUI.BeginDisabledGroup(true);
-                _scriptPreview = EditorGUILayout.TextArea(_scriptPreview, GUILayout.ExpandHeight(true));
-                if (_lockPreview) EditorGUI.EndDisabledGroup();
+                _dataType = (SOType)EditorGUILayout.EnumPopup("Data Type", _dataType);
+                _type = EditorGUILayout.TextField("Type Name", _type);
+                
+                EditorGUI.BeginDisabledGroup(true);
+                EditorGUILayout.TextField("Path", string.IsNullOrEmpty(_path) ? EMPTY_PATH_MESSAGE : _path);
+                EditorGUI.EndDisabledGroup();
+                
+                _overwriteExisting = EditorGUILayout.Toggle("Overwrite Existing", _overwriteExisting);
             }
-            _lockPreview = EditorGUILayout.Toggle("Lock Preview", _lockPreview);
 
-            GUIStyle buttonStyle = new GUIStyle(GUI.skin.button)
+            void DisplayScriptPreview()
             {
-                normal = { textColor = new Color(1, 0.3f, 0f, 1f) },
-                fontSize = 17,
-                fontStyle = FontStyle.Bold,
-                fixedHeight = 55 
-            };
-            Color ogColor = GUI.backgroundColor;
-            GUI.backgroundColor = new Color(0.6f, 0.9f, 1f, 1f);
+                EditorGUILayout.LabelField("Preview:");
+                using (var scrollView = new EditorGUILayout.ScrollViewScope(_scrollPosition, GUILayout.Height(position.height - 200)))
+                {
+                    _scrollPosition = scrollView.scrollPosition;
+                    if (_lockPreview) EditorGUI.BeginDisabledGroup(true);
+                    _scriptPreview = EditorGUILayout.TextArea(_scriptPreview, GUILayout.ExpandHeight(true));
+                    if (_lockPreview) EditorGUI.EndDisabledGroup();
+                }
+                _lockPreview = EditorGUILayout.Toggle("Lock Preview", _lockPreview);
+                if (_lockPreview) _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
+            }
 
-            if (GUILayout.Button("Generate Script", buttonStyle, GUILayout.ExpandWidth(true)))
+            void DisplayGenerateButton()
+            {
+                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button)
+                {
+                    normal = { textColor = new Color(1, 0.3f, 0f, 1f) },
+                    fontSize = 17,
+                    fontStyle = FontStyle.Bold,
+                    fixedHeight = 55 
+                };
+                Color ogColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.6f, 0.9f, 1f, 1f);
+                if (GUILayout.Button("Generate Script", buttonStyle, GUILayout.ExpandWidth(true)))
+                {
+                    TryGenerateScript();
+                }
+                GUI.backgroundColor = ogColor;
+            }
+
+            void TryGenerateScript()
             {
                 bool emptyPath = string.IsNullOrEmpty(_path);
                 bool emptyType = string.IsNullOrEmpty(_type);
@@ -139,10 +162,6 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
                     Debug.LogWarning(warningMessage);
                 }
             }
-
-            GUI.backgroundColor = ogColor;
-
-            if (_lockPreview) _scriptPreview = ScriptPreview(SCRIPT_TEMPLATE);
         }
 
         public void GenerateScript()
