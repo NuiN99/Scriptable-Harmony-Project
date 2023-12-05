@@ -93,17 +93,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(scriptType);
-                    if (GUILayout.Button("Generate", GUILayout.Width(75), GUILayout.Height(25)))
-                    {
-                        if (!_pathController.EmptyPath)
-                        {
-                            CreateScriptableObjectInstance(scriptType);
-                        }
-                        else
-                        {
-                            Debug.LogWarning("Invalid path: Please select a folder in the project panel");
-                        }
-                    }
+                    DisplayCreateButton(scriptType);
                     GUILayout.EndHorizontal();
                     DrawHorizontalLine();
                 }
@@ -132,6 +122,25 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
                     GUILayout.EndHorizontal();
                     DrawHorizontalLine();
                 }
+            }
+
+            void DisplayCreateButton(string scriptType)
+            {
+                GUIStyle buttonStyle = new GUIStyle(GUI.skin.button)
+                {
+                    normal = { textColor = new Color(1, 0.3f, 0f, 1f) },
+                    fixedWidth = 75,
+                    fixedHeight = 25
+                };
+                
+                Color ogColor = GUI.backgroundColor;
+                GUI.backgroundColor = new Color(0.6f, 0.9f, 1f, 1f);
+                if (GUILayout.Button("Create", buttonStyle))
+                {
+                    if (!_pathController.EmptyPath) CreateScriptableObjectInstance(scriptType);
+                    else Debug.LogWarning("Invalid path: Please select a folder in the project panel");
+                }
+                GUI.backgroundColor = ogColor;
             }
             
             void DrawHorizontalLine(float height = 1)
