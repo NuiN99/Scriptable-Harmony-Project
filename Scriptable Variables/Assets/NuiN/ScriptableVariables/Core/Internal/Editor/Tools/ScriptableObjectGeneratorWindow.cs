@@ -1,0 +1,234 @@
+using UnityEngine;
+using UnityEditor;
+using System;
+using System.Linq;
+using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.RuntimeSet.Base;
+using NuiN.ScriptableVariables.RuntimeSingle.Base;
+using NuiN.ScriptableVariables.Variable.Base;
+
+namespace NuiN.ScriptableVariables.Core.Editor.Tools
+{
+    internal class ScriptableObjectGeneratorWindow : EditorWindow
+    {
+        Type[] _scriptTypes;
+        SOType _selectedSOType = SOType.ScriptableVariable;
+        string _scriptTypeSearch = "";
+        string _assetName;
+        Vector2 _scrollPosition;
+
+        SelectionPathController _pathController;
+
+        [MenuItem("ScriptableVariables/Scriptable Object Generator")]
+        public static void ShowWindow()
+        {
+            GetWindow<ScriptableObjectGeneratorWindow>("Scriptable Object Generator");
+        }
+
+        void OnEnable()
+        {
+            InitializeScriptTypes();
+            _pathController = new SelectionPathController(this);
+        }
+        void OnDisable()
+        {
+            _pathController?.Dispose();
+        }
+
+        void OnGUI()
+        {
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+            
+            DisplayOptions();
+
+            var commonScriptTypes = GetFilteredScriptTypesWithNamespace(_scriptTypeSearch, "Common");
+            var customScriptTypes = GetFilteredScriptTypes(_scriptTypeSearch);
+            
+            DisplayCommonTypes();
+            DisplayCustomTypes();
+            
+            EditorGUILayout.EndScrollView();
+
+            return;
+
+            void DisplayOptions()
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Type:", GUILayout.Width(50));
+                SOType newSOType = (SOType)EditorGUILayout.EnumPopup(_selectedSOType, GUILayout.ExpandWidth(true));
+                GUILayout.EndHorizontal();
+        
+                if (newSOType != _selectedSOType)
+                {
+                    _selectedSOType = newSOType;
+                    InitializeScriptTypes();
+                }
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Filter:", GUILayout.Width(50));
+                _scriptTypeSearch = EditorGUILayout.TextField(_scriptTypeSearch, GUILayout.ExpandWidth(true));
+                GUILayout.EndHorizontal();
+            
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Name:", GUILayout.Width(50));
+                _assetName = EditorGUILayout.TextField(_assetName, GUILayout.ExpandWidth(true));
+                GUILayout.EndHorizontal();
+            
+                _pathController.DisplayPathGUI();
+            }
+
+            void DisplayCommonTypes()
+            {
+                if (commonScriptTypes.Length <= 0) return;
+                
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+                GUILayout.Label("Common", EditorStyles.boldLabel);
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+
+                DrawHorizontalLine(2);
+        
+                foreach (var scriptType in commonScriptTypes)
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(scriptType);
+                    if (GUILayout.Button("Generate", GUILayout.Width(75), GUILayout.Height(25)))
+                    {
+                        if (!_pathController.EmptyPath)
+                        {
+                            CreateScriptableObjectInstance(scriptType);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Invalid path: Please select a folder in the project panel");
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+                    DrawHorizontalLine();
+                }
+            }
+
+            void DisplayCustomTypes()
+            {
+                if (customScriptTypes.Length <= 0) return;
+                
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+                GUILayout.Label("Custom", EditorStyles.boldLabel);
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+
+                DrawHorizontalLine(2);
+        
+                foreach (var scriptType in customScriptTypes)
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(scriptType);
+                    if (GUILayout.Button("Generate", GUILayout.Width(75), GUILayout.Height(25)))
+                    {
+                        CreateScriptableObjectInstance(scriptType);
+                    }
+                    GUILayout.EndHorizontal();
+                    DrawHorizontalLine();
+                }
+            }
+            
+            void DrawHorizontalLine(float height = 1)
+            {
+                Rect rect = EditorGUILayout.GetControlRect(false, height);
+                EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+            }
+        }
+
+        string[] GetFilteredScriptTypes(string search)
+        {
+            return _scriptTypes
+                .Where(type => type.Namespace == null || !type.Namespace.ToLower().Contains("common") &&
+                    type.Name.ToLower().Contains(search.ToLower()))
+                .Select(type => TrimScriptType(type.Name))
+                .ToArray();
+        }
+
+        string[] GetFilteredScriptTypesWithNamespace(string search, string namespaceFilter)
+        {
+            return _scriptTypes
+                .Where(type => type.Namespace != null && type.Namespace.ToLower().Contains(namespaceFilter.ToLower()) &&
+                               type.Name.ToLower().Contains(search.ToLower()))
+                .Select(type => TrimScriptType(type.Name))
+                .ToArray();
+        }
+
+        string TrimScriptType(string typeName)
+        {
+            return _selectedSOType switch
+            {
+                SOType.ScriptableVariable => typeName.EndsWith("SO") ? typeName[..^2] : typeName,
+                SOType.RuntimeSet => typeName.EndsWith("RuntimeSetSO") ? typeName[..^12] : typeName,
+                SOType.RuntimeSingle => typeName.EndsWith("RuntimeSingleSO") ? typeName[..^15] : typeName,
+                _ => typeName
+            };
+        }
+
+        void CreateScriptableObjectInstance(string typeName)
+        {
+            Type selectedType = _scriptTypes.First(type => TrimScriptType(type.Name) == typeName);
+
+            ScriptableObject instance = CreateInstance(selectedType);
+
+            string suffix = _selectedSOType switch
+            {
+                SOType.RuntimeSet => "RuntimeSet",
+                SOType.RuntimeSingle => "RuntimeSingle",
+                SOType.ScriptableVariable => "Variable",
+                _ => "Type Not Implemented"
+            };
+            
+            string newAssetName = string.IsNullOrEmpty(_assetName)
+                ? $"New {TrimScriptType(selectedType.Name)} {suffix}"
+                : _assetName;
+            
+            AssetDatabase.CreateAsset(instance, $"{_pathController.SelectionPath}/{newAssetName}.asset");
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = instance;
+        }
+
+        void InitializeScriptTypes()
+        {
+            switch (_selectedSOType)
+            {
+                case SOType.ScriptableVariable:
+                    InitializeScriptTypes(typeof(ScriptableVariableBaseSO<>));
+                    break;
+                case SOType.RuntimeSet:
+                    InitializeScriptTypes(typeof(RuntimeSetBaseSO<>));
+                    break;
+                case SOType.RuntimeSingle:
+                    InitializeScriptTypes(typeof(RuntimeSingleBaseSO<>));
+                    break;
+            }
+        }
+
+        void InitializeScriptTypes(Type baseType)
+        {
+            _scriptTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(type => IsSubclassOfRawGeneric(type, baseType) && !type.IsAbstract && type != baseType)
+                .ToArray();
+        }
+
+        static bool IsSubclassOfRawGeneric(Type toCheck, Type generic)
+        {
+            while (toCheck != null && toCheck != typeof(object))
+            {
+                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                if (generic == cur)
+                    return true;
+                toCheck = toCheck.BaseType;
+            }
+            return false;
+        }
+    }
+}

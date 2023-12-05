@@ -13,19 +13,6 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
 {
     internal class CustomTypeScriptGeneratorWindow : EditorWindow
     {
-        static SOType _dataType;
-        static string _type;
-        const string EMPTY_PATH_MESSAGE = "Please select a folder in the Project panel";
-        string _path;
-        static string _scriptPreview;
-        static bool _lockPreview = true;
-        static bool _overwriteExisting;
-
-        static bool _isComponent;
-
-        // remove this functionality when created all commons
-        const bool IS_COMMON = true;
-
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
 using NuiN.ScriptableVariables.{SingularSuffix}.Base;
@@ -47,6 +34,19 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
     public class {TypeWithSuffix}Item : {BaseClass}<{Type}> { }
 }";
         
+        static SOType _dataType;
+        static string _type;
+        static string _scriptPreview;
+        static bool _lockPreview = true;
+        static bool _overwriteExisting;
+
+        static bool _isComponent;
+
+        // remove this functionality when created all commons
+        const bool IS_COMMON = true;
+
+        SelectionPathController _pathController;
+        
         static CustomTypeScriptGeneratorWindow _windowInstance;
         
         [MenuItem("ScriptableVariables/Custom Type Generator")]
@@ -56,32 +56,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
             _windowInstance.titleContent = new GUIContent("Script Generator");
             _windowInstance.Show();
         }
-        
-        void OnEnable() => Selection.selectionChanged += UpdatePath;
-        void OnDisable() => Selection.selectionChanged -= UpdatePath;
-        
-        void UpdatePath()
-        {
-            string selectedPath = GetSelectedFolderPath();
-            if (string.IsNullOrEmpty(selectedPath)) return;
-            
-            _path = selectedPath;
-            Repaint();
-        }
 
-        static string GetSelectedFolderPath()
-        {
-            Object[] selectedObjects = Selection.GetFiltered(typeof(Object), SelectionMode.Assets);
-            if (selectedObjects.Length <= 0) return null;
-            
-            string path = AssetDatabase.GetAssetPath(selectedObjects[0]);
-            if (File.Exists(path))
-            {
-                path = Path.GetDirectoryName(path);
-            }
-            return path;
-        }
-        
         Vector2 _scrollPosition;
         void OnGUI()
         {
@@ -99,12 +74,17 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
 
             void DisplayOptions()
             {
-                _dataType = (SOType)EditorGUILayout.EnumPopup("Data Type", _dataType);
-                _type = EditorGUILayout.TextField("Type Name", _type);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Type:", GUILayout.Width(50));
+                _dataType = (SOType)EditorGUILayout.EnumPopup(_dataType, GUILayout.ExpandWidth(true));
+                GUILayout.EndHorizontal();
                 
-                EditorGUI.BeginDisabledGroup(true);
-                EditorGUILayout.TextField("Path", string.IsNullOrEmpty(_path) ? EMPTY_PATH_MESSAGE : _path);
-                EditorGUI.EndDisabledGroup();
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Name", GUILayout.Width(50));
+                _type = EditorGUILayout.TextField(_type, GUILayout.ExpandWidth(true));
+                GUILayout.EndHorizontal();
+                
+                _pathController.DisplayPathGUI();
                 
                 _overwriteExisting = EditorGUILayout.Toggle("Overwrite Existing", _overwriteExisting);
             }
@@ -143,16 +123,15 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
 
             void TryGenerateScript()
             {
-                bool emptyPath = string.IsNullOrEmpty(_path);
                 bool emptyType = string.IsNullOrEmpty(_type);
-                if (!emptyPath && !emptyType)
+                if (!_pathController.EmptyPath && !emptyType)
                 {
                     GenerateScript();
                 }
                 else
                 {
                     string warningMessage = "Empty {string} when attempting to create a new Custom Type Script";
-                    warningMessage = emptyPath switch
+                    warningMessage = _pathController.EmptyPath switch
                     {
                         true when emptyType => warningMessage.Replace("{string}", "Path and Type Name"),
                         true => warningMessage.Replace("{string}", "Path"),
@@ -198,6 +177,9 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
                 _ => $"{_type}{GetSingularSuffix()}"
             };
         }
+        
+        void OnEnable() => _pathController = new SelectionPathController(this);
+        void OnDisable() => _pathController?.Dispose();
 
         static string GetPluralSuffix() => GetSingularSuffix() + "s";
 
@@ -238,18 +220,15 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
         void GenerateScriptFile(string fileName, string fileContents)
         {
             string folderName = _type;
-            string folderPath = Path.Combine(_path, folderName);
+            string folderPath = Path.Combine(_pathController.SelectionPath, folderName);
 
             if (_dataType is SOType.RuntimeSet or SOType.RuntimeSingle)
             {
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
+                if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
             }
             else
             {
-                folderPath = _path;
+                folderPath = _pathController.SelectionPath;
             }
 
             string filePath = Path.Combine(folderPath, $"{fileName}.cs");
@@ -266,8 +245,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
             }
 
             AssetDatabase.Refresh();
-
-            Debug.Log("Script Generated: " + fileName);
+            EditorUtility.FocusProjectWindow();
         }
     }
 }
