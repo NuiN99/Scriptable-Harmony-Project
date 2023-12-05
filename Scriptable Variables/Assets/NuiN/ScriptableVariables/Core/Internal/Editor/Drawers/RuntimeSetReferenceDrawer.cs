@@ -1,5 +1,6 @@
 using NuiN.ScriptableVariables.Core.Editor.Helpers;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.References;
 using NuiN.ScriptableVariables.RuntimeSet.References;
 using UnityEditor;
 using UnityEngine;

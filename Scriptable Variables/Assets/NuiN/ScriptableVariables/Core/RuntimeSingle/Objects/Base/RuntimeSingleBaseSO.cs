@@ -1,6 +1,7 @@
 using System;
 using NuiN.ScriptableVariables.Internal.Attributes;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.References;
 using NuiN.ScriptableVariables.RuntimeSingle.Components.Base;
 using NuiN.ScriptableVariables.RuntimeSingle.References;
 using NuiN.ScriptableVariables.RuntimeSingle.References.Base;

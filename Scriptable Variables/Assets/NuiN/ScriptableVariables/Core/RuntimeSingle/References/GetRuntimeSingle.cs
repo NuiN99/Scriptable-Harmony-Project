@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using NuiN.ScriptableVariables.RuntimeSingle.References.Base;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.RuntimeSingle.References
+namespace NuiN.ScriptableVariables.References
 {
     [Serializable]
     public class GetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T> where T : Object

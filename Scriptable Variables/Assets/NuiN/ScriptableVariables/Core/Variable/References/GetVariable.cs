@@ -1,7 +1,7 @@
 using System;
 using NuiN.ScriptableVariables.Variable.References.Base;
 
-namespace NuiN.ScriptableVariables.Variable.References
+namespace NuiN.ScriptableVariables.References
 {
     [Serializable]
     public class GetVariable<T> : ReferenceScriptableVariableBase<T>

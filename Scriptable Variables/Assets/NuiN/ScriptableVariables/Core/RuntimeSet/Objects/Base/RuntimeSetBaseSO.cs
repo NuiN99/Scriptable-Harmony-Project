@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NuiN.ScriptableVariables.Internal.Attributes;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.References;
 using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.RuntimeSet.References;
 using NuiN.ScriptableVariables.RuntimeSet.References.Base;

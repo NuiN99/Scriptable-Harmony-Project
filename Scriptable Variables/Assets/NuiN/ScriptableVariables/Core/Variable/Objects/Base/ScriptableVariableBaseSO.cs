@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using NuiN.ScriptableVariables.Internal.Attributes;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.References;
 using NuiN.ScriptableVariables.Variable.References;
 using NuiN.ScriptableVariables.Variable.References.Base;
 

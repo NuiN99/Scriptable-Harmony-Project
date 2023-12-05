@@ -2,7 +2,7 @@ using System;
 using NuiN.ScriptableVariables.Variable.References.Base;
 using UnityEditor;
 
-namespace NuiN.ScriptableVariables.Variable.References
+namespace NuiN.ScriptableVariables.References
 {
     [Serializable]
     public class SetVariable<T> : ReferenceScriptableVariableBase<T>
