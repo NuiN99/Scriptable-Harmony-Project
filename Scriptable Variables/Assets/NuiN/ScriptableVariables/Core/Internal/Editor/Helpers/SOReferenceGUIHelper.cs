@@ -33,14 +33,18 @@ namespace NuiN.ScriptableVariables.Core.Editor.Helpers
             {
                 case SOType.RuntimeSet: typeName += "RuntimeSetSO"; break;
                 case SOType.RuntimeSingle: typeName += "RuntimeSingleSO"; break;
-                case SOType.ScriptableVariable:
+                case SOType.Variable:
                 {
-                    if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
-                    {
-                        Type listType = variableType.GetGenericArguments()[0];
-                        typeName = $"{GetReadableTypeName(listType)}List";
-                    }
                     typeName = $"{typeName}SO";
+                    break;
+                }
+                case SOType.ListVariable:
+                {
+                    /*if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
+                    {
+                    }*/
+                    Type listType = variableType.GetGenericArguments()[0];
+                    typeName = $"{GetReadableTypeName(listType)}List";
                     break;
                 }
             }

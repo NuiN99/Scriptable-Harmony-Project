@@ -9,7 +9,7 @@ namespace NuiN.ScriptableVariables.Internal.Editor
 {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(GetRuntimeSet<>))]
-    internal class RuntimeSetReaderDrawer : PropertyDrawer
+    internal class GetRuntimeSetDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) 
             => SOReferenceGUIHelper.VarRefGUI(SOType.RuntimeSet, Access.Getter, "runtimeSet", position, property, label, fieldInfo);
@@ -19,7 +19,7 @@ namespace NuiN.ScriptableVariables.Internal.Editor
     }
 
     [CustomPropertyDrawer(typeof(SetRuntimeSet<>))]
-    internal class RuntimeSetWriterDrawer : PropertyDrawer
+    internal class SetRuntimeSetDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
             => SOReferenceGUIHelper.VarRefGUI(SOType.RuntimeSet, Access.Setter, "runtimeSet", position, property, label, fieldInfo);

@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.IO;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.ListVariable.Base;
 using NuiN.ScriptableVariables.RuntimeSet.Base;
 using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
 using NuiN.ScriptableVariables.RuntimeSingle.Base;
@@ -20,7 +21,7 @@ using NuiN.ScriptableVariables.{SingularSuffix}.Base;
 namespace NuiN.ScriptableVariables.{SingularSuffix}.{CustomOrCommon}
 {   
     [CreateAssetMenu(
-        menuName = ""ScriptableVariables/Custom/{Suffix}/{Type}"", 
+        menuName = ""ScriptableVariables/{CustomOrCommon}/{Suffix}/{Type}"",
         fileName = ""{FileName}"")]
     internal class {TypeWithSuffix}SO : {BaseClass}<{Type}> { }
 }";
@@ -173,7 +174,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
         {
             return _dataType switch
             {
-                SOType.ScriptableVariable => $"{_type}{GetSingularSuffix()}",
+                SOType.Variable => $"{_type}{GetSingularSuffix()}",
                 _ => $"{_type}{GetSingularSuffix()}"
             };
         }
@@ -189,7 +190,8 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
         {
             return _dataType switch
             {
-                SOType.ScriptableVariable => "Variable",
+                SOType.Variable => "Variable",
+                SOType.ListVariable => "ListVariable",
                 SOType.RuntimeSet => "RuntimeSet",
                 SOType.RuntimeSingle => "RuntimeSingle",
                 _ => ""
@@ -204,13 +206,13 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
                 {
                     SOType.RuntimeSet => nameof(RuntimeSetItemComponentBase<Object>),
                     SOType.RuntimeSingle => nameof(RuntimeSingleItemComponentBase<Object>),
-                    SOType.ScriptableVariable => null,
                     _ => null
                 };
             }
             return _dataType switch
             {
-                SOType.ScriptableVariable => nameof(ScriptableVariableBaseSO<object>),
+                SOType.Variable => nameof(ScriptableVariableBaseSO<object>),
+                SOType.ListVariable => nameof(ScriptableListVariableBaseSO<object>),
                 SOType.RuntimeSet => nameof(RuntimeSetBaseSO<Object>),
                 SOType.RuntimeSingle => nameof(RuntimeSingleBaseSO<Object>),
                 _ => ""

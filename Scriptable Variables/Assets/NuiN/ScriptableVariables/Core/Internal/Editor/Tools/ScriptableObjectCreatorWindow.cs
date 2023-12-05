@@ -3,16 +3,17 @@ using UnityEditor;
 using System;
 using System.Linq;
 using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.ListVariable.Base;
 using NuiN.ScriptableVariables.RuntimeSet.Base;
 using NuiN.ScriptableVariables.RuntimeSingle.Base;
 using NuiN.ScriptableVariables.Variable.Base;
 
 namespace NuiN.ScriptableVariables.Core.Editor.Tools
 {
-    internal class ScriptableObjectGeneratorWindow : EditorWindow
+    internal class ScriptableObjectCreatorWindow : EditorWindow
     {
         Type[] _scriptTypes;
-        SOType _selectedSOType = SOType.ScriptableVariable;
+        SOType _selectedSOType = SOType.Variable;
         string _scriptTypeSearch = "";
         string _assetName;
         Vector2 _scrollPosition;
@@ -22,7 +23,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
         [MenuItem("ScriptableVariables/Scriptable Object Generator")]
         public static void ShowWindow()
         {
-            GetWindow<ScriptableObjectGeneratorWindow>("Scriptable Object Generator");
+            GetWindow<ScriptableObjectCreatorWindow>("Scriptable Object Generator");
         }
 
         void OnEnable()
@@ -175,7 +176,8 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
         {
             return _selectedSOType switch
             {
-                SOType.ScriptableVariable => typeName.EndsWith("SO") ? typeName[..^2] : typeName,
+                SOType.Variable => typeName.EndsWith("VariableSO") ? typeName[..^10] : typeName,
+                SOType.ListVariable => typeName.EndsWith("VariableListSO") ? typeName[..14] : typeName,
                 SOType.RuntimeSet => typeName.EndsWith("RuntimeSetSO") ? typeName[..^12] : typeName,
                 SOType.RuntimeSingle => typeName.EndsWith("RuntimeSingleSO") ? typeName[..^15] : typeName,
                 _ => typeName
@@ -192,7 +194,8 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
             {
                 SOType.RuntimeSet => "RuntimeSet",
                 SOType.RuntimeSingle => "RuntimeSingle",
-                SOType.ScriptableVariable => "Variable",
+                SOType.Variable => "Variable",
+                SOType.ListVariable => "ListVariable",
                 _ => "Type Not Implemented"
             };
 
@@ -214,8 +217,11 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
         {
             switch (_selectedSOType)
             {
-                case SOType.ScriptableVariable:
+                case SOType.Variable:
                     InitializeScriptTypes(typeof(ScriptableVariableBaseSO<>));
+                    break;
+                case SOType.ListVariable:
+                    InitializeScriptTypes(typeof(ScriptableListVariableBaseSO<>));
                     break;
                 case SOType.RuntimeSet:
                     InitializeScriptTypes(typeof(RuntimeSetBaseSO<>));
