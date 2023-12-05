@@ -8,15 +8,15 @@ namespace NuiN.ScriptableVariables.RuntimeSet.References
     [Serializable]
     public class SetRuntimeSet<T> : ReferenceRuntimeSetBase<T> where T : Object
     {
-        public List<T> Items => runtimeSet.runtimeSet;
+        public List<T> Entities => runtimeSet.runtimeSet;
     
         public void Add(T item, bool invokeActions = true, bool returnIfContains = true)
         {
             if (item == null) return;
-            if (returnIfContains && Items.Contains(item)) return;
+            if (returnIfContains && Entities.Contains(item)) return;
         
-            List<T> oldItems = Items;
-            Items.Add(item);
+            List<T> oldItems = Entities;
+            Entities.Add(item);
 
             if (!invokeActions) return;
         
@@ -26,10 +26,10 @@ namespace NuiN.ScriptableVariables.RuntimeSet.References
     
         public void Remove(T item, bool invokeActions = true, bool returnIfDoesntContain = true)
         {
-            if (returnIfDoesntContain && !Items.Contains(item)) return;
+            if (returnIfDoesntContain && !Entities.Contains(item)) return;
         
-            List<T> oldItems = Items;
-            Items.Remove(item);
+            List<T> oldItems = Entities;
+            Entities.Remove(item);
         
             if (!invokeActions) return;
         
@@ -39,8 +39,8 @@ namespace NuiN.ScriptableVariables.RuntimeSet.References
 
         public void Clear(bool invokeActions = true)
         {
-            List<T> oldItems = Items;
-            Items.Clear();
+            List<T> oldItems = Entities;
+            Entities.Clear();
 
             if (!invokeActions) return;
         

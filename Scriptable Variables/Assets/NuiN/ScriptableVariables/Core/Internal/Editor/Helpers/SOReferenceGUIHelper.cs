@@ -96,11 +96,11 @@ namespace NuiN.ScriptableVariables.Core.Editor.Helpers
             void DrawPropertyField()
             {
                 Rect objectFieldPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
-                EditorStyles.label.normal.textColor = color;
                 EditorGUI.BeginProperty(objectFieldPosition, GUIContent.none, variableProperty);
+                EditorStyles.label.normal.textColor = color;
                 EditorGUI.PropertyField(objectFieldPosition, variableProperty, label, true);
-                EditorGUI.EndProperty();
                 EditorStyles.label.normal.textColor = Color.white;
+                EditorGUI.EndProperty();
             }
         }
         

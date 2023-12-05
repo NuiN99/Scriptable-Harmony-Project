@@ -7,7 +7,7 @@ namespace NuiN.ScriptableVariables.RuntimeSingle.References
     [Serializable]
     public class SetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T> where T : Object
     {
-        public T Item
+        public T Entity
         {
             get => runtimeSingle.runtimeSingle;
             private set => runtimeSingle.runtimeSingle = value;
@@ -16,23 +16,23 @@ namespace NuiN.ScriptableVariables.RuntimeSingle.References
         public void Set(T newItem, bool invokeActions = true, bool overrideExisting = true)
         {
             if (newItem == null) return;
-            if (Item != null && !overrideExisting) return;
+            if (Entity != null && !overrideExisting) return;
 
-            T oldItem = Item;
-            Item = newItem;
+            T oldItem = Entity;
+            Entity = newItem;
             
             if (!invokeActions) return;
             
-            runtimeSingle.onSetWithOld?.Invoke(oldItem, Item);
-            runtimeSingle.onSet?.Invoke(Item);
+            runtimeSingle.onSetWithOld?.Invoke(oldItem, Entity);
+            runtimeSingle.onSet?.Invoke(Entity);
         }
         
         public void Remove(bool invokeActions = true)
         {
-            if (Item == null) return;
+            if (Entity == null) return;
 
-            T oldItem = Item;
-            Item = null;
+            T oldItem = Entity;
+            Entity = null;
             
             if (!invokeActions) return;
             

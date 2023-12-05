@@ -12,7 +12,7 @@ public class ClosestEnemyToMouseSetter : MonoBehaviour
     void Update()
     {
         float closestDist = float.MaxValue;
-        foreach (Enemy enemy in enemySet.Items)
+        foreach (Enemy enemy in enemySet.Entities)
         {
             float distFromMouse = Vector3.Distance(mousePosition.Val, enemy.transform.position);
             if (distFromMouse >= closestDist) continue;
@@ -21,7 +21,7 @@ public class ClosestEnemyToMouseSetter : MonoBehaviour
             _closestEnemy = enemy;
         }
 
-        foreach (Enemy enemy in enemySet.Items)
+        foreach (Enemy enemy in enemySet.Entities)
         {
             Color enemyColor = enemy == _closestEnemy
                 ? Color.red

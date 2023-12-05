@@ -40,11 +40,14 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
             
             DisplayOptions();
-
+            
             var commonScriptTypes = GetFilteredScriptTypesWithNamespace(_scriptTypeSearch, "Common");
             var customScriptTypes = GetFilteredScriptTypes(_scriptTypeSearch);
             
+            GUILayout.Space(10);
             DisplayCommonTypes();
+            
+            GUILayout.Space(10);
             DisplayCustomTypes();
             
             EditorGUILayout.EndScrollView();
