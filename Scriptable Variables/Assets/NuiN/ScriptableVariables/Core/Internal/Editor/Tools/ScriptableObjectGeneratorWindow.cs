@@ -192,12 +192,15 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
                 SOType.ScriptableVariable => "Variable",
                 _ => "Type Not Implemented"
             };
-            
-            string newAssetName = string.IsNullOrEmpty(_assetName)
+
+            string baseAssetName = string.IsNullOrEmpty(_assetName)
                 ? $"New {TrimScriptType(selectedType.Name)} {suffix}"
                 : _assetName;
-            
-            AssetDatabase.CreateAsset(instance, $"{_pathController.SelectionPath}/{newAssetName}.asset");
+
+            string assetPath = $"{_pathController.SelectionPath}/{baseAssetName}.asset";
+            string uniqueAssetPath = AssetDatabase.GenerateUniqueAssetPath(assetPath);
+
+            AssetDatabase.CreateAsset(instance, uniqueAssetPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             EditorUtility.FocusProjectWindow();
