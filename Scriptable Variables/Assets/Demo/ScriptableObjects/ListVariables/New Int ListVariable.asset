@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: New Int ListVariable
   m_EditorClassIdentifier: 
   description: 
-  list: 00000000
+  list: 0000000000000000
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MousePosition
   m_EditorClassIdentifier: 
   description: 
-  value: {x: 0, y: 0}
+  value: {x: 0.50446725, y: 9.145793}
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
   total: 3
