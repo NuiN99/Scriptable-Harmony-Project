@@ -13,16 +13,9 @@ namespace NuiN.ScriptableVariables.Internal.Attributes
         {
             EditorGUI.BeginProperty(position, label, property);
         
-            if (property.objectReferenceValue != null)
-            {
-                EditorGUI.ObjectField(position, property.objectReferenceValue, typeof(Component), true);
-            }
-            else
-            {
-                EditorGUI.PropertyField(position, property, label, true);
-            }
+            if (property.objectReferenceValue == null) EditorGUI.PropertyField(position, property, label, true);
+            else EditorGUI.ObjectField(position, property.objectReferenceValue, typeof(Component), true);
             
-
             EditorGUI.EndProperty();
         }
     }
