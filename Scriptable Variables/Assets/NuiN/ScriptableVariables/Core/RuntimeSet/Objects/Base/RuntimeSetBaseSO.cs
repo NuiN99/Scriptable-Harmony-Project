@@ -29,7 +29,6 @@ namespace NuiN.ScriptableVariables.RuntimeSet.Base
         public Action onClear;
         public Action<List<T>> onClearWithOld;
 
-#if UNITY_EDITOR
         [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
         
@@ -38,7 +37,6 @@ namespace NuiN.ScriptableVariables.RuntimeSet.Base
         
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
             new("runtimeSet", typeof(ReferenceRuntimeSetBase<T>), typeof(GetRuntimeSet<T>), typeof(SetRuntimeSet<T>));
-#endif
         
         void OnEnable()
         {

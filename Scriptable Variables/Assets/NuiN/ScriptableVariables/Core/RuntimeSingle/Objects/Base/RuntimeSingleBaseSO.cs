@@ -25,7 +25,6 @@ namespace NuiN.ScriptableVariables.RuntimeSingle.Base
         public Action onRemove;
         public Action<T> onRemoveWithOld;
         
-#if UNITY_EDITOR
         [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
         
@@ -34,7 +33,6 @@ namespace NuiN.ScriptableVariables.RuntimeSingle.Base
         
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
             new("runtimeSingle", typeof(ReferenceRuntimeSingleBase<T>), typeof(GetRuntimeSingle<T>), typeof(SetRuntimeSingle<T>));
-#endif
         
         void OnEnable()
         {
