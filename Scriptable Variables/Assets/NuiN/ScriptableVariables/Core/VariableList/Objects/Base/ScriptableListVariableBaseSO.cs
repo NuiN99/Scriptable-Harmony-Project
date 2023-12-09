@@ -14,7 +14,7 @@ namespace NuiN.ScriptableVariables.ListVariable.Base
     {
         [SerializeField] [TextArea] string description; 
         
-        public List<T> _startValue = new();
+        List<T> _startValue = new();
         public List<T> list = new();
         
         public Action<List<T>> onSet;
