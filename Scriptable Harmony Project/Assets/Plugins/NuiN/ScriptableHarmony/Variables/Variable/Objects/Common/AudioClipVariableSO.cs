@@ -1,10 +1,10 @@
-using NuiN.ScriptableVariables.Variable.Base;
+using NuiN.ScriptableHarmony.Variable.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Variable.Common
+namespace NuiN.ScriptableHarmony.Variable.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/Variables/AudioClip", 
+        menuName = "ScriptableHarmony/Common/Variables/AudioClip", 
         fileName = "New AudioClip Variable")]
     internal class AudioClipVariableSO : ScriptableVariableBaseSO<AudioClip> { }
 }

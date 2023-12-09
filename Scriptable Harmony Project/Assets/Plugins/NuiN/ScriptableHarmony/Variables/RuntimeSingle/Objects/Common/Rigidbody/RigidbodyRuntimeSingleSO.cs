@@ -1,10 +1,10 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.RuntimeSingle.Base;
+using NuiN.ScriptableHarmony.RuntimeSingle.Base;
 
-namespace NuiN.ScriptableVariables.RuntimeSingle.Common
+namespace NuiN.ScriptableHarmony.RuntimeSingle.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/RuntimeSingles/Rigidbody", 
+        menuName = "ScriptableHarmony/Common/RuntimeSingles/Rigidbody", 
         fileName = "New Rigidbody RuntimeSingle")]
     internal class RigidbodyRuntimeSingleSO : RuntimeSingleBaseSO<Rigidbody> { }
 }

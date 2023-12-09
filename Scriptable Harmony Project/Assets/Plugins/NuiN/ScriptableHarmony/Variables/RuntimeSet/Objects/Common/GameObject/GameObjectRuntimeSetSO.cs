@@ -1,10 +1,10 @@
-using NuiN.ScriptableVariables.RuntimeSet.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.RuntimeSet.Common
+namespace NuiN.ScriptableHarmony.RuntimeSet.Common
 {
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/RuntimeSets/GameObject", 
+        menuName = "ScriptableHarmony/Common/RuntimeSets/GameObject", 
         fileName = "New GameObject RuntimeSet")]
     internal class GameObjectRuntimeSetSO : RuntimeSetBaseSO<GameObject> { }
 }

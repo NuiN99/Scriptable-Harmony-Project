@@ -1,7 +1,7 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.RuntimeSingle.Components.Base;
+using NuiN.ScriptableHarmony.RuntimeSingle.Components.Base;
 
-namespace NuiN.ScriptableVariables.RuntimeSingle.Components.Common
+namespace NuiN.ScriptableHarmony.RuntimeSingle.Components.Common
 {   
     public class SpriteRendererRuntimeSingleItem : RuntimeSingleItemComponentBase<SpriteRenderer> { }
 }

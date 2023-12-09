@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Internal.Helpers
+namespace NuiN.ScriptableHarmony.Internal.Helpers
 {
     [Serializable]
     public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver

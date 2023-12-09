@@ -1,11 +1,11 @@
-using NuiN.ScriptableVariables.Core.Editor.Helpers;
-using NuiN.ScriptableVariables.Internal.Helpers;
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.RuntimeSingle.References;
+using NuiN.ScriptableHarmony.Core.Editor.Helpers;
+using NuiN.ScriptableHarmony.Internal.Helpers;
+using NuiN.ScriptableHarmony.References;
+using NuiN.ScriptableHarmony.RuntimeSingle.References;
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Internal.Editor
+namespace NuiN.ScriptableHarmony.Internal.Editor
 {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(GetRuntimeSingle<>))]

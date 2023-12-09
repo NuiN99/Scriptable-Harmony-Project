@@ -1,10 +1,10 @@
-using NuiN.ScriptableVariables.Variable.Base;
+using NuiN.ScriptableHarmony.Variable.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Variable.Common
+namespace NuiN.ScriptableHarmony.Variable.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/Variables/double", 
+        menuName = "ScriptableHarmony/Common/Variables/double", 
         fileName = "New Double Variable")]
     internal class DoubleVariableSO : ScriptableVariableBaseSO<double> { }
 }

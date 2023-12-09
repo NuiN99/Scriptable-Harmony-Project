@@ -1,14 +1,14 @@
 using System;
-using NuiN.ScriptableVariables.Base;
-using NuiN.ScriptableVariables.Internal.Attributes;
-using NuiN.ScriptableVariables.Internal.Helpers;
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.RuntimeSingle.Components.Base;
-using NuiN.ScriptableVariables.RuntimeSingle.References.Base;
+using NuiN.ScriptableHarmony.Base;
+using NuiN.ScriptableHarmony.Internal.Attributes;
+using NuiN.ScriptableHarmony.Internal.Helpers;
+using NuiN.ScriptableHarmony.References;
+using NuiN.ScriptableHarmony.RuntimeSingle.Components.Base;
+using NuiN.ScriptableHarmony.RuntimeSingle.References.Base;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.RuntimeSingle.Base
+namespace NuiN.ScriptableHarmony.RuntimeSingle.Base
 {
     public class RuntimeSingleBaseSO<T> : RuntimeObjectBaseSO<T> where T : Object
     {

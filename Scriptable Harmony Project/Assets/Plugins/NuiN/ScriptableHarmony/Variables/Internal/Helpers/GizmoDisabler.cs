@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace NuiN.ScriptableVariables.Internal.Helpers
+namespace NuiN.ScriptableHarmony.Internal.Helpers
 {
     internal static class GizmoDisabler
     {

@@ -1,10 +1,10 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.RuntimeSet.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Base;
 
-namespace NuiN.ScriptableVariables.RuntimeSet.Common
+namespace NuiN.ScriptableHarmony.RuntimeSet.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Custom/RuntimeSets/SpriteRenderer", 
+        menuName = "ScriptableHarmony/Common/RuntimeSets/SpriteRenderer", 
         fileName = "New SpriteRenderer RuntimeSet")]
     internal class SpriteRendererRuntimeSetSO : RuntimeSetBaseSO<SpriteRenderer> { }
 }

@@ -1,9 +1,9 @@
-using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableHarmony.Internal.Helpers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace NuiN.ScriptableVariables.Base
+namespace NuiN.ScriptableHarmony.Base
 {
     public abstract class RuntimeObjectBaseSO<T> : ScriptableObjectBaseSO<T> where T : Object
     {

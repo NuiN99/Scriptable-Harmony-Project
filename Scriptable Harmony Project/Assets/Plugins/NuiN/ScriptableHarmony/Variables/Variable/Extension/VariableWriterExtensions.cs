@@ -1,8 +1,8 @@
 using System;
-using NuiN.ScriptableVariables.References;
+using NuiN.ScriptableHarmony.References;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Variable.References
+namespace NuiN.ScriptableHarmony.Variable.References
 {
     public static class VariableWriterExtensions
     {

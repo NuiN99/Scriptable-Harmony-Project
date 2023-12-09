@@ -1,36 +1,36 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
-using NuiN.ScriptableVariables.Internal.Helpers;
-using NuiN.ScriptableVariables.ListVariable.Base;
-using NuiN.ScriptableVariables.RuntimeSet.Base;
-using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
-using NuiN.ScriptableVariables.RuntimeSingle.Base;
-using NuiN.ScriptableVariables.RuntimeSingle.Components.Base;
-using NuiN.ScriptableVariables.Variable.Base;
+using NuiN.ScriptableHarmony.Internal.Helpers;
+using NuiN.ScriptableHarmony.ListVariable.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Components.Base;
+using NuiN.ScriptableHarmony.RuntimeSingle.Base;
+using NuiN.ScriptableHarmony.RuntimeSingle.Components.Base;
+using NuiN.ScriptableHarmony.Variable.Base;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.Editor.Tools
+namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
     internal class CustomTypeScriptGeneratorWindow : EditorWindow
     {
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
-using NuiN.ScriptableVariables.{SingularSuffix}.Base;
+using NuiN.ScriptableHarmony.{SingularSuffix}.Base;
 
-namespace NuiN.ScriptableVariables.{SingularSuffix}.{CustomOrCommon}
+namespace NuiN.ScriptableHarmony.{SingularSuffix}.{CustomOrCommon}
 {   
     [CreateAssetMenu(
-        menuName = ""ScriptableVariables/{CustomOrCommon}/{Suffix}/{Type}"",
+        menuName = ""ScriptableHarmony/{CustomOrCommon}/{Suffix}/{Type}"",
         fileName = ""{FileName}"")]
     internal class {TypeWithSuffix}SO : {BaseClass}<{Type}> { }
 }";
         
         const string COMPONENT_SCRIPT_TEMPLATE = 
 @"using UnityEngine;
-using NuiN.ScriptableVariables.{SingularSuffix}.Components.Base;
+using NuiN.ScriptableHarmony.{SingularSuffix}.Components.Base;
 
-namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
+namespace NuiN.ScriptableHarmony.{SingularSuffix}.Components.{CustomOrCommon}
 {   
     public class {TypeWithSuffix}Item : {BaseClass}<{Type}> { }
 }";
@@ -50,7 +50,7 @@ namespace NuiN.ScriptableVariables.{SingularSuffix}.Components.{CustomOrCommon}
         
         static CustomTypeScriptGeneratorWindow _windowInstance;
         
-        [MenuItem("ScriptableVariables/Custom Type Generator")]
+        [MenuItem("ScriptableHarmony/Custom Type Generator")]
         static void OpenWindow()
         {
             _windowInstance = GetWindow<CustomTypeScriptGeneratorWindow>();

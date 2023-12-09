@@ -1,7 +1,5 @@
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.RuntimeSet.References;
-using NuiN.ScriptableVariables.RuntimeSingle.References;
-using NuiN.ScriptableVariables.Variable.References;
+using NuiN.ScriptableHarmony.References;
+using NuiN.ScriptableHarmony.Variable.References;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

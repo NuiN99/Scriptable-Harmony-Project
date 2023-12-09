@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Linq;
-using NuiN.ScriptableVariables.Internal.Helpers;
-using NuiN.ScriptableVariables.ListVariable.Base;
-using NuiN.ScriptableVariables.RuntimeSet.Base;
-using NuiN.ScriptableVariables.RuntimeSingle.Base;
-using NuiN.ScriptableVariables.Variable.Base;
+using NuiN.ScriptableHarmony.Internal.Helpers;
+using NuiN.ScriptableHarmony.ListVariable.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Base;
+using NuiN.ScriptableHarmony.RuntimeSingle.Base;
+using NuiN.ScriptableHarmony.Variable.Base;
 
-namespace NuiN.ScriptableVariables.Core.Editor.Tools
+namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
     internal class ScriptableObjectCreatorWindow : EditorWindow
     {
@@ -20,7 +20,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
 
         SelectionPathController _pathController;
 
-        [MenuItem("ScriptableVariables/Scriptable Object Generator")]
+        [MenuItem("ScriptableHarmony/Scriptable Object Generator")]
         public static void ShowWindow()
         {
             GetWindow<ScriptableObjectCreatorWindow>("Scriptable Object Generator");

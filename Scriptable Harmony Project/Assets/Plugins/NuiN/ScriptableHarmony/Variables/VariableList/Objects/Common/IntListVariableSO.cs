@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
-using NuiN.ScriptableVariables.ListVariable.Base;
+using NuiN.ScriptableHarmony.ListVariable.Base;
 
-namespace NuiN.ScriptableVariables.ListVariable.Common
+namespace NuiN.ScriptableHarmony.ListVariable.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/ListVariables/int", 
+        menuName = "ScriptableHarmony/Common/ListVariables/int", 
         fileName = "New Int ListVariable")]
     internal class IntListVariableSO : ScriptableListVariableBaseSO<int> { }
 }

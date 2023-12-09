@@ -1,6 +1,6 @@
-using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Components.Base;
 
-namespace NuiN.ScriptableVariables.RuntimeSets.Custom.Components
+namespace NuiN.ScriptableHarmony.RuntimeSets.Custom.Components
 {   
     public class EnemyRuntimeSetItem : RuntimeSetItemComponentBase<Enemy> { }
 }

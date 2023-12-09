@@ -1,8 +1,8 @@
-using NuiN.ScriptableVariables.RuntimeSet.Components.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Components.Base;
 using UnityEngine;
 
 
-namespace NuiN.ScriptableVariables.RuntimeSet.Components.Common
+namespace NuiN.ScriptableHarmony.RuntimeSet.Components.Common
 {
     public class GameObjectRuntimeSetItem : RuntimeSetItemComponentBase<GameObject> { }
 }

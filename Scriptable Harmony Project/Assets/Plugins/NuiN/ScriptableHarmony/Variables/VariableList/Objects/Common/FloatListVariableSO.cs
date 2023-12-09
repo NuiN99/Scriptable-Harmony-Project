@@ -1,10 +1,10 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.ListVariable.Base;
+using NuiN.ScriptableHarmony.ListVariable.Base;
 
-namespace NuiN.ScriptableVariables.ListVariable.Common
+namespace NuiN.ScriptableHarmony.ListVariable.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/ListVariables/float",
+        menuName = "ScriptableHarmony/Common/ListVariables/float",
         fileName = "New Float ListVariable")]
     internal class FloatListVariableSO : ScriptableListVariableBaseSO<float> { }
 }

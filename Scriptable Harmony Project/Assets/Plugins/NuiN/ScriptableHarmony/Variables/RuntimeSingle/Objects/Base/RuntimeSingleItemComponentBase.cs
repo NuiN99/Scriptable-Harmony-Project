@@ -1,8 +1,8 @@
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.RuntimeSingle.References;
+using NuiN.ScriptableHarmony.References;
+using NuiN.ScriptableHarmony.RuntimeSingle.References;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.RuntimeSingle.Components.Base
+namespace NuiN.ScriptableHarmony.RuntimeSingle.Components.Base
 {
     public class RuntimeSingleItemComponentBase<T> : MonoBehaviour where T : Object
     {

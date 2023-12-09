@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.Editor.Tools
+namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
     internal class SelectionPathController
     {

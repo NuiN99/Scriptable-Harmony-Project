@@ -1,11 +1,11 @@
 using System;
-using NuiN.ScriptableVariables.Base;
-using NuiN.ScriptableVariables.Internal.Helpers;
-using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.Variable.References.Base;
+using NuiN.ScriptableHarmony.Base;
+using NuiN.ScriptableHarmony.Internal.Helpers;
+using NuiN.ScriptableHarmony.References;
+using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Variable.Base
+namespace NuiN.ScriptableHarmony.Variable.Base
 {
     public class ScriptableVariableBaseSO<T> : VariableObjectBaseSO<T>
     {

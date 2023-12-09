@@ -1,10 +1,10 @@
-using NuiN.ScriptableVariables.Variable.Base;
+using NuiN.ScriptableHarmony.Variable.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Variable.Common
+namespace NuiN.ScriptableHarmony.Variable.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/Variables/long", 
+        menuName = "ScriptableHarmony/Common/Variables/long", 
         fileName = "New Long Variable")]
     internal class LongVariableSO : ScriptableVariableBaseSO<long> { }
 }

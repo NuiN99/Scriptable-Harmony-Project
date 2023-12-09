@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using NuiN.ScriptableVariables.ListVariable.References.Base;
-using NuiN.ScriptableVariables.Variable.References.Base;
+using NuiN.ScriptableHarmony.ListVariable.References.Base;
+using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
 
-namespace NuiN.ScriptableVariables.References
+namespace NuiN.ScriptableHarmony.References
 {
     [Serializable]
     public class SetListVariable<T> : ReferenceScriptableListVariableBase<T>

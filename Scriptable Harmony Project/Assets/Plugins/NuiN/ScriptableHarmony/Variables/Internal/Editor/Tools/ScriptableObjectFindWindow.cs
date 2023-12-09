@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
-using NuiN.ScriptableVariables.Variable.Base;
+using NuiN.ScriptableHarmony.Variable.Base;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.Core.Editor.Tools
+namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
     internal class ScriptableObjectFindWindow : EditorWindow
     {
@@ -34,7 +34,7 @@ namespace NuiN.ScriptableVariables.Core.Editor.Tools
         string _searchFilter;
         static ScriptableObjectFindWindow _windowInstance;
 
-        [MenuItem("ScriptableVariables/Object Finder")]
+        [MenuItem("ScriptableHarmony/Object Finder")]
         static void OpenFindWindowMenuItem() => OpenFindWindow(string.Empty, null);
         
         public static void OpenFindWindow(string typeName, SerializedProperty property)

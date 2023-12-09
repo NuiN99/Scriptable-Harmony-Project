@@ -1,10 +1,10 @@
-using NuiN.ScriptableVariables.RuntimeSet.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.RuntimeSet.Common
+namespace NuiN.ScriptableHarmony.RuntimeSet.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Custom/RuntimeSets/Rigidbody", 
+        menuName = "ScriptableHarmony/Common/RuntimeSets/Rigidbody", 
         fileName = "New Rigidbody RuntimeSet")]
     internal class RigidbodyRuntimeSetSO : RuntimeSetBaseSO<Rigidbody> { }
 }

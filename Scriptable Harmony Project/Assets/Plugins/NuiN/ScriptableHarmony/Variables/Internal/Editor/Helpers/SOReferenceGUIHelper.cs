@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using NuiN.ScriptableVariables.Core.Editor.Tools;
-using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableHarmony.Core.Editor.Tools;
+using NuiN.ScriptableHarmony.Internal.Helpers;
 using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Core.Editor.Helpers
+namespace NuiN.ScriptableHarmony.Core.Editor.Helpers
 {
 #if UNITY_EDITOR
     internal static class SOReferenceGUIHelper

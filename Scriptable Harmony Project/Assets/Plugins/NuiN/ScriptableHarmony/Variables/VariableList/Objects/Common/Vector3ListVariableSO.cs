@@ -1,10 +1,10 @@
 using UnityEngine;
-using NuiN.ScriptableVariables.ListVariable.Base;
+using NuiN.ScriptableHarmony.ListVariable.Base;
 
-namespace NuiN.ScriptableVariables.ListVariable.Common
+namespace NuiN.ScriptableHarmony.ListVariable.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/ListVariables/Vector3",
+        menuName = "ScriptableHarmony/Common/ListVariables/Vector3",
         fileName = "New Vector3 ListVariable")]
     internal class Vector3ListVariableSO : ScriptableListVariableBaseSO<Vector3> { }
 }

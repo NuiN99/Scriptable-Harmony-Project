@@ -1,10 +1,10 @@
-using NuiN.ScriptableVariables.Variable.Base;
+using NuiN.ScriptableHarmony.Variable.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.Variable.Common
+namespace NuiN.ScriptableHarmony.Variable.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/Variables/Sprite", 
+        menuName = "ScriptableHarmony/Common/Variables/Sprite", 
         fileName = "New Sprite Variable")]
     internal class SpriteVariableSO : ScriptableVariableBaseSO<Sprite> { }
 }

@@ -1,10 +1,10 @@
-using NuiN.ScriptableVariables.RuntimeSet.Base;
+using NuiN.ScriptableHarmony.RuntimeSet.Base;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.RuntimeSet.Common
+namespace NuiN.ScriptableHarmony.RuntimeSet.Common
 {   
     [CreateAssetMenu(
-        menuName = "ScriptableVariables/Common/RuntimeSets/Transform", 
+        menuName = "ScriptableHarmony/Common/RuntimeSets/Transform", 
         fileName = "New Transform RuntimeSet")]
     internal class TransformRuntimeSetSO : RuntimeSetBaseSO<Transform> { }
 }

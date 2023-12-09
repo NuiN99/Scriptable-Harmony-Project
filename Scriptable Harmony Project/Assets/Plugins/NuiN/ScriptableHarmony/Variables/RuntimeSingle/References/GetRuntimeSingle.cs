@@ -1,9 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
-using NuiN.ScriptableVariables.RuntimeSingle.References.Base;
+using NuiN.ScriptableHarmony.RuntimeSingle.References.Base;
 using Object = UnityEngine.Object;
 
-namespace NuiN.ScriptableVariables.References
+namespace NuiN.ScriptableHarmony.References
 {
     [Serializable]
     public class GetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T> where T : Object

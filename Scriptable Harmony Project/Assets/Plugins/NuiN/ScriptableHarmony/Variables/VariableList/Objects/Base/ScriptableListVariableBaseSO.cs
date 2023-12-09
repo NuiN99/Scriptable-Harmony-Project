@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using NuiN.ScriptableVariables.Base;
-using NuiN.ScriptableVariables.Internal.Helpers;
-using NuiN.ScriptableVariables.ListVariable.References.Base;
-using NuiN.ScriptableVariables.References;
+using NuiN.ScriptableHarmony.Base;
+using NuiN.ScriptableHarmony.Internal.Helpers;
+using NuiN.ScriptableHarmony.ListVariable.References.Base;
+using NuiN.ScriptableHarmony.References;
 using UnityEngine;
 
-namespace NuiN.ScriptableVariables.ListVariable.Base
+namespace NuiN.ScriptableHarmony.ListVariable.Base
 {
     public class ScriptableListVariableBaseSO<T> : VariableObjectBaseSO<T>
     {
