@@ -6,48 +6,32 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class ScriptableVariableBaseBase<T> : ScriptableObject
+public abstract class ScriptableVariableBaseBase<T> : SOBaseBaseBase<T>
 {
     [SerializeField] [TextArea] string description;
     
     [Header("Value Persistence")]
     [SerializeField] bool resetOnSceneLoad = true;
     [SerializeField] bool resetOnExitPlaymode = true;
-        
-    [Header("References In Project")]
-    [ReadOnly] [SerializeField] int total;
-    [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
-        new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
     
-    void OnEnable()
+    new void OnEnable()
     {
-        GameLoadedEvent.OnGameLoaded += CacheStartValueBase;
+        base.OnEnable();;
+        GameLoadedEvent.OnGameLoaded += CacheStartValue;
         SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
-#if UNITY_EDITOR
         EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
-        Selection.selectionChanged += OnSelectedInProjectWindow;
-#endif
     }
-    void OnDisable()
+    new void OnDisable()
     {
-        GameLoadedEvent.OnGameLoaded -= CacheStartValueBase;
+        base.OnDisable();
+        GameLoadedEvent.OnGameLoaded -= CacheStartValue;
         SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
-#if UNITY_EDITOR
         EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
-        Selection.selectionChanged -= OnSelectedInProjectWindow;
-#endif
     }
-    
-    void Reset() => AssignDebugReferences();
     
     protected abstract void CacheStartValue();
     protected abstract void ResetValue();
-
-    void CacheStartValueBase()
-    {
-        gettersAndSetters?.Clear();
-        CacheStartValue();
-    }
+    
     void ResetValueOnSceneLoad(Scene s1, Scene s2)
     {
         if (resetOnSceneLoad) ResetValue();
@@ -57,18 +41,5 @@ public abstract class ScriptableVariableBaseBase<T> : ScriptableObject
     {
         if (!resetOnExitPlaymode) return;
         if (state == PlayModeStateChange.EnteredEditMode) ResetValue();
-    }
-    
-    void OnSelectedInProjectWindow()
-    {
-        gettersAndSetters?.Clear();
-        if (Selection.activeObject != this) return;
-        AssignDebugReferences();
-    }
-    
-    void AssignDebugReferences()
-    {
-        GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-        gettersAndSetters.FindObjectsAndAssignReferences(this, sceneObjs, out total);
     }
 }

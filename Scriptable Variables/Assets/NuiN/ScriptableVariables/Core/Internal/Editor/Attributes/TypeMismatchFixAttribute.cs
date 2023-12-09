@@ -13,7 +13,7 @@ namespace NuiN.ScriptableVariables.Internal.Attributes
         {
             EditorGUI.BeginProperty(position, label, property);
         
-            EditorGUI.ObjectField(position, property.objectReferenceValue, typeof(Object), true);
+            EditorGUI.ObjectField(position, property.objectReferenceValue, typeof(Component), true);
 
             EditorGUI.EndProperty();
         }

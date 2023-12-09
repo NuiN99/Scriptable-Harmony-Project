@@ -1,5 +1,10 @@
 using System;
 using System.Collections.Generic;
+using NuiN.ScriptableVariables.Internal.Helpers;
+using NuiN.ScriptableVariables.ListVariable.References.Base;
+using NuiN.ScriptableVariables.References;
+using NuiN.ScriptableVariables.Variable.References.Base;
+using UnityEngine;
 
 namespace NuiN.ScriptableVariables.ListVariable.Base
 {
@@ -28,6 +33,15 @@ namespace NuiN.ScriptableVariables.ListVariable.Base
         protected override void ResetValue()
         {
             list = new List<T>(_startValue);
+        }
+        
+        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
+            new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
+
+        protected override ReadWriteReferencesContainer GettersAndSetters
+        {
+            get => gettersAndSetters; 
+            set => gettersAndSetters = value;
         }
     }
 }

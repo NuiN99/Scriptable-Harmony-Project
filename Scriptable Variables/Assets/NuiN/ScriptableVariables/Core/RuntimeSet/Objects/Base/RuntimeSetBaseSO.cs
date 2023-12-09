@@ -13,12 +13,13 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.RuntimeSet.Base
 {
-    public class RuntimeSetBaseSO<T> : ScriptableObject where T : Object
+    public class RuntimeSetBaseSO<T> : RuntimeBaseBase<T> where T : Object
     {
         [SerializeField] [TextArea] string description;
+
+        [TypeMismatchFix] public List<T> runtimeSet = new();
         
-        [TypeMismatchFix]
-        public List<T> runtimeSet = new();
+       
 
         public Action<T> onAdd;
         public Action<List<T>, T> onAddWithOld;
@@ -28,66 +29,28 @@ namespace NuiN.ScriptableVariables.RuntimeSet.Base
 
         public Action onClear;
         public Action<List<T>> onClearWithOld;
-
-        [Header("References In Project")]
-        [ReadOnly] [SerializeField] int total;
-        
+        protected override RuntimeSetReferencesContainer ComponentHolders
+        {
+            get => componentHolders;
+            set => componentHolders = value;
+        }
         [SerializeField] RuntimeSetReferencesContainer componentHolders = 
             new("runtimeSet", typeof(RuntimeSetItemComponentBase<T>), typeof(SetRuntimeSet<T>));
+
+        protected override void ResetValue()
+        {
+            runtimeSet.Clear();
+        }
         
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
             new("runtimeSet", typeof(ReferenceRuntimeSetBase<T>), typeof(GetRuntimeSet<T>), typeof(SetRuntimeSet<T>));
-        
-        void OnEnable()
-        {
-            SceneManager.sceneUnloaded += ResetOnSceneUnloaded;
-#if UNITY_EDITOR
-            Selection.selectionChanged += OnSelectedInProjectWindow;
-            EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
-#endif
-        }
-        void OnDisable()
-        {
-            SceneManager.sceneUnloaded -= ResetOnSceneUnloaded;
 
-#if UNITY_EDITOR
-            EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
-            Selection.selectionChanged -= OnSelectedInProjectWindow;
-#endif
-        }
-        
-        void ResetOnSceneUnloaded(Scene scene) => runtimeSet.Clear();
-        
-#if UNITY_EDITOR
-        
-        void ResetValueOnStoppedPlaying(PlayModeStateChange state)
+        protected override ReadWriteReferencesContainer GettersAndSetters
         {
-            if (state != PlayModeStateChange.EnteredEditMode) return;
-            runtimeSet.Clear();
+            get => gettersAndSetters; 
+            set => gettersAndSetters = value;
         }
-
-        void Reset() => AssignDebugReferences();
-        
-        void OnSelectedInProjectWindow()
-        {
-            gettersAndSetters?.Clear();
-            componentHolders?.Clear();
-            if (Selection.activeObject != this) return;
-            AssignDebugReferences();
-        }
-
-        void AssignDebugReferences()
-        {
-            GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-
-            gettersAndSetters.FindObjectsAndAssignReferences(this, sceneObjs, out int readWriteCount);
-            componentHolders.FindObjectsAndAssignReferences(this, sceneObjs, out int setItemsCount);
-            
-            total = readWriteCount + setItemsCount;
-        }
-#endif
     }
-
 }
 
 

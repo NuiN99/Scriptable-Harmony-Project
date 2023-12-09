@@ -63,8 +63,8 @@ MonoBehaviour:
   runtimeSet:
     runtimeSet: {fileID: 11400000, guid: 328c7d3c657dfa24e8b1e7c9e1ea87d3, type: 2}
   lifetimeType: 0
-  invokeOnAdd: 1
-  invokeOnRemove: 1
+  dontInvokeOnAdd: 0
+  dontInvokeOnRemove: 0
 --- !u!212 &6093131480009090453
 SpriteRenderer:
   m_ObjectHideFlags: 0

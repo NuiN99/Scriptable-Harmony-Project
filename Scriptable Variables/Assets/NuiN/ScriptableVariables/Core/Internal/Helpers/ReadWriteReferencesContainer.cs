@@ -1,22 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using NuiN.ScriptableVariables.Internal.Attributes;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Internal.Helpers
 {
     [Serializable]
-    internal class ReadWriteReferencesContainer : ReferencesContainerBase
+    public class ReadWriteReferencesContainer : ReferencesContainerBase
     {
         Type _getterType;
         Type _setterType;
         
         [Header("Prefabs")]
+        [TypeMismatchFix]
         public List<Component> Getters;
+        [TypeMismatchFix]
         public List<Component> Setters;
             
         [Header("Scene")]
+        [TypeMismatchFix]
         public List<Component> getters;
+        [TypeMismatchFix]
         public List<Component> setters;
         
         public ReadWriteReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)

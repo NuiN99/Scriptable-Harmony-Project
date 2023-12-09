@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79409f4465a801b44a3c0ea9c415e617, type: 3}
   m_Name: Player_Health
   m_EditorClassIdentifier: 
+  total: 4
   description: 
-  value: 100
   resetOnSceneLoad: 0
   resetOnExitPlaymode: 1
-  total: 4
+  value: 100
   gettersAndSetters:
     Getters: []
     Setters: []

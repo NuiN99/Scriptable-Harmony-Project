@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using NuiN.ScriptableVariables.Internal.Attributes;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Internal.Helpers
 {
     [Serializable]
-    internal class RuntimeSetReferencesContainer : ReferencesContainerBase
+    public class RuntimeSetReferencesContainer : ReferencesContainerBase
     {
+        [TypeMismatchFix]
         public List<Component> prefabs;
+        [TypeMismatchFix]
         public List<Component> scene;
         
         Type _setterType;
