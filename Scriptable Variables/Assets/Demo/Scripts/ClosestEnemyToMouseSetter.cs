@@ -1,3 +1,4 @@
+using System;
 using NuiN.ScriptableVariables.References;
 using NuiN.ScriptableVariables.RuntimeSet.References;
 using NuiN.ScriptableVariables.Variable.References;

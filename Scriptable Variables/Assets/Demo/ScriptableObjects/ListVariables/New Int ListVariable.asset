@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a32e7a4ed124fe40b36a8f8141f73d3, type: 3}
   m_Name: New Int ListVariable
   m_EditorClassIdentifier: 
-  total: 0
   description: 
+  list: 0000000000000000000000000000000000000000
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
-  list: 0000000000000000000000000000000000000000
   gettersAndSetters:
     Getters: []
     Setters: []

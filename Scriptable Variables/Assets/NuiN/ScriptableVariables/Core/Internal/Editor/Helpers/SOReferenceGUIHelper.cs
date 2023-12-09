@@ -35,16 +35,12 @@ namespace NuiN.ScriptableVariables.Core.Editor.Helpers
                 case SOType.RuntimeSingle: typeName += "RuntimeSingleSO"; break;
                 case SOType.Variable:
                 {
-                    typeName = $"{typeName}SO";
+                    typeName = $"{typeName}VariableSO";
                     break;
                 }
                 case SOType.ListVariable:
                 {
-                    /*if (variableType.IsGenericType && variableType.GetGenericTypeDefinition() == typeof(List<>))
-                    {
-                    }*/
-                    Type listType = variableType.GetGenericArguments()[0];
-                    typeName = $"{GetReadableTypeName(listType)}List";
+                    typeName = $"{typeName}ListVariableSO";
                     break;
                 }
             }

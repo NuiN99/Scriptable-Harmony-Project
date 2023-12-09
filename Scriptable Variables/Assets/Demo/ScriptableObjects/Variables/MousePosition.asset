@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MousePosition
   m_EditorClassIdentifier: 
   description: 
+  value: {x: 0, y: 0}
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1
-  value: {x: 0, y: 0}
   gettersAndSetters:
     Getters: []
     Setters: []
