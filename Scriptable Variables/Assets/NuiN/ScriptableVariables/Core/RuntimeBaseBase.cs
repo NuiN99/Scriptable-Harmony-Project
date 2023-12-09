@@ -9,47 +9,47 @@ using UnityEngine.SceneManagement;
 
 public abstract class RuntimeBaseBase<T> : SOBaseBaseBase<T> where T : Object
 {
-    
+    protected int totalComponentHolders;
     protected abstract RuntimeSetReferencesContainer ComponentHolders { get; set; }
     
     new void OnEnable()
     {
-        base.OnEnable();
         SceneManager.sceneUnloaded += ResetOnSceneUnloaded;
 #if UNITY_EDITOR
+        base.OnEnable();
         EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
         Selection.selectionChanged += OnSelectedInProjectWindow;
 #endif
     }
     new void OnDisable()
     {
-        base.OnDisable();
         SceneManager.sceneUnloaded -= ResetOnSceneUnloaded;
 #if UNITY_EDITOR
+        base.OnDisable();
         EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
         Selection.selectionChanged -= OnSelectedInProjectWindow;
 #endif
     }
     
+    protected abstract void ResetValue();
+    
     void ResetValueOnStoppedPlaying(PlayModeStateChange state)
     {
-        if (state != PlayModeStateChange.EnteredEditMode) return;
-        ResetValue();
+        if (state == PlayModeStateChange.EnteredEditMode) ResetValue();
     }
+    
+    void ResetOnSceneUnloaded(Scene scene) => ResetValue();
 
     void OnSelectedInProjectWindow()
     {
         ComponentHolders?.Clear();
         if (Selection.activeObject != this) return;
-        AssignDebugReferences();
+        AssignComponentDebugReferences();
     }
     
-    void AssignDebugReferences()
+    void AssignComponentDebugReferences()
     {
         GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-        ComponentHolders.FindObjectsAndAssignReferences(this, sceneObjs, out int setItemsCount);
+        ComponentHolders.FindObjectsAndAssignReferences(this, sceneObjs, out totalComponentHolders);
     }
-    
-    void ResetOnSceneUnloaded(Scene scene) => ResetValue();
-    protected abstract void ResetValue();
 }

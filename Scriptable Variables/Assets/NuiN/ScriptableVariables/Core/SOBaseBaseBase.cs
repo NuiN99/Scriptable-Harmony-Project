@@ -10,9 +10,7 @@ using UnityEngine;
 
 public abstract class SOBaseBaseBase<T> : ScriptableObject
 {
-    [Header("References In Project")]
-    [ReadOnly] [SerializeField] int total;
-    
+    protected int total;
     protected abstract ReadWriteReferencesContainer GettersAndSetters { get; set; }
 
     protected virtual void OnEnable()

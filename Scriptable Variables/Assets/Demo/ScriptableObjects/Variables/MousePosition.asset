@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 724fc39ded15488795414a1144a8522f, type: 3}
   m_Name: MousePosition
   m_EditorClassIdentifier: 
-  total: 3
   description: 
   resetOnSceneLoad: 1
   resetOnExitPlaymode: 1

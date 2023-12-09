@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be58aa7cbc9e7e44967cd09713fd022, type: 3}
   m_Name: ActiveEnemies_Set
   m_EditorClassIdentifier: 
-  total: 0
   description: 
   runtimeSet: []
   componentHolders:

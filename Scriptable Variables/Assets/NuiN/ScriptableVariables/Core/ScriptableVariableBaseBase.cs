@@ -9,11 +9,10 @@ using UnityEngine.SceneManagement;
 public abstract class ScriptableVariableBaseBase<T> : SOBaseBaseBase<T>
 {
     [SerializeField] [TextArea] string description;
-    
-    [Header("Value Persistence")]
-    [SerializeField] bool resetOnSceneLoad = true;
-    [SerializeField] bool resetOnExitPlaymode = true;
-    
+
+    protected abstract bool ResetOnSceneLoad();
+    protected abstract bool ResetOnExitPlayMode();
+
     new void OnEnable()
     {
         base.OnEnable();;
@@ -34,12 +33,12 @@ public abstract class ScriptableVariableBaseBase<T> : SOBaseBaseBase<T>
     
     void ResetValueOnSceneLoad(Scene s1, Scene s2)
     {
-        if (resetOnSceneLoad) ResetValue();
+        if (ResetOnSceneLoad()) ResetValue();
     }
     
     void ResetValueOnStoppedPlaying(PlayModeStateChange state)
     {
-        if (!resetOnExitPlaymode) return;
+        if (!ResetOnExitPlayMode()) return;
         if (state == PlayModeStateChange.EnteredEditMode) ResetValue();
     }
 }
