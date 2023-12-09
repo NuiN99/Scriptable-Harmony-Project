@@ -32,7 +32,9 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
 #if UNITY_EDITOR
             return Setters.Count + Getters.Count + setters.Count + getters.Count;
 #endif
+#if !UNITY_EDITOR
             return 0;
+#endif
         }
 
         public override bool ListsAreNull()
@@ -40,7 +42,9 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
 #if UNITY_EDITOR
             return Setters == null || Getters == null || setters == null || getters == null;
 #endif
+#if !UNITY_EDITOR
             return true;
+#endif
         }
 
         public override void Clear()

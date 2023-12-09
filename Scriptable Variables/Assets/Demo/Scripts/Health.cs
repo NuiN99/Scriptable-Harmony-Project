@@ -11,11 +11,8 @@ public class Health : MonoBehaviour
     [SerializeField] SetVariable<float> maxHealth;
     [SerializeField] SetVariable<float> curHealth;
 
-    GetRuntimeSingle<Enemy> test;
-
     public void TakeDamage(float amount)
     {
-        test.Entity.name = null;
         curHealth.SubtractClamped(amount, min: 0, max: maxHealth.Val);
     }
 

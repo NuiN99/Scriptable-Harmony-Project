@@ -25,7 +25,9 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
 #if UNITY_EDITOR
             return prefabs.Count + scene.Count;
 #endif
+#if !UNITY_EDITOR
             return 0;
+#endif
         }
 
         public override bool ListsAreNull()
@@ -33,7 +35,9 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
 #if UNITY_EDITOR
             return prefabs == null || scene == null;
 #endif
+#if !UNITY_EDITOR
             return true;
+#endif
         }
 
         public override void Clear()

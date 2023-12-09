@@ -14,7 +14,7 @@ namespace NuiN.ScriptableVariables.ListVariable.Base
     {
         [SerializeField] [TextArea] string description; 
         
-        List<T> _startValue = new();
+        public List<T> _startValue = new();
         public List<T> list = new();
         
         public Action<List<T>> onSet;
@@ -60,15 +60,13 @@ namespace NuiN.ScriptableVariables.ListVariable.Base
         void CacheStartValueOnStart()
         {
             gettersAndSetters?.Clear();
-            _startValue = null;
-            _startValue = list;
+            _startValue = new List<T>(list);
         }
 
         void ResetValueOnSceneLoad(Scene scene, Scene scene2)
         {
             if (!resetOnSceneLoad) return;
-            list = null;
-            list = _startValue;
+            list = new List<T>(_startValue);
         }
         
 #if UNITY_EDITOR
@@ -80,8 +78,7 @@ namespace NuiN.ScriptableVariables.ListVariable.Base
             if (!resetOnExitPlaymode) return;
             if (state == PlayModeStateChange.EnteredEditMode)
             {
-                list = null;
-                list = _startValue;
+                list = new List<T>(_startValue);
             }
         }
 
