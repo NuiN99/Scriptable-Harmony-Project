@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/Vector3", 
         fileName = "New Vector3 Variable")]
-    internal class Vector3SO : ScriptableVariableBaseSO<Vector3> { }
+    internal class Vector3VariableSO : ScriptableVariableBaseSO<Vector3> { }
 }

@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/Sprite", 
         fileName = "New Sprite Variable")]
-    internal class SpriteSO : ScriptableVariableBaseSO<Sprite> { }
+    internal class SpriteVariableSO : ScriptableVariableBaseSO<Sprite> { }
 }

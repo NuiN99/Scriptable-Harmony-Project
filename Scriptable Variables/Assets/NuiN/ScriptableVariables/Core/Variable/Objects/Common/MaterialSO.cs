@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/Material", 
         fileName = "New Material Variable")]
-    internal class MaterialSO : ScriptableVariableBaseSO<Material> { }
+    internal class MaterialVariableSO : ScriptableVariableBaseSO<Material> { }
 }

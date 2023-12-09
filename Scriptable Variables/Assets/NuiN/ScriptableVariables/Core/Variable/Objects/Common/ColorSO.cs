@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/Color", 
         fileName = "New Color Variable")]
-    internal class ColorSO : ScriptableVariableBaseSO<Color> { }
+    internal class ColorVariableSO : ScriptableVariableBaseSO<Color> { }
 }

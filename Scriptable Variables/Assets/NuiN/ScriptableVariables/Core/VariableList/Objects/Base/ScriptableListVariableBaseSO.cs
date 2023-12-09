@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
+using NuiN.ScriptableVariables.Base;
 using NuiN.ScriptableVariables.Internal.Helpers;
 using NuiN.ScriptableVariables.ListVariable.References.Base;
 using NuiN.ScriptableVariables.References;
-using NuiN.ScriptableVariables.Variable.References.Base;
 using UnityEngine;
 
 namespace NuiN.ScriptableVariables.ListVariable.Base
 {
-    public class ScriptableListVariableBaseSO<T> : ScriptableVariableBaseBase<T>
+    public class ScriptableListVariableBaseSO<T> : VariableObjectBaseSO<T>
     {
         List<T> _startValue = new();
         public List<T> list = new();

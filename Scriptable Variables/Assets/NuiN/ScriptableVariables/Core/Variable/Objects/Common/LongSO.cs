@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/long", 
         fileName = "New Long Variable")]
-    internal class LongSO : ScriptableVariableBaseSO<long> { }
+    internal class LongVariableSO : ScriptableVariableBaseSO<long> { }
 }

@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/AudioClip", 
         fileName = "New AudioClip Variable")]
-    internal class AudioClipSO : ScriptableVariableBaseSO<AudioClip> { }
+    internal class AudioClipVariableSO : ScriptableVariableBaseSO<AudioClip> { }
 }

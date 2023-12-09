@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/double", 
         fileName = "New Double Variable")]
-    internal class DoubleSO : ScriptableVariableBaseSO<double> { }
+    internal class DoubleVariableSO : ScriptableVariableBaseSO<double> { }
 }

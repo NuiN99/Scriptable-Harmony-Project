@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NuiN.ScriptableVariables.Base;
 using NuiN.ScriptableVariables.Internal.Attributes;
 using NuiN.ScriptableVariables.Internal.Helpers;
 using NuiN.ScriptableVariables.References;
@@ -10,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableVariables.RuntimeSet.Base
 {
-    public class RuntimeSetBaseSO<T> : RuntimeBaseBase<T> where T : Object
+    public class RuntimeSetBaseSO<T> : RuntimeObjectBaseSO<T> where T : Object
     {
         [SerializeField] [TextArea] string description;
         

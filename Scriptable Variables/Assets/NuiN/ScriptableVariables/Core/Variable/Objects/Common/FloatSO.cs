@@ -6,5 +6,5 @@ namespace NuiN.ScriptableVariables.Variable.Common
     [CreateAssetMenu(
         menuName = "ScriptableVariables/Common/Variables/float", 
         fileName = "New Float Variable")]
-    internal class FloatSO : ScriptableVariableBaseSO<float> { }
+    internal class FloatVariableSO : ScriptableVariableBaseSO<float> { }
 }
