@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Internal.Helpers
 {
-#if UNITY_EDITOR
     [Serializable]
     internal class RuntimeSetReferencesContainer : ReferencesContainerBase
     {
@@ -16,21 +15,38 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
 
         public RuntimeSetReferencesContainer(string fieldName, Type baseType, Type setterType) : base(fieldName, baseType)
         {
+#if UNITY_EDITOR
             _setterType = setterType;
+#endif
         }
         
-        public override int TotalReferencesCount() => prefabs.Count + scene.Count;
+        public override int TotalReferencesCount()
+        {
+#if UNITY_EDITOR
+            return prefabs.Count + scene.Count;
+#endif
+            return 0;
+        }
 
-        public override bool ListsAreNull() => prefabs == null || scene == null;
+        public override bool ListsAreNull()
+        {
+#if UNITY_EDITOR
+            return prefabs == null || scene == null;
+#endif
+            return true;
+        }
 
         public override void Clear()
         {
+#if UNITY_EDITOR
             prefabs?.Clear();
             scene?.Clear();
+#endif
         }
         
         protected override void CheckComponentAndAssign(object variableCaller, Component component, ObjectsToSearch objectsToSearch)
         {
+#if UNITY_EDITOR
             Type componentType = component.GetType();
             
             Type componentBaseType = componentType.BaseType;
@@ -60,7 +76,7 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
                     case ObjectsToSearch.Scene: scene?.Add(component); break;
                 }
             }
+#endif
         }
     }
-#endif
 }

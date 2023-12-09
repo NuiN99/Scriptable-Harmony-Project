@@ -12,9 +12,8 @@ namespace NuiN.ScriptableVariables.Variable.Base
 {
     public class ScriptableVariableBaseSO<T> : ScriptableObject
     {
-#if UNITY_EDITOR
         [SerializeField] [TextArea] string description; 
-#endif
+        
         T _startValue;
         public T value;
         
@@ -23,14 +22,12 @@ namespace NuiN.ScriptableVariables.Variable.Base
         
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad = true;
-#if UNITY_EDITOR
         [SerializeField] bool resetOnExitPlaymode = true;
         
         [Header("References In Project")]
         [ReadOnly] [SerializeField] int total;
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = 
             new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
-#endif
         
         void OnEnable()
         {
@@ -51,7 +48,11 @@ namespace NuiN.ScriptableVariables.Variable.Base
 #endif
         }
         
-        void CacheStartValueOnStart() =>  _startValue = value;
+        void CacheStartValueOnStart()
+        {
+            gettersAndSetters.Clear();
+            _startValue = value;
+        }
 
         void ResetValueOnSceneLoad(Scene scene, Scene scene2)
         {
@@ -66,7 +67,10 @@ namespace NuiN.ScriptableVariables.Variable.Base
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (!resetOnExitPlaymode) return;
-            if (state == PlayModeStateChange.EnteredEditMode) value = _startValue;
+            if (state == PlayModeStateChange.EnteredEditMode)
+            {
+                value = _startValue;
+            }
         }
 
         void OnSelectedInProjectWindow()

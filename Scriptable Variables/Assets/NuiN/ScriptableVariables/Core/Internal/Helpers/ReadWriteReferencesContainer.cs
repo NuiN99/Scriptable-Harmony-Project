@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace NuiN.ScriptableVariables.Internal.Helpers
 {
-#if UNITY_EDITOR
     [Serializable]
     internal class ReadWriteReferencesContainer : ReferencesContainerBase
     {
@@ -22,24 +21,41 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
         
         public ReadWriteReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)
         {
+#if UNITY_EDITOR
             _setterType = setterType;
             _getterType = getterType;
+#endif
         }
         
-        public override int TotalReferencesCount() => Setters.Count + Getters.Count + setters.Count + getters.Count;
+        public override int TotalReferencesCount()
+        {
+#if UNITY_EDITOR
+            return Setters.Count + Getters.Count + setters.Count + getters.Count;
+#endif
+            return 0;
+        }
 
-        public override bool ListsAreNull() => Setters == null || Getters == null || setters == null || getters == null;
+        public override bool ListsAreNull()
+        {
+#if UNITY_EDITOR
+            return Setters == null || Getters == null || setters == null || getters == null;
+#endif
+            return true;
+        }
 
         public override void Clear()
         {
+#if UNITY_EDITOR
             Getters?.Clear();
             Setters?.Clear();
             getters?.Clear();
             setters?.Clear();
+#endif
         }
         
         protected override void CheckComponentAndAssign(object variableCaller, Component component, ObjectsToSearch objectsToSearch)
         {
+#if UNITY_EDITOR
             Type componentType = component.GetType();
             FieldInfo[] fields =
                 componentType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -72,7 +88,7 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
                     case ObjectsToSearch.Scene: setters?.Add(component); break;
                 }
             }
+#endif
         }
     }
-#endif
 }

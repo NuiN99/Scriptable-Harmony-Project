@@ -9,7 +9,6 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
     [Serializable]
     internal abstract class ReferencesContainerBase
     {
-#if UNITY_EDITOR
         public enum ObjectsToSearch { Scene, Prefabs }
         
         protected Type baseType;
@@ -22,10 +21,12 @@ namespace NuiN.ScriptableVariables.Internal.Helpers
 
         protected ReferencesContainerBase(string fieldName, Type baseType)
         {
+#if UNITY_EDITOR
             this.fieldName = fieldName;
             this.baseType = baseType;
+#endif
         }
-        
+#if UNITY_EDITOR
         public void FindObjectsAndAssignReferences(object variableCaller, IEnumerable<GameObject> sceneObjs, out int count)
         {
             Clear();
