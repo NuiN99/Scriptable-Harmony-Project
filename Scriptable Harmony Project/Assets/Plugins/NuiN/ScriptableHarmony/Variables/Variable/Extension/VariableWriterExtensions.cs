@@ -367,6 +367,12 @@ namespace NuiN.ScriptableHarmony.Variable.References
         }
 
         #endregion
+        
+        #region Toggle
+        
+        public static void Toggle(this SetVariable<bool> reference, bool invokeActions = true) => reference.Set(!reference.Val, invokeActions);
+        
+        #endregion
     }
 }
 
