@@ -10,6 +10,7 @@ using NuiN.ScriptableHarmony.Variable.Base;
 
 namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
+#if UNITY_EDITOR
     internal class ScriptableObjectCreatorWindow : EditorWindow
     {
         Type[] _scriptTypes;
@@ -252,4 +253,5 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Tools
             return false;
         }
     }
+#endif
 }

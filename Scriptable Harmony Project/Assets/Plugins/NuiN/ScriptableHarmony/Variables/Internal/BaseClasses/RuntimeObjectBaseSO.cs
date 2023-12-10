@@ -30,14 +30,15 @@ namespace NuiN.ScriptableHarmony.Base
         }
     
         protected abstract void ResetValue();
+        
+        void ResetOnSceneUnloaded(Scene scene) => ResetValue();
     
+#if UNITY_EDITOR
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (state == PlayModeStateChange.EnteredEditMode) ResetValue();
         }
-    
-        void ResetOnSceneUnloaded(Scene scene) => ResetValue();
-
+        
         void OnSelectedInProjectWindow()
         {
             ComponentHolders?.Clear();
@@ -50,6 +51,7 @@ namespace NuiN.ScriptableHarmony.Base
             GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
             ComponentHolders.FindObjectsAndAssignReferences(this, sceneObjs, out totalComponentHolders);
         }
+#endif
     }
 }
 

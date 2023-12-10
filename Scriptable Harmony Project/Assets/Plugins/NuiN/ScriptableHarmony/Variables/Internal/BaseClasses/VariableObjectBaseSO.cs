@@ -14,14 +14,18 @@ namespace NuiN.ScriptableHarmony.Base
             base.OnEnable();;
             GameLoadedEvent.OnGameLoaded += CacheStartValue;
             SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
+#if UNITY_EDITOR
             EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
+#endif
         }
         new void OnDisable()
         {
             base.OnDisable();
             GameLoadedEvent.OnGameLoaded -= CacheStartValue;
             SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
+#if  UNITY_EDITOR
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
+#endif
         }
     
         protected abstract void CacheStartValue();
@@ -33,9 +37,12 @@ namespace NuiN.ScriptableHarmony.Base
         {
             if (ResetOnSceneLoad()) ResetValue();
         }
+        
+#if UNITY_EDITOR
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
             if (ResetOnExitPlayMode() && state == PlayModeStateChange.EnteredEditMode) ResetValue();
         }
+#endif
     }
 }

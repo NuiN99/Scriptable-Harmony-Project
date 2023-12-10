@@ -6,6 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
+#if UNITY_EDITOR
     internal class SelectionPathController
     {
         const string EMPTY_PATH_MESSAGE = "Please select a folder in the Project panel";
@@ -59,4 +60,5 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Tools
             return path;
         }
     }
+#endif
 }

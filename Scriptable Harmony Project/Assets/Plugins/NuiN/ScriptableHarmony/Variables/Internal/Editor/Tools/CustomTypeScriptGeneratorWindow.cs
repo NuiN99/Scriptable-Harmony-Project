@@ -12,6 +12,7 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
+#if UNITY_EDITOR
     internal class CustomTypeScriptGeneratorWindow : EditorWindow
     {
         const string SCRIPT_TEMPLATE =
@@ -250,4 +251,5 @@ namespace NuiN.ScriptableHarmony.{SingularSuffix}.Components.{CustomOrCommon}
             EditorUtility.FocusProjectWindow();
         }
     }
+#endif
 }

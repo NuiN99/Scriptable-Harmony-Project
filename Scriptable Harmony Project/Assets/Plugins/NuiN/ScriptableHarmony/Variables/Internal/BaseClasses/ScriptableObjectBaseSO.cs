@@ -22,6 +22,7 @@ namespace NuiN.ScriptableHarmony.Base
 #endif
         }
     
+#if UNITY_EDITOR
         void Reset() => AssignDebugReferences();
         
         void OnSelectedInProjectWindow()
@@ -36,5 +37,6 @@ namespace NuiN.ScriptableHarmony.Base
             GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
             GettersAndSetters.FindObjectsAndAssignReferences(this, sceneObjs, out total);
         }
+#endif
     }
 }
