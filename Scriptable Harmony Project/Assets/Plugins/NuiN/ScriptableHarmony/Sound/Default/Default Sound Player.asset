@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Default Sound Player
   m_EditorClassIdentifier: 
   masterVolume: 1
-  disableAudio: 0
   mixerGroup: {fileID: 0}
-  sourcePrefab: {fileID: -3020941784565110084, guid: 29cfe243699287540a03588f858117aa, type: 3}
-  spatialSourcePrefab: {fileID: -3020941784565110084, guid: 04677b233a00b5140ba681de8e636c50, type: 3}
+  source: {fileID: -3020941784565110084, guid: 29cfe243699287540a03588f858117aa, type: 3}
+  spatialSource: {fileID: -3020941784565110084, guid: 04677b233a00b5140ba681de8e636c50, type: 3}
+  disableAudio: 0
+  disableAudioOnScenes: []

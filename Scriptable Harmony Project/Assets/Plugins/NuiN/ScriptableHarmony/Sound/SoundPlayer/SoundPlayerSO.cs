@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NuiN.ScriptableHarmony.References;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace NuiN.ScriptableHarmony.Sound
@@ -11,21 +13,42 @@ namespace NuiN.ScriptableHarmony.Sound
     public class SoundPlayerSO : ScriptableObject
     {
         AudioSource _activeSource;
+        bool _sceneDisabledAudio;
     
         [Range(0,1)] public float masterVolume = 1f;
-        public bool disableAudio;
         
         [SerializeField] [Tooltip("Sets the Source's mixer group")] AudioMixerGroup mixerGroup;
-        [SerializeField] AudioSource sourcePrefab;
-        [SerializeField] AudioSource spatialSourcePrefab;
-    
+        
+        [Header("Prefabs")]
+        [SerializeField] AudioSource source;
+        [SerializeField] AudioSource spatialSource;
+
+        [Header("Options")]
+        public bool disableAudio;
+        [SerializeField] List<string> disableAudioOnScenes;
+
+
+        void OnEnable() => SceneManager.activeSceneChanged += CheckDisabledScenes;
+        void OnDisable() => SceneManager.activeSceneChanged -= CheckDisabledScenes;
+
+        void CheckDisabledScenes(Scene from, Scene to)
+        {
+            if (disableAudioOnScenes.Any(sceneName => sceneName != null && sceneName == to.name))
+            {
+                _sceneDisabledAudio = true;
+                return;
+            }
+
+            _sceneDisabledAudio = false;
+        }
+
         public void Play(AudioClip clip, float volume = 1)
         {
-            if (disableAudio) return;
+            if (disableAudio || _sceneDisabledAudio) return;
             
             if (_activeSource == null)
             {
-                _activeSource = Instantiate(sourcePrefab);
+                _activeSource = Instantiate(source);
                 _activeSource.name = "Scriptable Harmony AudioSource";
                 _activeSource.outputAudioMixerGroup = mixerGroup;
             }
@@ -34,7 +57,7 @@ namespace NuiN.ScriptableHarmony.Sound
         }
         public void PlayRandom(List<AudioClip> clips, float volume = 1)
         {
-            if (disableAudio) return;
+            if (disableAudio || _sceneDisabledAudio) return;
             
             AudioClip randClip = clips[Random.Range(0, clips.Count)];
             Play(randClip, volume);
@@ -42,9 +65,9 @@ namespace NuiN.ScriptableHarmony.Sound
         
         void PlaySoundSpatial(AudioClip clip, Vector3 position, float volume = 1, Transform parent = null)
         {
-            if (disableAudio) return;
+            if (disableAudio || _sceneDisabledAudio) return;
             
-            AudioSource source = Instantiate(spatialSourcePrefab, position, Quaternion.identity, parent);
+            AudioSource source = Instantiate(spatialSource, position, Quaternion.identity, parent);
             source.outputAudioMixerGroup = mixerGroup;
             source.clip = clip;
             source.volume = volume * masterVolume;
