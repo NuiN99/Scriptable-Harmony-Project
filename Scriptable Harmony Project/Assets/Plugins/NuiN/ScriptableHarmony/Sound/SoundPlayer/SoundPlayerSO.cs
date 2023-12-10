@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NuiN.ScriptableHarmony.References;
@@ -26,8 +27,7 @@ namespace NuiN.ScriptableHarmony.Sound
         [Header("Options")]
         public bool disableAudio;
         [SerializeField] List<string> disableAudioOnScenes;
-
-
+        
         void OnEnable() => SceneManager.activeSceneChanged += CheckDisabledScenes;
         void OnDisable() => SceneManager.activeSceneChanged -= CheckDisabledScenes;
 
