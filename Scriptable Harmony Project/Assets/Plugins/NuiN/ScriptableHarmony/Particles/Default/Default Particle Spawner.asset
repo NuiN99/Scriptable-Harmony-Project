@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94af996d90c0c99418b4f247531c0238, type: 3}
   m_Name: Default Particle Spawner
   m_EditorClassIdentifier: 
-  globalEmissionFactor: 5
-  globalScaleFactor: 0.5
+  globalEmissionMultiplier: 1
+  globalScaleMultiplier: 1
   disableParticles: 0

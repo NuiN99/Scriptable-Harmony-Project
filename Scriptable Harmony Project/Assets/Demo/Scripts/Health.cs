@@ -14,6 +14,7 @@ public class Health : MonoBehaviour
 
     [SerializeField] SoundSO clickSound;
     [SerializeField] ParticleEffectArraySO clickParticles;
+    [SerializeField] ParticleEffectSO clickParticle;
 
     public void TakeDamage(float amount)
     {
@@ -29,6 +30,14 @@ public class Health : MonoBehaviour
             TakeDamage(10);
             clickSound.PlaySpatial(mousePosition);
             clickParticles.SpawnAll(mousePosition);
+            
+            clickParticle.Spawn(
+                position: mousePosition, 
+                rotation: Random.rotation, 
+                parent: transform, 
+                emissionFactor: 2f, 
+                scaleFactor: 2f, 
+                lifetime: 2f);
         }
     }
 }

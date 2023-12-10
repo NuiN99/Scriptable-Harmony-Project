@@ -12,36 +12,36 @@ namespace NuiN.ScriptableHarmony.Particles
         protected override ParticleSystem GetParticleSystem()
             => particleSystems[Random.Range(0, particleSystems.Length)];
 
-        public void SpawnIndex(int index, Vector3 position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
-            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
-        public void SpawnIndex(int index, GetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
-            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
-        public void SpawnIndex(int index, SetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
-            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
-        public void SpawnIndex(int index, GetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
-            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
-        public void SpawnIndex(int index, SetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
-            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
+        public void SpawnIndex(int index, Vector3 position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
+            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
+        public void SpawnIndex(int index, GetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
+            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
+        public void SpawnIndex(int index, SetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
+            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
+        public void SpawnIndex(int index, GetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
+            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
+        public void SpawnIndex(int index, SetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
+            => spawner.Spawn(particleSystems[index], position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
         
-        public void SpawnAll(Vector3 position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
+        public void SpawnAll(Vector3 position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
         {
-            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
+            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
         }
-        public void SpawnAll(GetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
+        public void SpawnAll(GetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
         {
-            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
+            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
         }
-        public void SpawnAll(SetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
+        public void SpawnAll(SetVariable<Vector3> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
         {
-            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
+            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
         }
-        public void SpawnAll(GetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
+        public void SpawnAll(GetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
         {
-            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
+            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
         }
-        public void SpawnAll(SetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f)
+        public void SpawnAll(SetVariable<Vector2> position, Quaternion rotation = default, Transform parent = null, float emissionFactor = 1f, float scaleFactor = 1f, float? lifetime = null)
         {
-            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor);
+            foreach(var system in particleSystems) spawner.Spawn(system, position, rotation, parent, emissionMultiplier * emissionFactor, scaleMultiplier * scaleFactor, lifetime);
         }
     }
 }
