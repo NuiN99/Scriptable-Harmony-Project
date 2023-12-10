@@ -698,6 +698,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 6cdccd4445e20b149a254567308cf392, type: 2}
     - target: {fileID: 1699109869603293091, guid: 7aad103259e944144a52da8f1a8e52da, type: 3}
+      propertyPath: soundPlayer
+      value: 
+      objectReference: {fileID: 11400000, guid: 77e8d653c16d0e64497474e7a71021a5, type: 2}
+    - target: {fileID: 1699109869603293091, guid: 7aad103259e944144a52da8f1a8e52da, type: 3}
       propertyPath: mousePosition.variable
       value: 
       objectReference: {fileID: 11400000, guid: 86785aa3398081d41a2afbdbb8f6109d, type: 2}

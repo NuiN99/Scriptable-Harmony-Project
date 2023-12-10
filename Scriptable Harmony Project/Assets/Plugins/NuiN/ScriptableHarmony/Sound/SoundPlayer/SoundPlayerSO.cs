@@ -12,11 +12,12 @@ namespace NuiN.ScriptableHarmony.Sound
     {
         AudioSource _activeSource;
     
-        [SerializeField] [Range(0,1)] float masterVolume = 1f;
+        [Range(0,1)] public float masterVolume = 1f;
+        public bool disableAudio;
+        
         [SerializeField] [Tooltip("Sets the Source's mixer group")] AudioMixerGroup mixerGroup;
         [SerializeField] AudioSource sourcePrefab;
         [SerializeField] AudioSource spatialSourcePrefab;
-        [SerializeField] bool disableAudio;
     
         public void Play(AudioClip clip, float volume = 1)
         {
