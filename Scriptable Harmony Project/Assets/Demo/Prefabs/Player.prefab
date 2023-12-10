@@ -49,6 +49,11 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: f7d0b865de3082e4d9d52d6472064416, type: 2}
   curHealth:
     variable: {fileID: 11400000, guid: a3c0bcc312ab773419e971dce8159a71, type: 2}
+  mousePosition:
+    variable: {fileID: 11400000, guid: 86785aa3398081d41a2afbdbb8f6109d, type: 2}
+  clickSound: {fileID: 11400000, guid: 6cdccd4445e20b149a254567308cf392, type: 2}
+  particleSpawner: {fileID: 11400000, guid: bc1656ffa2eada245b953f7df531e78f, type: 2}
+  clickParticles: {fileID: 8340463019197833235, guid: 7bd0cbeea119be544b10cfe30ff93601, type: 3}
 --- !u!114 &6679494176011856133
 MonoBehaviour:
   m_ObjectHideFlags: 0

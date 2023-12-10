@@ -1,3 +1,4 @@
+using NuiN.ScriptableHarmony.Particles;
 using NuiN.ScriptableHarmony.References;
 using NuiN.ScriptableHarmony.Sound;
 using NuiN.ScriptableHarmony.Variable.References;
@@ -12,6 +13,9 @@ public class Health : MonoBehaviour
     [SerializeField] GetVariable<Vector2> mousePosition;
 
     [SerializeField] SoundSO clickSound;
+    [SerializeField] ParticleSpawnerSO particleSpawner;
+
+    [SerializeField] ParticleSystem clickParticles;
 
     public void TakeDamage(float amount)
     {
@@ -26,6 +30,7 @@ public class Health : MonoBehaviour
         {
             TakeDamage(10);
             clickSound.PlaySpatial(mousePosition);
+            particleSpawner.Spawn(clickParticles, mousePosition);
         }
     }
 }
