@@ -18,15 +18,15 @@ namespace NuiN.ScriptableHarmony.Sound
         public void Play(float volumeFactor = 1)
             => player.Play(GetClip(), volume * volumeFactor);
 
-        public AudioSource PlaySpatial(Vector3 position, Transform parent = null, float volumeFactor = 1)
+        public void PlaySpatial(Vector3 position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(GetClip(), position, volume * volumeFactor, parent);
-        public AudioSource PlaySpatial(GetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
+        public void PlaySpatial(GetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(GetClip(), position, volume * volumeFactor, parent);
-        public AudioSource PlaySpatial(SetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
+        public void PlaySpatial(SetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(GetClip(), position, volume * volumeFactor, parent);
-        public AudioSource PlaySpatial(GetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
+        public void PlaySpatial(GetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(GetClip(), position, volume * volumeFactor, parent);
-        public AudioSource PlaySpatial(SetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
+        public void PlaySpatial(SetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(GetClip(), position, volume * volumeFactor, parent);
     }
 }

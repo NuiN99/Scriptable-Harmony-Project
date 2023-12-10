@@ -16,15 +16,15 @@ namespace NuiN.ScriptableHarmony.Sound
         public void PlayIndex(int index, float volumeFactor = 1)
             => player.Play(audioClips[index], volume * volumeFactor);
 
-        public AudioSource PlayIndexSpatial(int index, Vector3 position, Transform parent = null, float volumeFactor = 1)
+        public void PlayIndexSpatial(int index, Vector3 position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(audioClips[index], position, volume * volumeFactor, parent);
-        public AudioSource PlayIndexSpatial(int index, GetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
+        public void PlayIndexSpatial(int index, GetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(audioClips[index], position, volume * volumeFactor, parent);
-        public AudioSource PlayIndexSpatial(int index, SetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
+        public void PlayIndexSpatial(int index, SetVariable<Vector3> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(audioClips[index], position, volume * volumeFactor, parent);
-        public AudioSource PlayIndexSpatial(int index, GetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
+        public void PlayIndexSpatial(int index, GetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(audioClips[index], position, volume * volumeFactor, parent);
-        public AudioSource PlayIndexSpatial(int index, SetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
+        public void PlayIndexSpatial(int index, SetVariable<Vector2> position, Transform parent = null, float volumeFactor = 1)
             => player.PlaySpatial(audioClips[index], position, volume * volumeFactor, parent);
     }
 }
