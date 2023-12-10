@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8340463019197833235}
   - component: {fileID: -5436389240856321704}
   m_Layer: 0
-  m_Name: Click_Particles
+  m_Name: Click_Particles 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78828c871b4a4123a26c8a2fae71d9bf, type: 3}
+  m_Name: ClickParticles_Array
+  m_EditorClassIdentifier: 
+  spawner: {fileID: 11400000, guid: bc1656ffa2eada245b953f7df531e78f, type: 2}
+  emissionMultiplier: 5
+  scaleMultiplier: 1.25
+  particleSystems:
+  - {fileID: 8340463019197833235, guid: 7bd0cbeea119be544b10cfe30ff93601, type: 3}
+  - {fileID: 8340463019197833235, guid: 380507a69f6f1e4409af5af14875affc, type: 3}
+  - {fileID: 8340463019197833235, guid: 1527691f212fcb249a625da5f8fe9fd7, type: 3}
