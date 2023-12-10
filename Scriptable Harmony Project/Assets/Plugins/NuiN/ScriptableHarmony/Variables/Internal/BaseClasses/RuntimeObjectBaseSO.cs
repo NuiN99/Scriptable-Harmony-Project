@@ -1,3 +1,4 @@
+using NuiN.ScriptableHarmony.Events;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using UnityEditor;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace NuiN.ScriptableHarmony.Base
         new void OnEnable()
         {
             SceneManager.sceneUnloaded += ResetOnSceneUnloaded;
+            VariableEvents.OnResetAllVariableObjects += ResetValue;
 #if UNITY_EDITOR
             base.OnEnable();
             EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
@@ -22,6 +24,7 @@ namespace NuiN.ScriptableHarmony.Base
         new void OnDisable()
         {
             SceneManager.sceneUnloaded -= ResetOnSceneUnloaded;
+            VariableEvents.OnResetAllVariableObjects -= ResetValue;
 #if UNITY_EDITOR
             base.OnDisable();
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;

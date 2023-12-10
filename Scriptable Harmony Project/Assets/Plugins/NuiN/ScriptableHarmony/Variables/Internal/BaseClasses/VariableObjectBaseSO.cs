@@ -1,3 +1,4 @@
+using NuiN.ScriptableHarmony.Events;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using UnityEditor;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace NuiN.ScriptableHarmony.Base
             base.OnEnable();;
             GameLoadedEvent.OnGameLoaded += CacheStartValue;
             SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
+            VariableEvents.OnResetAllVariableObjects += ResetValue;
 #if UNITY_EDITOR
             EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
 #endif
@@ -23,6 +25,7 @@ namespace NuiN.ScriptableHarmony.Base
             base.OnDisable();
             GameLoadedEvent.OnGameLoaded -= CacheStartValue;
             SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
+            VariableEvents.OnResetAllVariableObjects -= ResetValue;
 #if  UNITY_EDITOR
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
 #endif
