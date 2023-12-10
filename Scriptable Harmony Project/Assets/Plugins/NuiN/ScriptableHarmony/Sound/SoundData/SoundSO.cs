@@ -6,6 +6,9 @@ namespace NuiN.ScriptableHarmony.Sound
     public class SoundSO : SoundBaseSO
     {
         [SerializeField] AudioClip audioClip;
+
+        public AudioClip Clip => audioClip;
+        
         protected override AudioClip GetClip() => audioClip;
     }
 }

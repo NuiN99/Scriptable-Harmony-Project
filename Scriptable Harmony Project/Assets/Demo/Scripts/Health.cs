@@ -1,4 +1,5 @@
 using NuiN.ScriptableHarmony.References;
+using NuiN.ScriptableHarmony.Sound;
 using NuiN.ScriptableHarmony.Variable.References;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,9 @@ public class Health : MonoBehaviour
     [Header("Writers")]
     [SerializeField] SetVariable<float> maxHealth;
     [SerializeField] SetVariable<float> curHealth;
+    [SerializeField] GetVariable<Vector2> mousePosition;
+
+    [SerializeField] SoundSO clickSound;
 
     public void TakeDamage(float amount)
     {
@@ -18,6 +22,10 @@ public class Health : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(1)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        if(Input.GetMouseButtonDown(0)) TakeDamage(10);
+        if (Input.GetMouseButtonDown(0))
+        {
+            TakeDamage(10);
+            clickSound.PlaySpatial(mousePosition);
+        }
     }
 }

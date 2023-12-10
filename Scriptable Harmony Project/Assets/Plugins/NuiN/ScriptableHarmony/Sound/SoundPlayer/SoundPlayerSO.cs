@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NuiN.ScriptableHarmony.References;
 using UnityEngine;
 using UnityEngine.Audio;
 using Random = UnityEngine.Random;
@@ -34,6 +35,28 @@ namespace NuiN.ScriptableHarmony.Sound
         }
 
         public AudioSource PlaySpatial(AudioClip clip, Vector3 position, float volume = 1, Transform parent = null)
+            => PlaySoundSpatial(clip, position, volume, parent);
+        public AudioSource PlaySpatial(AudioClip clip, GetVariable<Vector3> position, float volume = 1, Transform parent = null)
+            => PlaySoundSpatial(clip, position.Val, volume, parent);
+        public AudioSource PlaySpatial(AudioClip clip, SetVariable<Vector3> position, float volume = 1, Transform parent = null)
+            => PlaySoundSpatial(clip, position.Val, volume, parent);
+        public AudioSource PlaySpatial(AudioClip clip, GetVariable<Vector2> position, float volume = 1, Transform parent = null)
+            => PlaySoundSpatial(clip, position.Val, volume, parent);
+        public AudioSource PlaySpatial(AudioClip clip, SetVariable<Vector2> position, float volume = 1, Transform parent = null)
+            => PlaySoundSpatial(clip, position.Val, volume, parent);
+        
+        public AudioSource PlayRandomSpatial(List<AudioClip> clips, Vector3 position, float volume = 1, Transform parent = null)
+            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
+        public AudioSource PlayRandomSpatial(List<AudioClip> clips, GetVariable<Vector3> position, float volume = 1, Transform parent = null)
+            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
+        public AudioSource PlayRandomSpatial(List<AudioClip> clips, SetVariable<Vector3> position, float volume = 1, Transform parent = null)
+            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
+        public AudioSource PlayRandomSpatial(List<AudioClip> clips, GetVariable<Vector2> position, float volume = 1, Transform parent = null)
+            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
+        public AudioSource PlayRandomSpatial(List<AudioClip> clips, SetVariable<Vector2> position, float volume = 1, Transform parent = null)
+            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
+
+        AudioSource PlaySoundSpatial(AudioClip clip, Vector3 position, float volume = 1, Transform parent = null)
         {
             AudioSource source = Instantiate(spatialSourcePrefab, position, Quaternion.identity, parent);
             source.outputAudioMixerGroup = mixerGroup;
@@ -42,11 +65,6 @@ namespace NuiN.ScriptableHarmony.Sound
             source.Play();
             Destroy(source.gameObject, clip.length / Mathf.Max(Math.Abs(source.pitch), Mathf.Epsilon));
             return source;
-        }
-        public AudioSource PlayRandomSpatial(List<AudioClip> clips, Vector3 position, float volume = 1, Transform parent = null)
-        {
-            AudioClip randClip = clips[Random.Range(0, clips.Count)];
-            return PlaySpatial(randClip, position, volume, parent);
         }
     }
 }
