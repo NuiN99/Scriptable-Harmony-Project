@@ -18,7 +18,7 @@ public class HealthbarUI : MonoBehaviour
     }
     void OnDisable()
     {
-        curHealth.UnsubOnChange(OnHealthChanged);
+        curHealth.UnSubOnChange(OnHealthChanged);
     }
 
     void OnHealthChanged(float newHealth)
