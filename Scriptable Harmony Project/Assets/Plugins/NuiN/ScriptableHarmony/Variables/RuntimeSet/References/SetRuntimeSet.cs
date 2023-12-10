@@ -20,7 +20,25 @@ namespace NuiN.ScriptableHarmony.References
 
             if (!invokeActions) return;
         
+            runtimeSet.onAddWithListWithOld?.Invoke(oldItems, Entities);
             runtimeSet.onAddWithOld?.Invoke(oldItems, item);
+            runtimeSet.onAddWithList?.Invoke(Entities);
+            runtimeSet.onAdd?.Invoke(item);
+        }
+        
+        public void Insert(T item, int index, bool invokeActions = true, bool returnIfContains = true)
+        {
+            if (item == null) return;
+            if (returnIfContains && Entities.Contains(item)) return;
+            
+            List<T> oldItems = Entities;
+            Entities.Insert(index, item);
+            
+            if (!invokeActions) return;
+            
+            runtimeSet.onAddWithListWithOld?.Invoke(oldItems, Entities);
+            runtimeSet.onAddWithOld?.Invoke(oldItems, item);
+            runtimeSet.onAddWithList?.Invoke(Entities);
             runtimeSet.onAdd?.Invoke(item);
         }
     
@@ -33,8 +51,24 @@ namespace NuiN.ScriptableHarmony.References
         
             if (!invokeActions) return;
         
+            runtimeSet.onRemoveWithListWithOld?.Invoke(oldItems, Entities);
             runtimeSet.onRemoveWithOld?.Invoke(oldItems, item);
+            runtimeSet.onRemoveWithList?.Invoke(Entities);
             runtimeSet.onRemove?.Invoke(item);
+        }
+        
+        public void RemoveAt(int index, bool invokeActions = true)
+        {
+            T removedItem = Entities[index];
+            List<T> oldItems = Entities;
+            Entities.RemoveAt(index);
+
+            if (!invokeActions) return;
+            
+            runtimeSet.onRemoveWithListWithOld?.Invoke(oldItems, Entities);
+            runtimeSet.onRemoveWithOld?.Invoke(oldItems, removedItem);
+            runtimeSet.onRemoveWithList?.Invoke(Entities);
+            runtimeSet.onRemove?.Invoke(removedItem);
         }
 
         public void Clear(bool invokeActions = true)
@@ -43,7 +77,7 @@ namespace NuiN.ScriptableHarmony.References
             Entities.Clear();
 
             if (!invokeActions) return;
-        
+            
             runtimeSet.onClearWithOld?.Invoke(oldItems);
             runtimeSet.onClear?.Invoke();
         }

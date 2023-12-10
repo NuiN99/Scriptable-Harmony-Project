@@ -22,9 +22,15 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         
         public Action<T> onAdd;
         public Action<List<T>,T> onAddWithOld;
+        
+        public Action<List<T>> onAddWithList;
+        public Action<List<T>,List<T>> onAddWithListWithOld;
 
         public Action<T> onRemove;
         public Action<List<T>,T> onRemoveWithOld;
+        
+        public Action<List<T>> onRemoveWithList;
+        public Action<List<T>,List<T>> onRemoveWithListWithOld;
 
         public Action onClear;
         public Action<List<T>> onClearWithOld;
