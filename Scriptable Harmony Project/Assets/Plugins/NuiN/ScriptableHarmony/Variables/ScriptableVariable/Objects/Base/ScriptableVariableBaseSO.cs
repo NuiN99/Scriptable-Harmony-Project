@@ -13,7 +13,6 @@ namespace NuiN.ScriptableHarmony.Variable.Base
     {
         T _initialValue;
         T _prevValue;
-        SetVariable<T> _actionInvoker;
 
         public T value;
         
@@ -28,13 +27,7 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         {
             _initialValue = value;
         }
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-            _actionInvoker = new SetVariable<T>(this);
-        }
-
+        
         void OnValidate()
         {
             InvokeOnValueChangedInEditor();
@@ -45,7 +38,8 @@ namespace NuiN.ScriptableHarmony.Variable.Base
             
             // yield until next frame to avoid warnings when using sliders
             await Task.Yield();
-            _actionInvoker.Set(value);
+            
+            onChange?.Invoke(value);
             _prevValue = value;
         }
 

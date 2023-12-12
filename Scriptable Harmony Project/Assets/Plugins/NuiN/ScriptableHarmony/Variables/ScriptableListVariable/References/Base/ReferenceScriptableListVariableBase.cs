@@ -6,7 +6,7 @@ using UnityEngine;
 namespace NuiN.ScriptableHarmony.ListVariable.References.Base
 {
     [Serializable]
-    public class ReferenceScriptableListVariableBase<T>
+    public abstract class ReferenceScriptableListVariableBase<T>
     {
         [SerializeField] protected ScriptableListVariableBaseSO<T> list;
 

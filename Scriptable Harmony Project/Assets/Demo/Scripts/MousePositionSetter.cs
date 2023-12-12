@@ -11,6 +11,6 @@ public class MousePositionSetter : MonoBehaviour
     
     void Update()
     {
-        mousePos.Set(_cam.ScreenToWorldPoint(Input.mousePosition), false);
+        mousePos.SetNoInvoke(_cam.ScreenToWorldPoint(Input.mousePosition));
     }
 }

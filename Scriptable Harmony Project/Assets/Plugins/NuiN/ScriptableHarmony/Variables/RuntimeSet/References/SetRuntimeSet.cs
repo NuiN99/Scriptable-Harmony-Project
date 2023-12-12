@@ -10,76 +10,94 @@ namespace NuiN.ScriptableHarmony.References
     {
         public List<T> Entities => runtimeSet.runtimeSet;
     
-        public void Add(T item, bool invokeActions = true, bool returnIfContains = true)
+        public void Add(T item)
         {
             if (item == null) return;
-            if (returnIfContains && Entities.Contains(item)) return;
         
-            List<T> oldItems = Entities;
+            var oldItems = new List<T>(Entities);
             Entities.Add(item);
-
-            if (!invokeActions) return;
-        
+            
             runtimeSet.onAddWithListWithOld?.Invoke(oldItems, Entities);
             runtimeSet.onAddWithOld?.Invoke(oldItems, item);
             runtimeSet.onAddWithList?.Invoke(Entities);
             runtimeSet.onAdd?.Invoke(item);
         }
-        
-        public void Insert(T item, int index, bool invokeActions = true, bool returnIfContains = true)
+        public void AddNoInvoke(T item)
         {
             if (item == null) return;
-            if (returnIfContains && Entities.Contains(item)) return;
+            Entities.Add(item);
+        }
+        
+        public void Insert(T item, int index)
+        {
+            if (item == null) return;
             
-            List<T> oldItems = Entities;
+            var oldItems = new List<T>(Entities);
             Entities.Insert(index, item);
             
-            if (!invokeActions) return;
-            
             runtimeSet.onAddWithListWithOld?.Invoke(oldItems, Entities);
             runtimeSet.onAddWithOld?.Invoke(oldItems, item);
             runtimeSet.onAddWithList?.Invoke(Entities);
             runtimeSet.onAdd?.Invoke(item);
         }
-    
-        public void Remove(T item, bool invokeActions = true, bool returnIfDoesntContain = true)
+        public void InsertNoInvoke(T item, int index)
         {
-            if (returnIfDoesntContain && !Entities.Contains(item)) return;
-        
-            List<T> oldItems = Entities;
-            Entities.Remove(item);
-        
-            if (!invokeActions) return;
-        
+            if (item == null) return;
+            Entities.Insert(index, item);
+        }
+    
+        public void Remove(T item)
+        {
+            if(!Entities.Remove(item)) return;
+            
+            var oldItems = new List<T>(Entities);
+            
             runtimeSet.onRemoveWithListWithOld?.Invoke(oldItems, Entities);
             runtimeSet.onRemoveWithOld?.Invoke(oldItems, item);
             runtimeSet.onRemoveWithList?.Invoke(Entities);
             runtimeSet.onRemove?.Invoke(item);
         }
+        public void RemoveNoInvoke(T item)
+        {
+            Entities.Remove(item);
+        }
         
-        public void RemoveAt(int index, bool invokeActions = true)
+        public void RemoveAt(int index)
         {
             T removedItem = Entities[index];
-            List<T> oldItems = Entities;
+            if (removedItem == null) return;
+            
+            var oldItems = new List<T>(Entities);
             Entities.RemoveAt(index);
-
-            if (!invokeActions) return;
             
             runtimeSet.onRemoveWithListWithOld?.Invoke(oldItems, Entities);
             runtimeSet.onRemoveWithOld?.Invoke(oldItems, removedItem);
             runtimeSet.onRemoveWithList?.Invoke(Entities);
             runtimeSet.onRemove?.Invoke(removedItem);
         }
-
-        public void Replace(List<T> newList, bool invokeActions = true)
+        public void RemoveAtNoInvoke(int index)
         {
-            foreach(var item in Entities) Remove(item, invokeActions);
-            foreach(var item in newList) Add(item, invokeActions);
+            Entities.RemoveAt(index);
+        }
+
+        public void Replace(List<T> newList)
+        {
+            Clear();
+            foreach(var item in newList) Add(item);
+        }
+        public void ReplaceNoInvoke(List<T> newList)
+        {
+            ClearNoInvoke();
+            foreach(var item in newList) AddNoInvoke(item);
         }
         
-        public void Clear(bool invokeActions = true)
+        public void Clear()
         {
-            foreach(var item in Entities) Remove(item, invokeActions);
+            for(int i = Entities.Count-1; i >= 0; i--) Remove(Entities[i]);
+        }
+        public void ClearNoInvoke()
+        {
+            for(int i = Entities.Count-1; i >= 0; i--) RemoveNoInvoke(Entities[i]);
         }
     }
 }

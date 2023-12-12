@@ -10,7 +10,7 @@ namespace NuiN.ScriptableHarmony.References
     {
         public T Val => variable.value;
 
-        public void Set(T value, bool invokeActions = true)
+        public void Set(T value)
         {
             T oldValue = variable.value;
             variable.value = value;
@@ -19,12 +19,16 @@ namespace NuiN.ScriptableHarmony.References
             EditorUtility.SetDirty(variable);
             #endif
 
-            if (!invokeActions) return;
-            
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
         }
-
-        public SetVariable(ScriptableVariableBaseSO<T> variable) : base(variable) { }
+        public void SetNoInvoke(T value)
+        {
+            variable.value = value;
+            
+            #if UNITY_EDITOR
+            EditorUtility.SetDirty(variable);
+            #endif
+        }
     }
 }

@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableHarmony.RuntimeSingle.References.Base
 {
     [Serializable]
-    public class ReferenceRuntimeSingleBase<T> where T : Object
+    public abstract class ReferenceRuntimeSingleBase<T> where T : Object
     {
         [SerializeField] protected RuntimeSingleBaseSO<T> runtimeSingle;
         

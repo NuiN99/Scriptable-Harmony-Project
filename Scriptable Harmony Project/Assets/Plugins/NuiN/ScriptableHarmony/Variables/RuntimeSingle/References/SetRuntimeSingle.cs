@@ -13,7 +13,7 @@ namespace NuiN.ScriptableHarmony.References
             private set => runtimeSingle.runtimeSingle = value;
         }
 
-        public void Set(T newItem, bool invokeActions = true, bool overrideExisting = true)
+        void Set(T newItem, bool overrideExisting, bool invokeActions)
         {
             if (newItem == null) return;
             if (Entity != null && !overrideExisting) return;
@@ -26,8 +26,16 @@ namespace NuiN.ScriptableHarmony.References
             runtimeSingle.onSetWithOld?.Invoke(oldItem, Entity);
             runtimeSingle.onSet?.Invoke(Entity);
         }
+        public void TrySet(T newItem)
+            => Set(newItem, false, true);
+        public void TrySetNoInvoke(T newItem)
+            => Set(newItem, false, false);
+        public void Set(T newItem)
+            => Set(newItem, true, true);
+        public void SetNoInvoke(T newItem, bool invokeActions = true, bool overrideExisting = true)
+            => Set(newItem, true, false);
         
-        public void Remove(bool invokeActions = true)
+        void Remove(bool invokeActions)
         {
             if (Entity == null) return;
 
@@ -39,5 +47,7 @@ namespace NuiN.ScriptableHarmony.References
             runtimeSingle.onRemoveWithOld?.Invoke(oldItem);
             runtimeSingle.onRemove?.Invoke();
         }
+        public void Remove() => Remove(true);
+        public void RemoveNoInvoke() => Remove(false);
     }
 }

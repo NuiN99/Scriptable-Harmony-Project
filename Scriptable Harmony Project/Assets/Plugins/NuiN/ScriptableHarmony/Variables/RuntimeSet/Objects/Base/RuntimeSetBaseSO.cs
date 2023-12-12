@@ -28,7 +28,7 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Base
         
         public Action<List<T>> onRemoveWithList;
         public Action<List<T>,List<T>> onRemoveWithListWithOld;
-
+        
         [Header("Debug References")]
         [SerializeField] RuntimeSetReferencesContainer componentHolders = new("runtimeSet", typeof(RuntimeSetItemComponentBase<T>), typeof(SetRuntimeSet<T>));
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("runtimeSet", typeof(ReferenceRuntimeSetBase<T>), typeof(GetRuntimeSet<T>), typeof(SetRuntimeSet<T>));

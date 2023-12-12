@@ -9,6 +9,6 @@ namespace NuiN.ScriptableHarmony.References
     [Serializable]
     public class GetListVariable<T> : ReferenceScriptableListVariableBase<T>
     {
-        public ReadOnlyCollection<T> Items => list.list.AsReadOnly();
+        public ReadOnlyCollection<T> Items => list.items.AsReadOnly();
     }
 }

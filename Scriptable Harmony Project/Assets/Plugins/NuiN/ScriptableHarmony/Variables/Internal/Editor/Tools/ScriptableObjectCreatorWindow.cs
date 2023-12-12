@@ -178,7 +178,7 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Tools
             return _selectedSOType switch
             {
                 SOType.Variable => typeName.EndsWith("VariableSO") ? typeName[..^10] : typeName,
-                SOType.ListVariable => typeName.EndsWith("ListVariableSO") ? typeName[..14] : typeName,
+                SOType.ListVariable => typeName.EndsWith("ListVariableSO") ? typeName[..^14] : typeName,
                 SOType.RuntimeSet => typeName.EndsWith("RuntimeSetSO") ? typeName[..^12] : typeName,
                 SOType.RuntimeSingle => typeName.EndsWith("RuntimeSingleSO") ? typeName[..^15] : typeName,
                 _ => typeName

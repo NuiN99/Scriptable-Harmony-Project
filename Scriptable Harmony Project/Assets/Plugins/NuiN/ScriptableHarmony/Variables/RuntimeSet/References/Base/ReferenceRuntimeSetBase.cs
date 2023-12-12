@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableHarmony.RuntimeSet.References.Base
 {
     [Serializable]
-    public class ReferenceRuntimeSetBase<T> where T : Object
+    public abstract class ReferenceRuntimeSetBase<T> where T : Object
     {
         [SerializeField] protected RuntimeSetBaseSO<T> runtimeSet;
         

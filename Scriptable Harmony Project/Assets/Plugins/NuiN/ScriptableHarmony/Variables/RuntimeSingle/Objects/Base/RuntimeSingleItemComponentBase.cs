@@ -33,12 +33,21 @@ namespace NuiN.ScriptableHarmony.RuntimeSingle.Components.Base
         {
             if (SelfDestructIfNullObject(thisObject)) return;
             if (lifetimeType != type) return;
-            runtimeSingle.Set(thisObject, !dontInvokeOnSet, overwriteExisting);
+            
+            switch (dontInvokeOnSet)
+            {
+                case false when overwriteExisting: runtimeSingle.Set(thisObject); break;
+                case false when !overwriteExisting: runtimeSingle.TrySet(thisObject); break;
+                case true when overwriteExisting: runtimeSingle.SetNoInvoke(thisObject); break;
+                case true when !overwriteExisting: runtimeSingle.TrySetNoInvoke(thisObject); break;
+            }
         }
         void RemoveFromSet(Type type)
         {
             if (lifetimeType != type) return;
-            runtimeSingle.Remove(!dontInvokeOnRemove);
+            
+            if (!dontInvokeOnRemove) runtimeSingle.Remove();
+            else runtimeSingle.RemoveNoInvoke();
         }
 
         bool SelfDestructIfNullObject(T obj)

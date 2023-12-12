@@ -27,12 +27,17 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Components.Base
         {
             if (SelfDestructIfNullObject(thisObject)) return;
             if (lifetimeType != type) return;
-            runtimeSet.Add(thisObject, !dontInvokeOnAdd);
+            
+            if(!dontInvokeOnAdd) runtimeSet.Add(thisObject);
+            else runtimeSet.AddNoInvoke(thisObject);
         }
         void RemoveFromSet(Type type)
         {
             if (lifetimeType != type) return;
-            runtimeSet.Remove(thisObject, !dontInvokeOnRemove);
+            runtimeSet.Remove(thisObject);
+            
+            if(!dontInvokeOnRemove) runtimeSet.Remove(thisObject);
+            else runtimeSet.RemoveNoInvoke(thisObject);
         }
 
         bool SelfDestructIfNullObject(T obj)

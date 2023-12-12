@@ -1,94 +1,112 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using NuiN.ScriptableHarmony.ListVariable.Base;
 using NuiN.ScriptableHarmony.ListVariable.References.Base;
-using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
+using Debug = UnityEngine.Debug;
 
 namespace NuiN.ScriptableHarmony.References
 {
     [Serializable]
     public class SetListVariable<T> : ReferenceScriptableListVariableBase<T>
     {
-        public List<T> Items => list.list;
+        public List<T> Items => list.items;
         
-        public void Add(T item, bool invokeActions = true)
+        public void Add(T item)
         {
-            List<T> oldValue = Items;
+            var oldValue = new List<T>(Items);
             Items.Add(item);
-            
             SetDirty();
 
-            if (!invokeActions) return;
-            
             list.onAddWithListWithOld?.Invoke(oldValue, Items);
             list.onAddWithOld?.Invoke(oldValue, item);
             list.onAddWithList?.Invoke(Items);
             list.onAdd?.Invoke(item);
         }
-
-        public void Insert(T item, int index, bool invokeActions = true)
+        public void AddNoInvoke(T item)
         {
-            List<T> oldValue = Items;
+            Items.Add(item);
+            SetDirty();
+        }
+
+        public void Insert(T item, int index)
+        {
+            var oldValue = new List<T>(Items);
             Items.Insert(index, item);
-            
             SetDirty();
 
-            if (!invokeActions) return;
-            
             list.onAddWithListWithOld?.Invoke(oldValue, Items);
             list.onAddWithOld?.Invoke(oldValue, item);
             list.onAddWithList?.Invoke(Items);
             list.onAdd?.Invoke(item);
         }
-
-        public void RemoveAt(int index, bool invokeActions = true)
+        public void InsertNoInvoke(T item, int index)
         {
-            List<T> oldValue = Items;
+            Items.Insert(index, item);
+            SetDirty();
+        }
+
+        public void RemoveAt(int index)
+        {
+            var oldValue = new List<T>(Items);
 
             T removedItem = Items[index];
             Items.RemoveAt(index);
-            
             SetDirty();
 
-            if (!invokeActions) return;
-            
             list.onRemoveWithListWithOld?.Invoke(oldValue, Items);
             list.onRemoveWithOld?.Invoke(oldValue, removedItem);
             list.onRemoveWithList?.Invoke(Items);
             list.onRemove?.Invoke(removedItem);
         }
-        
-        public void Remove(T item, bool invokeActions = true)
+        public void RemoveAtNoInvoke(int index)
         {
-            List<T> oldValue = Items;
+            Items.RemoveAt(index);
+            SetDirty();
+        }
+        
+        public void Remove(T item)
+        {
+            var oldValue = new List<T>(Items);
             Items.Remove(item);
-            
             SetDirty();
 
-            if (!invokeActions) return;
-            
             list.onRemoveWithListWithOld?.Invoke(oldValue, Items);
             list.onRemoveWithOld?.Invoke(oldValue, item);
             list.onRemoveWithList?.Invoke(Items);
             list.onRemove?.Invoke(item);
         }
-        
-        public void Replace(List<T> newList, bool invokeActions = true)
+        public void RemoveNoInvoke(T item)
         {
-            foreach(var item in Items) Remove(item, invokeActions);
-            foreach(var item in newList) Add(item, invokeActions);
+            Items.Remove(item);
+            SetDirty();
         }
         
-        public void Clear(bool invokeActions = true)
+        public void Replace(List<T> newList)
         {
-            foreach(var item in Items) Remove(item, invokeActions);
+            Clear();
+            foreach(var item in newList) Add(item);
+        }
+        public void ReplaceNoInvoke(List<T> newList)
+        {
+            ClearNoInvoke();
+            foreach(var item in newList) AddNoInvoke(item);
+        }
+        
+        public void Clear()
+        {
+            for(int i = Items.Count-1; i >= 0; i--) Remove(Items[i]);
+        }
+        public void ClearNoInvoke()
+        {
+            for(int i = Items.Count-1; i >= 0; i--) RemoveNoInvoke(Items[i]);
         }
 
+        [Conditional("UNITY_EDITOR")]
         void SetDirty()
         {
-#if UNITY_EDITOR
             EditorUtility.SetDirty(list);
-#endif
         }
     }
 }
