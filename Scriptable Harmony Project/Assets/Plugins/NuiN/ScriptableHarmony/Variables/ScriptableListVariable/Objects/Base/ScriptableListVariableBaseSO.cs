@@ -29,9 +29,9 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         public Action<List<T>> onRemoveWithList;
         public Action<List<T>,List<T>> onRemoveWithListWithOld;
         
-        [Header("Debug References")]
-        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
-        protected override ReadWriteReferencesContainer GettersAndSetters { get => gettersAndSetters;set => gettersAndSetters = value; }
+        [Header("Debugging")]
+        [SerializeField] GetSetReferencesContainer gettersAndSetters = new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
+        protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters;set => gettersAndSetters = value; }
         
         [SOMethodButton("Save List")]
         public void SaveValueButton()

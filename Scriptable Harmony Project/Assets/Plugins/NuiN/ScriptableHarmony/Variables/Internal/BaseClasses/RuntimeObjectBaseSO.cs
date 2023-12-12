@@ -8,7 +8,6 @@ namespace NuiN.ScriptableHarmony.Base
 {
     public abstract class RuntimeObjectBaseSO<T> : ScriptableObjectBaseSO<T> where T : Object
     {
-        protected int totalComponentHolders;
         protected abstract RuntimeSetReferencesContainer ComponentHolders { get; set; }
     
         new void OnEnable()
@@ -52,7 +51,7 @@ namespace NuiN.ScriptableHarmony.Base
         void AssignComponentDebugReferences()
         {
             GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-            ComponentHolders.FindObjectsAndAssignReferences(this, sceneObjs, out totalComponentHolders);
+            ComponentHolders.FindObjectsAndAssignReferences(this, sceneObjs);
         }
 #endif
     }

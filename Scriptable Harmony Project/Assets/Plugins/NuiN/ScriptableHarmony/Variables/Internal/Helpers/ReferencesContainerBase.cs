@@ -27,7 +27,7 @@ namespace NuiN.ScriptableHarmony.Internal.Helpers
 #endif
         }
 #if UNITY_EDITOR
-        public void FindObjectsAndAssignReferences(object variableCaller, IEnumerable<GameObject> sceneObjs, out int count)
+        public void FindObjectsAndAssignReferences(object variableCaller, IEnumerable<GameObject> sceneObjs)
         {
             Clear();
                 
@@ -40,8 +40,6 @@ namespace NuiN.ScriptableHarmony.Internal.Helpers
 
             AssignReferences(variableCaller, allPrefabs, ObjectsToSearch.Prefabs);
             AssignReferences(variableCaller, sceneObjs, ObjectsToSearch.Scene);
-            
-            count = ListsAreNull() ? 0 : TotalReferencesCount();
         }
         
         void AssignReferences(object variableCaller, IEnumerable<GameObject> foundObjects, ObjectsToSearch objectsToSearch)

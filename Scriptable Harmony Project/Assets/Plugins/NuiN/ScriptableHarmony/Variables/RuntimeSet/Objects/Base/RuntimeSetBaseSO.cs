@@ -29,11 +29,11 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Base
         public Action<List<T>> onRemoveWithList;
         public Action<List<T>,List<T>> onRemoveWithListWithOld;
         
-        [Header("Debug References")]
+        [Header("Debugging")]
         [SerializeField] RuntimeSetReferencesContainer componentHolders = new("runtimeSet", typeof(RuntimeSetItemComponentBase<T>), typeof(SetRuntimeSet<T>));
-        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("runtimeSet", typeof(ReferenceRuntimeSetBase<T>), typeof(GetRuntimeSet<T>), typeof(SetRuntimeSet<T>));
+        [SerializeField] GetSetReferencesContainer gettersAndSetters = new("runtimeSet", typeof(ReferenceRuntimeSetBase<T>), typeof(GetRuntimeSet<T>), typeof(SetRuntimeSet<T>));
         protected override RuntimeSetReferencesContainer ComponentHolders { get => componentHolders; set => componentHolders = value; }
-        protected override ReadWriteReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
+        protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
         
         protected override void ResetValue() => runtimeSet.Clear();
     }

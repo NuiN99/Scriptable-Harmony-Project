@@ -6,8 +6,7 @@ namespace NuiN.ScriptableHarmony.Base
 {
     public abstract class ScriptableObjectBaseSO<T> : ScriptableObject
     {
-        protected int total;
-        protected abstract ReadWriteReferencesContainer GettersAndSetters { get; set; }
+        protected abstract GetSetReferencesContainer GettersAndSetters { get; set; }
 
         protected virtual void OnEnable()
         {
@@ -35,7 +34,7 @@ namespace NuiN.ScriptableHarmony.Base
         void AssignDebugReferences()
         {
             GameObject[] sceneObjs = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-            GettersAndSetters.FindObjectsAndAssignReferences(this, sceneObjs, out total);
+            GettersAndSetters.FindObjectsAndAssignReferences(this, sceneObjs);
         }
 #endif
     }

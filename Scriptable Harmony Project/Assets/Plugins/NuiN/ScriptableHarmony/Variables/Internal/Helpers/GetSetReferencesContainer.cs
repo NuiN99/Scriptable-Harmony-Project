@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using NuiN.ScriptableHarmony.Editor.Attributes;
+using UnityEditor;
 using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.Internal.Helpers
 {
     [Serializable]
-    public class ReadWriteReferencesContainer : ReferencesContainerBase
+    public class GetSetReferencesContainer : ReferencesContainerBase
     {
         Type _getterType;
         Type _setterType;
@@ -24,7 +25,7 @@ namespace NuiN.ScriptableHarmony.Internal.Helpers
         [TypeMismatchFix]
         public List<Component> setters;
         
-        public ReadWriteReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)
+        public GetSetReferencesContainer(string fieldName, Type baseType, Type getterType, Type setterType) : base(fieldName, baseType)
         {
 #if UNITY_EDITOR
             _setterType = setterType;

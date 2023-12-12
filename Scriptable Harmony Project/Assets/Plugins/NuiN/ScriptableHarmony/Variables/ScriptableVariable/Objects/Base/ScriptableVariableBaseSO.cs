@@ -22,9 +22,9 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         public Action<T> onChange;
         public Action<T, T> onChangeWithOld;
         
-        [Header("Debug References")]
-        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
-        protected override ReadWriteReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
+        [Header("Debugging")]
+        [SerializeField] GetSetReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
+        protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
 
         [SOMethodButton("Save Value")]
         public void SaveValueButton()
