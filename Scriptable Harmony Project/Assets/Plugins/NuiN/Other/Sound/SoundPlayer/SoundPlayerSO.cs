@@ -42,7 +42,38 @@ namespace NuiN.ScriptableHarmony.Sound
             _sceneDisabledAudio = false;
         }
 
-        public void Play(AudioClip clip, float volume = 1)
+        public void Play(SoundSO sound, float volumeMult = 1) 
+            => Play(sound.Clip, sound.Volume * volumeMult);
+        public void PlaySpatial(SoundSO sound, Vector3 position, float volumeMult = 1, Transform parent = null)
+            => PlaySpatial(sound.Clip, position, sound.Volume * volumeMult, parent);
+        
+        public void PlayRandom(SoundArraySO soundArray, float volumeMult = 1)
+            => PlayRandom(soundArray.Clips, soundArray.Volume * volumeMult);
+        public void PlayRandomSpatial(SoundArraySO soundArray, Vector3 position, float volumeMult = 1, Transform parent = null)
+            => PlayRandomSpatial(soundArray.Clips, position, soundArray.Volume * volumeMult, parent);
+        
+        public void PlayIndex(SoundArraySO soundArray, int index, float volumeMult = 1)
+            => Play(soundArray.Clips[index], soundArray.Volume * volumeMult);
+        public void PlayIndexSpatial(SoundArraySO soundArray, int index, Vector3 position, float volumeMult = 1, Transform parent = null)
+            => PlaySpatial(soundArray.Clips[index], position, soundArray.Volume * volumeMult, parent);
+        
+
+        public void PlayAll(SoundArraySO soundArray, float volumeMult = 1f)
+        {
+            foreach (var clip in soundArray.Clips) Play(clip, soundArray.Volume * volumeMult);
+        }
+        public void PlayAllSpatial(SoundArraySO soundArray, Vector3 position, float volumeMult = 1f, Transform parent = null)
+        {
+            foreach (var clip in soundArray.Clips) PlaySpatial(clip, position, soundArray.Volume * volumeMult, parent);
+        }
+        
+       
+        
+        
+        
+     
+
+        void Play(AudioClip clip, float volume = 1)
         {
             if (disableAudio || _sceneDisabledAudio) return;
             
@@ -55,7 +86,7 @@ namespace NuiN.ScriptableHarmony.Sound
         
             _activeSource.PlayOneShot(clip, volume * masterVolume);
         }
-        public void PlayRandom(List<AudioClip> clips, float volume = 1)
+        void PlayRandom(IReadOnlyList<AudioClip> clips, float volume = 1)
         {
             if (disableAudio || _sceneDisabledAudio) return;
             
@@ -63,7 +94,7 @@ namespace NuiN.ScriptableHarmony.Sound
             Play(randClip, volume);
         }
         
-        void PlaySoundSpatial(AudioClip clip, Vector3 position, float volume = 1, Transform parent = null)
+        void PlaySpatial(AudioClip clip, Vector3 position, float volume = 1, Transform parent = null)
         {
             if (disableAudio || _sceneDisabledAudio) return;
             
@@ -75,10 +106,9 @@ namespace NuiN.ScriptableHarmony.Sound
             Destroy(audioSource.gameObject, clip.length / Mathf.Max(Math.Abs(audioSource.pitch), Mathf.Epsilon));
         }
 
-        public void PlaySpatial(AudioClip clip, Vector3 position, float volume = 1, Transform parent = null)
-            => PlaySoundSpatial(clip, position, volume, parent);
-        
-        public void PlayRandomSpatial(List<AudioClip> clips, Vector3 position, float volume = 1, Transform parent = null)
-            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
+        void PlayRandomSpatial(IReadOnlyList<AudioClip> clips, Vector3 position, float volume = 1, Transform parent = null)
+        {
+            PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
+        }
     }
 }

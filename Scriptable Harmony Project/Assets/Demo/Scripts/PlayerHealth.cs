@@ -5,16 +5,17 @@ using NuiN.ScriptableHarmony.Variable.References;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     [Header("Writers")]
     [SerializeField] SetVariable<float> maxHealth;
     [SerializeField] SetVariable<float> curHealth;
     [SerializeField] GetVariable<Vector2> mousePosition;
 
-    [SerializeField] SoundSO clickSound;
     [SerializeField] ParticleEffectArraySO clickParticles;
     [SerializeField] ParticleEffectSO clickParticle;
+
+    [SerializeField] SoundSO clickSound;
 
     public void TakeDamage(float amount)
     {
@@ -28,7 +29,6 @@ public class Health : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             TakeDamage(10);
-            clickSound.PlaySpatial(mousePosition.Val);
             clickParticles.SpawnAll(mousePosition);
             
             clickParticle.Spawn(
@@ -38,6 +38,8 @@ public class Health : MonoBehaviour
                 emissionFactor: 2f, 
                 scaleFactor: 2f, 
                 lifetime: 2f);
+            
+            clickSound.PlaySpatial(mousePosition.Val);
         }
     }
 }

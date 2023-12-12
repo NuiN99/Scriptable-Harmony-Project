@@ -28,9 +28,15 @@ namespace NuiN.ScriptableHarmony.Sound
             bool isArray = selectedClips!.Count > 1;
 
             AudioClip clip = selectedClips[0];
-        
-            Object newSoundObj = isArray ? SoundArraySO.CreateInstance(selectedClips.ToArray()) : SoundSO.CreateInstance(clip);
-            string assetName = isArray ? NEW_SOUND_ARRAY_NAME : NEW_SOUND_NAME;
+            SoundPlayerSO defaultSoundPlayer = Resources.Load<SoundPlayerSO>("Default Sound Player");
+            
+            Object newSoundObj = isArray 
+                ? SoundArraySO.CreateInstance(selectedClips.ToArray(), defaultSoundPlayer) 
+                : SoundSO.CreateInstance(clip, defaultSoundPlayer);
+            
+            string assetName = isArray 
+                ? NEW_SOUND_ARRAY_NAME 
+                : NEW_SOUND_NAME;
         
             string directory = Path.GetDirectoryName(AssetDatabase.GetAssetPath(clip));
             string assetPath = $"{directory}/{assetName}.asset";

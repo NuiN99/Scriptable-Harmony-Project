@@ -12,14 +12,6 @@ namespace NuiN.ScriptableHarmony.Sound
 
         public SoundPlayerSO SoundPlayer => player;
         public float Volume => volume;
-        
-        protected abstract AudioClip GetClip();
-
-        public void Play(float volumeFactor = 1)
-            => player.Play(GetClip(), volume * volumeFactor);
-
-        public void PlaySpatial(Vector3 position, Transform parent = null, float volumeFactor = 1)
-            => player.PlaySpatial(GetClip(), position, volume * volumeFactor, parent);
 
         void Reset()
         {
