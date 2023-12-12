@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: 77e8d653c16d0e64497474e7a71021a5, type: 2}
   volume: 1
-  audioClip: {fileID: 8300000, guid: 87aed24d34cd33e4886348f5075db739, type: 3}
+  audioClip: {fileID: 8300000, guid: 9dc230a1e8b108b4fa41bf2de39a1222, type: 3}

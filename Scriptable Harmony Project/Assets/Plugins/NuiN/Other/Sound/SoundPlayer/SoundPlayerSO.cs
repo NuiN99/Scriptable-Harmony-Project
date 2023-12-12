@@ -64,12 +64,6 @@ namespace NuiN.ScriptableHarmony.Sound
         {
             foreach (var clip in soundArray.Clips) PlaySpatial(clip, position, soundArray.Volume * volumeMult, parent);
         }
-        
-       
-        
-        
-        
-     
 
         void Play(AudioClip clip, float volume = 1)
         {
