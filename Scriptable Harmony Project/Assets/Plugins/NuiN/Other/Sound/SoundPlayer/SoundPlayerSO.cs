@@ -67,34 +67,18 @@ namespace NuiN.ScriptableHarmony.Sound
         {
             if (disableAudio || _sceneDisabledAudio) return;
             
-            AudioSource source = Instantiate(spatialSource, position, Quaternion.identity, parent);
-            source.outputAudioMixerGroup = mixerGroup;
-            source.clip = clip;
-            source.volume = volume * masterVolume;
-            source.Play();
-            Destroy(source.gameObject, clip.length / Mathf.Max(Math.Abs(source.pitch), Mathf.Epsilon));
+            AudioSource audioSource = Instantiate(spatialSource, position, Quaternion.identity, parent);
+            audioSource.outputAudioMixerGroup = mixerGroup;
+            audioSource.clip = clip;
+            audioSource.volume = volume * masterVolume;
+            audioSource.Play();
+            Destroy(audioSource.gameObject, clip.length / Mathf.Max(Math.Abs(audioSource.pitch), Mathf.Epsilon));
         }
 
         public void PlaySpatial(AudioClip clip, Vector3 position, float volume = 1, Transform parent = null)
             => PlaySoundSpatial(clip, position, volume, parent);
-        public void PlaySpatial(AudioClip clip, GetVariable<Vector3> position, float volume = 1, Transform parent = null)
-            => PlaySoundSpatial(clip, position.Val, volume, parent);
-        public void PlaySpatial(AudioClip clip, SetVariable<Vector3> position, float volume = 1, Transform parent = null)
-            => PlaySoundSpatial(clip, position.Val, volume, parent);
-        public void PlaySpatial(AudioClip clip, GetVariable<Vector2> position, float volume = 1, Transform parent = null)
-            => PlaySoundSpatial(clip, position.Val, volume, parent);
-        public void PlaySpatial(AudioClip clip, SetVariable<Vector2> position, float volume = 1, Transform parent = null)
-            => PlaySoundSpatial(clip, position.Val, volume, parent);
         
         public void PlayRandomSpatial(List<AudioClip> clips, Vector3 position, float volume = 1, Transform parent = null)
-            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
-        public void PlayRandomSpatial(List<AudioClip> clips, GetVariable<Vector3> position, float volume = 1, Transform parent = null)
-            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
-        public void PlayRandomSpatial(List<AudioClip> clips, SetVariable<Vector3> position, float volume = 1, Transform parent = null)
-            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
-        public void PlayRandomSpatial(List<AudioClip> clips, GetVariable<Vector2> position, float volume = 1, Transform parent = null)
-            => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
-        public void PlayRandomSpatial(List<AudioClip> clips, SetVariable<Vector2> position, float volume = 1, Transform parent = null)
             => PlaySpatial(clips[Random.Range(0, clips.Count)], position, volume, parent);
     }
 }

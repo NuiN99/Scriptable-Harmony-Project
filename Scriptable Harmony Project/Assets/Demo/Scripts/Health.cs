@@ -28,7 +28,7 @@ public class Health : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             TakeDamage(10);
-            clickSound.PlaySpatial(mousePosition);
+            clickSound.PlaySpatial(mousePosition.Val);
             clickParticles.SpawnAll(mousePosition);
             
             clickParticle.Spawn(
