@@ -10,13 +10,14 @@ namespace NuiN.ScriptableHarmony.Base
     {
         [SerializeField] [TextArea] string description;
     
-        protected new virtual void OnEnable()
+        new void OnEnable()
         {
             base.OnEnable();;
             GameLoadedEvent.OnGameLoaded += CacheInitialValue;
             SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
             VariableEvents.OnResetAllVariableObjects += ResetValue;
 #if UNITY_EDITOR
+            EditorApplication.quitting += ResetValue;
             EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
 #endif
         }
@@ -27,6 +28,7 @@ namespace NuiN.ScriptableHarmony.Base
             SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
             VariableEvents.OnResetAllVariableObjects -= ResetValue;
 #if  UNITY_EDITOR
+            EditorApplication.quitting -= ResetValue;
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
 #endif
         }

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MousePosition
   m_EditorClassIdentifier: 
   description: 
-  value: {x: 2, y: 0}
-  defaultValue: {x: 2, y: 0}
+  value: {x: 0, y: 0}
+  defaultValue: {x: 0, y: 0}
   resetOnSceneLoad: 1
   gettersAndSetters:
     Getters: []
