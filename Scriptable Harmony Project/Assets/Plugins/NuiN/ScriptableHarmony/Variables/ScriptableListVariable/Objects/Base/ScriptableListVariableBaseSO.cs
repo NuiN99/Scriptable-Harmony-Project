@@ -16,9 +16,6 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad = true;
         
-        public Action<List<T>> onSet;
-        public Action<List<T>, List<T>> onSetWithOld;
-        
         public Action<T> onAdd;
         public Action<List<T>,T> onAddWithOld;
         
@@ -30,9 +27,6 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         
         public Action<List<T>> onRemoveWithList;
         public Action<List<T>,List<T>> onRemoveWithListWithOld;
-
-        public Action onClear;
-        public Action<List<T>> onClearWithOld;
         
         [Header("Debug References")]
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));

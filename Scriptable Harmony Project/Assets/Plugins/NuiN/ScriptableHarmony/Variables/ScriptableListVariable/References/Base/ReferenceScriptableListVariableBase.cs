@@ -9,11 +9,6 @@ namespace NuiN.ScriptableHarmony.ListVariable.References.Base
     public class ReferenceScriptableListVariableBase<T>
     {
         [SerializeField] protected ScriptableListVariableBaseSO<T> list;
-        
-        public void SubOnSet(Action<List<T>> onSet) => list.onSet += onSet;
-        public void UnSubOnSet(Action<List<T>> onSet) => list.onSet -= onSet;
-        public void SubOnSetWithOld(Action<List<T>, List<T>> onSetWithOld) => list.onSetWithOld += onSetWithOld;
-        public void UnSubOnSetWithOld(Action<List<T>, List<T>> onSetWithOld) => list.onSetWithOld -= onSetWithOld;
 
         public void SubOnAdd(Action<T> onAdd) => list.onAdd += onAdd;
         public void UnSubOnAdd(Action<T> onAdd) => list.onAdd -= onAdd;
@@ -34,10 +29,5 @@ namespace NuiN.ScriptableHarmony.ListVariable.References.Base
         public void UnSubOnRemove(Action<List<T>> onRemoveWithList) => list.onRemoveWithList -= onRemoveWithList;
         public void SubOnRemoveWithOld(Action<List<T>,List<T>> onRemoveWithListWithOld) => list.onRemoveWithListWithOld += onRemoveWithListWithOld;
         public void UnSubOnRemoveWithOld(Action<List<T>,List<T>> onRemoveWithListWithOld) => list.onRemoveWithListWithOld -= onRemoveWithListWithOld;
-        
-        public void SubOnClear(Action onClear) => list.onClear += onClear;
-        public void UnSubOnClear(Action onClear) => list.onClear -= onClear;
-        public void SubOnClearWithOld(Action<List<T>> onClearWithOld) => list.onClearWithOld += onClearWithOld;
-        public void UnSubOnClearWithOld(Action<List<T>> onClearWithOld) => list.onClearWithOld -= onClearWithOld;
     }
 }

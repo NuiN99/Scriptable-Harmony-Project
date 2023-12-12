@@ -10,19 +10,6 @@ namespace NuiN.ScriptableHarmony.References
     public class SetListVariable<T> : ReferenceScriptableListVariableBase<T>
     {
         public List<T> Items => list.list;
-
-        public void Set(List<T> newList, bool invokeActions = true)
-        {
-            List<T> oldValue = Items;
-            list.list = newList;
-            
-            SetDirty();
-
-            if (!invokeActions) return;
-            
-            list.onSetWithOld?.Invoke(oldValue, newList);
-            list.onSet?.Invoke(newList);
-        }
         
         public void Add(T item, bool invokeActions = true)
         {
@@ -86,17 +73,15 @@ namespace NuiN.ScriptableHarmony.References
             list.onRemove?.Invoke(item);
         }
         
+        public void Replace(List<T> newList, bool invokeActions = true)
+        {
+            foreach(var item in Items) Remove(item, invokeActions);
+            foreach(var item in newList) Add(item, invokeActions);
+        }
+        
         public void Clear(bool invokeActions = true)
         {
-            List<T> oldValue = Items;
-            Items.Clear();
-            
-            SetDirty();
-
-            if (!invokeActions) return;
-            
-            list.onClearWithOld?.Invoke(oldValue);
-            list.onClear?.Invoke();
+            foreach(var item in Items) Remove(item, invokeActions);
         }
 
         void SetDirty()

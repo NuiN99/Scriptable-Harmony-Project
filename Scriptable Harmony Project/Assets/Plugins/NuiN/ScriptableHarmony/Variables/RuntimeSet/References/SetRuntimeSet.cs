@@ -71,15 +71,15 @@ namespace NuiN.ScriptableHarmony.References
             runtimeSet.onRemove?.Invoke(removedItem);
         }
 
+        public void Replace(List<T> newList, bool invokeActions = true)
+        {
+            foreach(var item in Entities) Remove(item, invokeActions);
+            foreach(var item in newList) Add(item, invokeActions);
+        }
+        
         public void Clear(bool invokeActions = true)
         {
-            List<T> oldItems = Entities;
-            Entities.Clear();
-
-            if (!invokeActions) return;
-            
-            runtimeSet.onClearWithOld?.Invoke(oldItems);
-            runtimeSet.onClear?.Invoke();
+            foreach(var item in Entities) Remove(item, invokeActions);
         }
     }
 }
