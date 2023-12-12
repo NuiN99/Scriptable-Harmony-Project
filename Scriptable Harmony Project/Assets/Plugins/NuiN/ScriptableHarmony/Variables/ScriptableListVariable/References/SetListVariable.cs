@@ -9,75 +9,75 @@ namespace NuiN.ScriptableHarmony.References
     [Serializable]
     public class SetListVariable<T> : ReferenceScriptableListVariableBase<T>
     {
-        public List<T> Items => list.items;
+        public List<T> Values => list.values;
         
         public void Add(T item)
         {
-            var oldValue = new List<T>(Items);
-            Items.Add(item);
+            var oldValue = new List<T>(Values);
+            Values.Add(item);
             SetDirty();
 
-            list.onAddWithListWithOld?.Invoke(oldValue, Items);
+            list.onAddWithListWithOld?.Invoke(oldValue, Values);
             list.onAddWithOld?.Invoke(oldValue, item);
-            list.onAddWithList?.Invoke(Items);
+            list.onAddWithList?.Invoke(Values);
             list.onAdd?.Invoke(item);
         }
         public void AddNoInvoke(T item)
         {
-            Items.Add(item);
+            Values.Add(item);
             SetDirty();
         }
 
         public void Insert(T item, int index)
         {
-            var oldValue = new List<T>(Items);
-            Items.Insert(index, item);
+            var oldValue = new List<T>(Values);
+            Values.Insert(index, item);
             SetDirty();
 
-            list.onAddWithListWithOld?.Invoke(oldValue, Items);
+            list.onAddWithListWithOld?.Invoke(oldValue, Values);
             list.onAddWithOld?.Invoke(oldValue, item);
-            list.onAddWithList?.Invoke(Items);
+            list.onAddWithList?.Invoke(Values);
             list.onAdd?.Invoke(item);
         }
         public void InsertNoInvoke(T item, int index)
         {
-            Items.Insert(index, item);
+            Values.Insert(index, item);
             SetDirty();
         }
 
         public void RemoveAt(int index)
         {
-            var oldValue = new List<T>(Items);
+            var oldValue = new List<T>(Values);
 
-            T removedItem = Items[index];
-            Items.RemoveAt(index);
+            T removedItem = Values[index];
+            Values.RemoveAt(index);
             SetDirty();
 
-            list.onRemoveWithListWithOld?.Invoke(oldValue, Items);
+            list.onRemoveWithListWithOld?.Invoke(oldValue, Values);
             list.onRemoveWithOld?.Invoke(oldValue, removedItem);
-            list.onRemoveWithList?.Invoke(Items);
+            list.onRemoveWithList?.Invoke(Values);
             list.onRemove?.Invoke(removedItem);
         }
         public void RemoveAtNoInvoke(int index)
         {
-            Items.RemoveAt(index);
+            Values.RemoveAt(index);
             SetDirty();
         }
         
         public void Remove(T item)
         {
-            var oldValue = new List<T>(Items);
-            Items.Remove(item);
+            var oldValue = new List<T>(Values);
+            Values.Remove(item);
             SetDirty();
 
-            list.onRemoveWithListWithOld?.Invoke(oldValue, Items);
+            list.onRemoveWithListWithOld?.Invoke(oldValue, Values);
             list.onRemoveWithOld?.Invoke(oldValue, item);
-            list.onRemoveWithList?.Invoke(Items);
+            list.onRemoveWithList?.Invoke(Values);
             list.onRemove?.Invoke(item);
         }
         public void RemoveNoInvoke(T item)
         {
-            Items.Remove(item);
+            Values.Remove(item);
             SetDirty();
         }
         
@@ -94,11 +94,11 @@ namespace NuiN.ScriptableHarmony.References
         
         public void Clear()
         {
-            for(int i = Items.Count-1; i >= 0; i--) Remove(Items[i]);
+            for(int i = Values.Count-1; i >= 0; i--) Remove(Values[i]);
         }
         public void ClearNoInvoke()
         {
-            for(int i = Items.Count-1; i >= 0; i--) RemoveNoInvoke(Items[i]);
+            for(int i = Values.Count-1; i >= 0; i--) RemoveNoInvoke(Values[i]);
         }
 
         [Conditional("UNITY_EDITOR")]

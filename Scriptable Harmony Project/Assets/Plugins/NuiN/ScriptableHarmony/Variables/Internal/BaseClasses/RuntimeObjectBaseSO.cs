@@ -8,7 +8,7 @@ namespace NuiN.ScriptableHarmony.Base
 {
     public abstract class RuntimeObjectBaseSO<T> : ScriptableObjectBaseSO<T> where T : Object
     {
-        protected abstract RuntimeSetReferencesContainer ComponentHolders { get; set; }
+        protected abstract RuntimeObjectReferencesContainer ComponentHolders { get; set; }
     
         new void OnEnable()
         {

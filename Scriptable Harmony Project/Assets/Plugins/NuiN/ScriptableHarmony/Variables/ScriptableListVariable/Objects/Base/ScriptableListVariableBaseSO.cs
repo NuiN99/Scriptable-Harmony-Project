@@ -11,8 +11,8 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
 {
     public class ScriptableListVariableBaseSO<T> : ScriptableVariableLifetimeBaseSO<T>
     {
-        List<T> _initialItems = new();
-        public List<T> items = new();
+        List<T> _initialValues = new();
+        public List<T> values = new();
         
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad = true;
@@ -36,11 +36,11 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         [SOMethodButton("Save List")]
         public void SaveValueButton()
         {
-            _initialItems = new List<T>(items);
+            _initialValues = new List<T>(values);
         }
         
-        protected override void CacheInitialValue() => _initialItems = new List<T>(items);
-        protected override void ResetValue() => items = new List<T>(_initialItems);
+        protected override void CacheInitialValue() => _initialValues = new List<T>(values);
+        protected override void ResetValue() => values = new List<T>(_initialValues);
         protected override bool ResetOnSceneLoad() => resetOnSceneLoad;
     }
 }

@@ -16,7 +16,12 @@ MonoBehaviour:
   value: {x: 0, y: 0}
   resetOnSceneLoad: 1
   gettersAndSetters:
-    Getters: []
+    Getters:
+    - {fileID: 8374975215262088032, guid: 7460790150a2f65499d38182f15d47b2, type: 3}
+    - {fileID: 1699109869603293091, guid: 7aad103259e944144a52da8f1a8e52da, type: 3}
     Setters: []
-    getters: []
-    setters: []
+    getters:
+    - {fileID: 0}
+    - {fileID: 0}
+    setters:
+    - {fileID: 0}

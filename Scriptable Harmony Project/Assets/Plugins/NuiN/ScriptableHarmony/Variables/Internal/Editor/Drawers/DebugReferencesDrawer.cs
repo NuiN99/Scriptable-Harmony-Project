@@ -1,27 +1,61 @@
+using System.Collections.Generic;
+using System.Linq;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using UnityEditor;
 using UnityEngine;
-// ReSharper disable InconsistentNaming
 
 namespace NuiN.ScriptableHarmony.Editor
 {
     [CustomPropertyDrawer(typeof(GetSetReferencesContainer))]
-    internal class ReadWriteReferencesContainerDrawer : PropertyDrawer
+    internal class GetSetReferencesContainerDrawer : PropertyDrawer
     {
+        string[] _propertyNames = { "Getters", "Setters", "getters", "setters" };
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            DebugReferencesDrawerBase.DebugReferenceGUI(_propertyNames.ToList(), "References - ", position, property, label);
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return DebugReferencesDrawerBase.GetPropertyHeight(_propertyNames.ToList(), property, label);
+        }
+    }
+    
+    [CustomPropertyDrawer(typeof(RuntimeObjectReferencesContainer))]
+    internal class RuntimeObjectReferencesContainerDrawer : PropertyDrawer
+    {
+        string[] _propertyNames = { "prefabs", "scene" };
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            DebugReferencesDrawerBase.DebugReferenceGUI(_propertyNames.ToList(), "Entities - ", position, property, label);
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return DebugReferencesDrawerBase.GetPropertyHeight(_propertyNames.ToList(), property, label);
+        }
+    }
+
+    internal static class DebugReferencesDrawerBase
+    {
+        public static void DebugReferenceGUI(List<string> propertyNames, string labelPrefix, Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            SerializedProperty getters = property.FindPropertyRelative("getters");
-            SerializedProperty setters = property.FindPropertyRelative("setters");
-            SerializedProperty Getters = property.FindPropertyRelative("Getters");
-            SerializedProperty Setters = property.FindPropertyRelative("Setters");
+            List<SerializedProperty> properties = propertyNames.Select(property.FindPropertyRelative).ToList();
+            int totalReferencesCount = properties.Sum(prop => prop.arraySize);
 
-            int totalReferencesCount = getters.arraySize + setters.arraySize + Getters.arraySize + Setters.arraySize;
+            Rect foldoutRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
 
-            property.isExpanded = EditorGUI.Foldout(
-                new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight),
-                property.isExpanded, $"Total References: {totalReferencesCount}");
+            property.isExpanded = EditorGUI.Foldout(foldoutRect, property.isExpanded, $"{labelPrefix}{totalReferencesCount}", true);
+
+            if (Event.current.type == EventType.MouseDown && foldoutRect.Contains(Event.current.mousePosition))
+            {
+                property.isExpanded = !property.isExpanded;
+                Event.current.Use();
+            }
 
             if (property.isExpanded)
             {
@@ -30,10 +64,12 @@ namespace NuiN.ScriptableHarmony.Editor
                 float lineHeight = EditorGUIUtility.singleLineHeight;
                 float startY = position.y + lineHeight;
 
-                startY = DrawReadOnlyList(new Rect(position.x, startY, position.width, lineHeight), "Getters", Getters);
-                startY = DrawReadOnlyList(new Rect(position.x, startY, position.width, lineHeight), "Setters", Setters);
-                startY = DrawReadOnlyList(new Rect(position.x, startY, position.width, lineHeight), "getters", getters);
-                DrawReadOnlyList(new Rect(position.x, startY, position.width, lineHeight), "setters", setters);
+                int index = 0;
+                foreach (var serializedProperty in properties)
+                {
+                    startY = DrawReadOnlyList(new Rect(position.x, startY, position.width, lineHeight), propertyNames[index], serializedProperty);
+                    index++;
+                }
 
                 EditorGUI.indentLevel--;
             }
@@ -41,30 +77,26 @@ namespace NuiN.ScriptableHarmony.Editor
             EditorGUI.EndProperty();
         }
 
-        static float DrawReadOnlyList(Rect rect, string label, SerializedProperty list)
+        public static float DrawReadOnlyList(Rect rect, string label, SerializedProperty list)
         {
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUI.PropertyField(rect, list, new GUIContent(label), true);
+            EditorGUI.PropertyField(rect, list, new GUIContent($"{label[0].ToString().ToUpper()}{label[1..]}"), true);
             EditorGUI.EndDisabledGroup();
             return rect.y + EditorGUI.GetPropertyHeight(list, true);
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        public static float GetPropertyHeight(List<string> propertyNames, SerializedProperty property, GUIContent label)
         {
             float height = EditorGUIUtility.singleLineHeight;
             if (!property.isExpanded) return height;
-            
-            height += GetListHeight(property.FindPropertyRelative("getters"));
-            height += GetListHeight(property.FindPropertyRelative("setters"));
-            height += GetListHeight(property.FindPropertyRelative("Getters"));
-            height += GetListHeight(property.FindPropertyRelative("Setters"));
+
+            height += propertyNames.Sum(name => GetListHeight(property.FindPropertyRelative(name)));
             return height;
         }
 
-        static float GetListHeight(SerializedProperty list)
+        public static float GetListHeight(SerializedProperty list)
         {
             return EditorGUI.GetPropertyHeight(list, true);
         }
     }
 }
-

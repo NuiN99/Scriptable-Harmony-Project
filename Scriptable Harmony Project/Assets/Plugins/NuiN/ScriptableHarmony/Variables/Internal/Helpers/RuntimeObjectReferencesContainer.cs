@@ -7,7 +7,7 @@ using UnityEngine;
 namespace NuiN.ScriptableHarmony.Internal.Helpers
 {
     [Serializable]
-    public class RuntimeSetReferencesContainer : ReferencesContainerBase
+    public class RuntimeObjectReferencesContainer : ReferencesContainerBase
     {
         [TypeMismatchFix]
         public List<Component> prefabs;
@@ -16,7 +16,7 @@ namespace NuiN.ScriptableHarmony.Internal.Helpers
         
         Type _setterType;
 
-        public RuntimeSetReferencesContainer(string fieldName, Type baseType, Type setterType) : base(fieldName, baseType)
+        public RuntimeObjectReferencesContainer(string fieldName, Type baseType, Type setterType) : base(fieldName, baseType)
         {
 #if UNITY_EDITOR
             _setterType = setterType;
