@@ -21,6 +21,10 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         
         public Action<T> onChange;
         public Action<T, T> onChangeWithOld;
+        
+        [Header("Debug References")]
+        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
+        protected override ReadWriteReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
 
         [SOMethodButton("Save Value")]
         public void SaveValueButton()
@@ -42,10 +46,7 @@ namespace NuiN.ScriptableHarmony.Variable.Base
             onChange?.Invoke(value);
             _prevValue = value;
         }
-
-        [Header("Debug References")]
-        [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
-        protected override ReadWriteReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
+        
         protected override void CacheInitialValue() => _initialValue = value;
         protected override void ResetValue() => value = _initialValue;
         
