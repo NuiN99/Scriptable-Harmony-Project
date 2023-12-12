@@ -864,10 +864,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Healthbar
       objectReference: {fileID: 0}
-    - target: {fileID: 4883777534672474907, guid: 8df1235b16d13714caf41085b629313c, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6552205957416834907, guid: 8df1235b16d13714caf41085b629313c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -946,10 +942,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6552205957416834907, guid: 8df1235b16d13714caf41085b629313c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8603474834475351057, guid: 8df1235b16d13714caf41085b629313c, type: 3}
-      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

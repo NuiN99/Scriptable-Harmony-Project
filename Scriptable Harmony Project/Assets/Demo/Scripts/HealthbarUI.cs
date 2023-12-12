@@ -9,7 +9,7 @@ public class HealthbarUI : MonoBehaviour
     [SerializeField] GetVariable<float> curHealth;
     
     [Header("UI")]
-    [SerializeField] Slider healthSlider;
+    [SerializeField] Image healthSlider;
 
     void OnEnable()
     {
@@ -23,7 +23,7 @@ public class HealthbarUI : MonoBehaviour
 
     void OnHealthChanged(float newHealth)
     {
-        float sliderVal = newHealth / maxHealth.Val;
-        healthSlider.value = sliderVal;
+        float fillAmount = newHealth / maxHealth.Val;
+        healthSlider.fillAmount = fillAmount;
     }
 }
