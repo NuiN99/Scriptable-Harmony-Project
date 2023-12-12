@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ClickParticle
   m_EditorClassIdentifier: 
   spawner: {fileID: 11400000, guid: bc1656ffa2eada245b953f7df531e78f, type: 2}
-  emissionMultiplier: 1
+  emissionMultiplier: 0
   scaleMultiplier: 1
   particleSystem: {fileID: 8340463019197833235, guid: 7bd0cbeea119be544b10cfe30ff93601, type: 3}
