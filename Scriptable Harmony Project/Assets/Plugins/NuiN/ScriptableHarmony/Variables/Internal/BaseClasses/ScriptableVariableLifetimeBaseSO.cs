@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 
 namespace NuiN.ScriptableHarmony.Base
 {
-    public abstract class VariableObjectBaseSO<T> : ScriptableObjectBaseSO<T>
+    public abstract class ScriptableVariableLifetimeBaseSO<T> : ScriptableObjectBaseSO<T>
     {
         [SerializeField] [TextArea] string description;
     
-        new void OnEnable()
+        protected new virtual void OnEnable()
         {
             base.OnEnable();;
-            GameLoadedEvent.OnGameLoaded += CacheStartValue;
+            GameLoadedEvent.OnGameLoaded += CacheInitialValue;
             SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
             VariableEvents.OnResetAllVariableObjects += ResetValue;
 #if UNITY_EDITOR
@@ -23,7 +23,7 @@ namespace NuiN.ScriptableHarmony.Base
         new void OnDisable()
         {
             base.OnDisable();
-            GameLoadedEvent.OnGameLoaded -= CacheStartValue;
+            GameLoadedEvent.OnGameLoaded -= CacheInitialValue;
             SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
             VariableEvents.OnResetAllVariableObjects -= ResetValue;
 #if  UNITY_EDITOR
@@ -31,10 +31,9 @@ namespace NuiN.ScriptableHarmony.Base
 #endif
         }
     
-        protected abstract void CacheStartValue();
+        protected abstract void CacheInitialValue();
         protected abstract void ResetValue();
         protected abstract bool ResetOnSceneLoad();
-        protected abstract bool ResetOnExitPlayMode();
     
         void ResetValueOnSceneLoad(Scene s1, Scene s2)
         {
@@ -44,7 +43,7 @@ namespace NuiN.ScriptableHarmony.Base
 #if UNITY_EDITOR
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
-            if (ResetOnExitPlayMode() && state == PlayModeStateChange.EnteredEditMode) ResetValue();
+            if (state == PlayModeStateChange.EnteredEditMode) ResetValue();
         }
 #endif
     }

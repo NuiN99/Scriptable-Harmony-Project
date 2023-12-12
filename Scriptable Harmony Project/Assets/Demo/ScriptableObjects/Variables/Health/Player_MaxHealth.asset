@@ -15,8 +15,6 @@ MonoBehaviour:
   description: 
   value: 100
   resetOnSceneLoad: 0
-  resetOnExitPlaymode: 1
-  total: 4
   gettersAndSetters:
     Getters:
     - {fileID: 3719732740253014072, guid: 8df1235b16d13714caf41085b629313c, type: 3}

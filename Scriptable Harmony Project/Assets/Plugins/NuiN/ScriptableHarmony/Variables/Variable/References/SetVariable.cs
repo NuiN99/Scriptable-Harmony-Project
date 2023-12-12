@@ -1,4 +1,5 @@
 using System;
+using NuiN.ScriptableHarmony.Variable.Base;
 using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
 
@@ -23,5 +24,7 @@ namespace NuiN.ScriptableHarmony.References
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
         }
+
+        public SetVariable(ScriptableVariableBaseSO<T> variable) : base(variable) { }
     }
 }

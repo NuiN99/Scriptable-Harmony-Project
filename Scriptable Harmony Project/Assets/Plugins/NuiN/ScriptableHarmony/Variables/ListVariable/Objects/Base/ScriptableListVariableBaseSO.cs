@@ -8,14 +8,13 @@ using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.ListVariable.Base
 {
-    public class ScriptableListVariableBaseSO<T> : VariableObjectBaseSO<T>
+    public class ScriptableListVariableBaseSO<T> : ScriptableVariableLifetimeBaseSO<T>
     {
         List<T> _startValue = new();
         public List<T> list = new();
         
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad = true;
-        [SerializeField] bool resetOnExitPlaymode = true;
         
         public Action<List<T>> onSet;
         public Action<List<T>, List<T>> onSetWithOld;
@@ -39,10 +38,9 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         [SerializeField] ReadWriteReferencesContainer gettersAndSetters = new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
         protected override ReadWriteReferencesContainer GettersAndSetters { get => gettersAndSetters;set => gettersAndSetters = value; }
 
-        protected override void CacheStartValue() => _startValue = new List<T>(list);
+        protected override void CacheInitialValue() => _startValue = new List<T>(list);
         protected override void ResetValue() => list = new List<T>(_startValue);
         
         protected override bool ResetOnSceneLoad() => resetOnSceneLoad;
-        protected override bool ResetOnExitPlayMode() => resetOnExitPlaymode;
     }
 }
