@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724fc39ded15488795414a1144a8522f, type: 3}
-  m_Name: MousePosition
+  m_Script: {fileID: 11500000, guid: 7cb83076284636b49932d9766af889b3, type: 3}
+  m_Name: New Vector2 ListVariable
   m_EditorClassIdentifier: 
   description: 
-  value: {x: 2, y: 0}
-  defaultValue: {x: 2, y: 0}
+  values: []
+  defaultValues: []
   resetOnSceneLoad: 1
   gettersAndSetters:
     Getters: []

@@ -12,10 +12,9 @@ namespace NuiN.ScriptableHarmony.Variable.Base
     public class ScriptableVariableBaseSO<T> : ScriptableVariableLifetimeBaseSO<T>
     {
         T _prevValue;
-
         
         public T value;
-        [SerializeField] [ReadOnly] T defaultValue;
+        [SerializeField] [ReadOnlyPlayMode] T defaultValue;
         
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad;
