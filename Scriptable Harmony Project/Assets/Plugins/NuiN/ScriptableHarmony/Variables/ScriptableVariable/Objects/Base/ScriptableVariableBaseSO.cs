@@ -11,10 +11,11 @@ namespace NuiN.ScriptableHarmony.Variable.Base
 {
     public class ScriptableVariableBaseSO<T> : ScriptableVariableLifetimeBaseSO<T>
     {
-        T _initialValue;
         T _prevValue;
 
+        
         public T value;
+        [SerializeField] [ReadOnly] T defaultValue;
         
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad;
@@ -29,7 +30,7 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         [SOMethodButton("Save Value")]
         public void SaveValueButton()
         {
-            _initialValue = value;
+            defaultValue = value;
         }
         
         void OnValidate()
@@ -47,8 +48,8 @@ namespace NuiN.ScriptableHarmony.Variable.Base
             _prevValue = value;
         }
         
-        protected override void CacheInitialValue() => _initialValue = value;
-        protected override void ResetValue() => value = _initialValue;
+        protected override void CacheInitialValue() => defaultValue = value;
+        protected override void ResetValue() => value = defaultValue;
         
         protected override bool ResetOnSceneLoad() => resetOnSceneLoad;
     }
