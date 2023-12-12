@@ -17,7 +17,7 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         public T value;
         
         [Header("Value Persistence")]
-        [SerializeField] bool resetOnSceneLoad = true;
+        [SerializeField] bool resetOnSceneLoad;
         
         public Action<T> onChange;
         public Action<T, T> onChangeWithOld;
