@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NuiN.ScriptableHarmony.Base;
-using NuiN.ScriptableHarmony.Internal.Attributes;
+using NuiN.ScriptableHarmony.Editor.Attributes;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using NuiN.ScriptableHarmony.References;
 using NuiN.ScriptableHarmony.RuntimeSet.Components.Base;

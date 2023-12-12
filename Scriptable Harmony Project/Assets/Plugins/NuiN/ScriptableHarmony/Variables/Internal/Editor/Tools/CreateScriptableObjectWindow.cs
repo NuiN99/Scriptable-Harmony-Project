@@ -11,7 +11,7 @@ using NuiN.ScriptableHarmony.Variable.Base;
 namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
 #if UNITY_EDITOR
-    internal class ScriptableObjectCreatorWindow : EditorWindow
+    internal class CreateScriptableObjectWindow : EditorWindow
     {
         Type[] _scriptTypes;
         SOType _selectedSOType = SOType.Variable;
@@ -21,10 +21,10 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 
         SelectionPathController _pathController;
 
-        [MenuItem("ScriptableHarmony/Scriptable Object Generator")]
+        [MenuItem("ScriptableHarmony/Create a Scriptable Object")]
         public static void ShowWindow()
         {
-            GetWindow<ScriptableObjectCreatorWindow>("Scriptable Object Generator");
+            GetWindow<CreateScriptableObjectWindow>("Scriptable Object Creator");
         }
 
         void OnEnable()
@@ -120,10 +120,7 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Tools
                 {
                     GUILayout.BeginHorizontal();
                     GUILayout.Label(scriptType);
-                    if (GUILayout.Button("Generate", GUILayout.Width(75), GUILayout.Height(25)))
-                    {
-                        CreateScriptableObjectInstance(scriptType);
-                    }
+                    DisplayCreateButton(scriptType);
                     GUILayout.EndHorizontal();
                     DrawHorizontalLine();
                 }

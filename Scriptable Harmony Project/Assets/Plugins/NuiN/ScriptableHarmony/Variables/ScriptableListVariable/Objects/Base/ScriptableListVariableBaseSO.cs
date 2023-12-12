@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using NuiN.ScriptableHarmony.Base;
 using NuiN.ScriptableHarmony.Editor.Attributes;
 using NuiN.ScriptableHarmony.Internal.Helpers;

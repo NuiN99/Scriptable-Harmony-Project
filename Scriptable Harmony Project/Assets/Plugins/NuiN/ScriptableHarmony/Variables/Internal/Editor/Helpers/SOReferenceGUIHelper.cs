@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using NuiN.ScriptableHarmony.Core.Editor.Tools;
 using NuiN.ScriptableHarmony.Internal.Helpers;
@@ -70,7 +69,7 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Helpers
                 GUI.backgroundColor = new Color(0.4f,0.4f,0.4f, 1);
                 if (GUI.Button(buttonPosition, buttonText, buttonStyle))
                 {
-                    ScriptableObjectFindWindow.OpenFindWindow(typeName, variableProperty);
+                    FindScriptableObjectWindow.OpenFindWindow(typeName, variableProperty);
                 }
                 GUI.backgroundColor = originalColor;
             }

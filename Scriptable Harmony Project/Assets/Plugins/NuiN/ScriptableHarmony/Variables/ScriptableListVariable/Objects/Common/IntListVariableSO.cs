@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using NuiN.ScriptableHarmony.ListVariable.Base;
 
 namespace NuiN.ScriptableHarmony.ListVariable.Common

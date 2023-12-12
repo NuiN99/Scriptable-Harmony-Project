@@ -13,7 +13,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
 #if UNITY_EDITOR
-    internal class CustomTypeScriptGeneratorWindow : EditorWindow
+    internal class GenerateCustomTypeWindow : EditorWindow
     {
         const string SCRIPT_TEMPLATE =
 @"using UnityEngine;
@@ -49,13 +49,13 @@ namespace NuiN.ScriptableHarmony.{SingularSuffix}.Components.{CustomOrCommon}
 
         SelectionPathController _pathController;
         
-        static CustomTypeScriptGeneratorWindow _windowInstance;
+        static GenerateCustomTypeWindow _windowInstance;
         
-        [MenuItem("ScriptableHarmony/Custom Type Generator")]
+        [MenuItem("ScriptableHarmony/Generate a Custom Type")]
         static void OpenWindow()
         {
-            _windowInstance = GetWindow<CustomTypeScriptGeneratorWindow>();
-            _windowInstance.titleContent = new GUIContent("Script Generator");
+            _windowInstance = GetWindow<GenerateCustomTypeWindow>();
+            _windowInstance.titleContent = new GUIContent("Custom Type Generator");
             _windowInstance.Show();
         }
 

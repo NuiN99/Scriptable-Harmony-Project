@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 {
-    internal class ScriptableObjectFindWindow : EditorWindow
+    internal class FindScriptableObjectWindow : EditorWindow
     {
         List<Object> _foundObjects = new();
         Vector2 _scrollPosition;
@@ -32,16 +32,16 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Tools
         
         static SerializedProperty _property;
         string _searchFilter;
-        static ScriptableObjectFindWindow _windowInstance;
+        static FindScriptableObjectWindow _windowInstance;
 
-        [MenuItem("ScriptableHarmony/Object Finder")]
+        [MenuItem("ScriptableHarmony/Find a Scriptable Object")]
         static void OpenFindWindowMenuItem() => OpenFindWindow(string.Empty, null);
         
         public static void OpenFindWindow(string typeName, SerializedProperty property)
         {
             _property = property;
             _typeName = typeName;
-            _windowInstance = GetWindow<ScriptableObjectFindWindow>("Scriptable Object Finder");
+            _windowInstance = GetWindow<FindScriptableObjectWindow>("Scriptable Object Finder");
 
             _windowInstance.FindObjects();
         }

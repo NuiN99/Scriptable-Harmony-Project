@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using NuiN.ScriptableHarmony.ListVariable.Base;
 using NuiN.ScriptableHarmony.ListVariable.References.Base;
 using UnityEditor;
-using Debug = UnityEngine.Debug;
 
 namespace NuiN.ScriptableHarmony.References
 {

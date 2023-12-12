@@ -1,7 +1,4 @@
-﻿using System;
-using NuiN.ScriptableHarmony.References;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.Sound
 {

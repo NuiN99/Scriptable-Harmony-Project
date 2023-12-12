@@ -1,6 +1,4 @@
-using System;
 using NuiN.ScriptableHarmony.References;
-using UnityEditor;
 using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.Particles

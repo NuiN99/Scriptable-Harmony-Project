@@ -1,6 +1,6 @@
 using System;
 using NuiN.ScriptableHarmony.Base;
-using NuiN.ScriptableHarmony.Internal.Attributes;
+using NuiN.ScriptableHarmony.Editor.Attributes;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using NuiN.ScriptableHarmony.References;
 using NuiN.ScriptableHarmony.RuntimeSingle.Components.Base;

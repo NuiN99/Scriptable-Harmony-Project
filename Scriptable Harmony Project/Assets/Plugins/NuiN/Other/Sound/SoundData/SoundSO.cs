@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using UnityEditor;
 using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.Sound

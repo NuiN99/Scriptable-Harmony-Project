@@ -1,7 +1,6 @@
 using NuiN.ScriptableHarmony.Core.Editor.Helpers;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using NuiN.ScriptableHarmony.References;
-using NuiN.ScriptableHarmony.RuntimeSingle.References;
 using UnityEditor;
 using UnityEngine;
 

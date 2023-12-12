@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using NuiN.ScriptableHarmony.References;
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace NuiN.ScriptableHarmony.Particles

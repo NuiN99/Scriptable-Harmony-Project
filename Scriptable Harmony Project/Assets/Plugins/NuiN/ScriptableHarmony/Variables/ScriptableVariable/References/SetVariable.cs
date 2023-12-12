@@ -1,5 +1,4 @@
 using System;
-using NuiN.ScriptableHarmony.Variable.Base;
 using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
 

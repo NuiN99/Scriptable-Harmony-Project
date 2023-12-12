@@ -1,5 +1,4 @@
 using NuiN.ScriptableHarmony.References;
-using NuiN.ScriptableHarmony.RuntimeSingle.References;
 using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.RuntimeSingle.Components.Base

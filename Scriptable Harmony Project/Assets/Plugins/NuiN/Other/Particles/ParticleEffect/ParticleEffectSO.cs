@@ -1,4 +1,3 @@
-using NuiN.ScriptableHarmony.Particles;
 using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.Particles
