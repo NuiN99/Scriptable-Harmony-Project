@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.Sound
 {
-    [CreateAssetMenu(menuName = "ScriptableHarmony/Sound/SoundSO", fileName = "New Sound")]
+    [CreateAssetMenu(menuName = "ScriptableHarmony/Sound/Sound Object", fileName = "New Sound")]
     public class SoundSO : SoundBaseSO
     {
         [SerializeField] AudioClip audioClip;
