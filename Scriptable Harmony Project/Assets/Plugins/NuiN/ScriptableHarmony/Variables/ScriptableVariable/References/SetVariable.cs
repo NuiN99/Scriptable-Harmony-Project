@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-using NuiN.ScriptableHarmony.Variable.Base;
+using NuiN.ScriptableHarmony.Internal.Logging;
 using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
 
@@ -21,6 +21,8 @@ namespace NuiN.ScriptableHarmony.References
 
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
+            
+            SHLogger.LogEvent("Set Variable", $"From: <color='red'>{oldValue}</color> | To: <color='green'>{Val}</color>", variable);
         }
         public void SetNoInvoke(T value)
         {

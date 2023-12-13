@@ -34,12 +34,14 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Base
         
         public Action onClear;
         public Action<List<T>> onClearWithOld;
-        
-        [Header("Debugging")]
+
+        [Header("Debugging")] 
+        [SerializeField] bool logEvents;
         [SerializeField] RuntimeObjectReferencesContainer componentHolders = new("runtimeSet", typeof(RuntimeSetItemComponentBase<T>), typeof(SetRuntimeSet<T>));
         [SerializeField] GetSetReferencesContainer gettersAndSetters = new("runtimeSet", typeof(ReferenceRuntimeSetBase<T>), typeof(GetRuntimeSet<T>), typeof(SetRuntimeSet<T>));
         protected override RuntimeObjectReferencesContainer ComponentHolders { get => componentHolders; set => componentHolders = value; }
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
+        public override bool LogEvents => logEvents;
         
         protected override void ResetValue() => entities.Clear();
     }

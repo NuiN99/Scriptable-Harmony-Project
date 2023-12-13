@@ -41,7 +41,6 @@ namespace NuiN.ScriptableHarmony.Editor.Attributes
             }
             
             base.OnInspectorGUI();
-
         }
     }
 #endif

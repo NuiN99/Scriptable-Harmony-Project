@@ -21,12 +21,14 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         
         public Action<T> onChange;
         public Action<T, T> onChangeWithOld;
-        
-        [Header("Debugging")]
-        [SerializeField] GetSetReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
-        protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
 
+        [Header("Debugging")] 
+        [SerializeField] bool logEvents;
+        [SerializeField] GetSetReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
+        
+        protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
         public T DefaultValue => defaultValue;
+        public override bool LogEvents => logEvents;
 
         [SOMethodButton("Save Value")]
         public void SaveValueButton()
