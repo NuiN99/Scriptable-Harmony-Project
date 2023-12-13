@@ -10,13 +10,12 @@ namespace NuiN.ScriptableHarmony.Internal.Logging
 {
     internal static class SHLogger
     {
-        public const string LOGGING_BOOL_KEY = "LoggingEnabled";
         public static bool loggingEnabled;
 
         [RuntimeInitializeOnLoadMethod]
-        static void AssignLoggingState()
+        static void CheckLoggingState()
         {
-            loggingEnabled = Resources.Load<ScriptableHarmonyConfigSO>("ScriptableHarmony_Config").loggingEnabled;
+            loggingEnabled = SHLoggerOptionsWindow.IsLoggingEnabled();
         }
         
         [Conditional("UNITY_EDITOR")] [Conditional("DEVELOPMENT_BUILD")]
@@ -37,6 +36,13 @@ namespace NuiN.ScriptableHarmony.Internal.Logging
         public static void LogVariableSet<T>(string eventName, T from, T to, bool invokedAction, ScriptableObjectBaseSO<T> obj)
         {
             string contents = $"From: <color='red'>{from}</color>, To: <color='white'>{to}</color>";
+            LogAction(eventName, contents, invokedAction, obj);
+        }
+        
+        [Conditional("UNITY_EDITOR")] [Conditional("DEVELOPMENT_BUILD")]
+        public static void LogListVariableAdd<T>(string eventName, T added, bool invokedAction, ScriptableObjectBaseSO<T> obj)
+        {
+            string contents = $"Added: <color='white'>{added}</color>";
             LogAction(eventName, contents, invokedAction, obj);
         }
     }

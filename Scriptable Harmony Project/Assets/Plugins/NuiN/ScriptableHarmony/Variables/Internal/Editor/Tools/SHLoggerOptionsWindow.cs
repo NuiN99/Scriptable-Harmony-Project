@@ -9,22 +9,28 @@ namespace  NuiN.ScriptableHarmony.Editor
     {
 #if UNITY_EDITOR
         const string MENU_PATH = "ScriptableHarmony/Logging/Logging Enabled";
+        const string PREFS_LOGGING_KEY = "SHLoggerBool";
+        
         [MenuItem(MENU_PATH)]
         static void ToggleLogging()
         {
-            var config = Resources.Load<ScriptableHarmonyConfigSO>("ScriptableHarmony_Config");
-            bool loggingEnabled = config.loggingEnabled;
-            config.loggingEnabled = !loggingEnabled;
-            SHLogger.loggingEnabled = loggingEnabled;
+            bool loggingEnabled = IsLoggingEnabled();
+            PlayerPrefs.SetInt(PREFS_LOGGING_KEY, loggingEnabled ? 0 : 1);
+            SHLogger.loggingEnabled = !loggingEnabled;
             Debug.Log("Logging: " + (loggingEnabled ? "<color=\"red\">Off</color>" : "<color=\"white\">On</color>"));
         }
 
         [MenuItem(MENU_PATH, true)]
         static bool ToggleLoggingValidate()
         {
-            bool loggingEnabled = Resources.Load<ScriptableHarmonyConfigSO>("ScriptableHarmony_Config").loggingEnabled;
+            bool loggingEnabled = IsLoggingEnabled();
             Menu.SetChecked(MENU_PATH, loggingEnabled);
             return true;
+        }
+
+        public static bool IsLoggingEnabled()
+        {
+            return PlayerPrefs.GetInt(PREFS_LOGGING_KEY) == 1;
         }
 #endif
     }
