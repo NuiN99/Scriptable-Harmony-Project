@@ -81,24 +81,34 @@ namespace NuiN.ScriptableHarmony.References
             SetDirty();
         }
         
-        public void Replace(List<T> newList)
+        public void Replace(IEnumerable<T> newList)
         {
-            Clear();
-            foreach(var item in newList) Add(item);
+            var oldValue = new List<T>(Values);
+            list.values = new List<T>(newList);
+            SetDirty();
+
+            list.onReplaceWithOld?.Invoke(oldValue, Values);
+            list.onReplace?.Invoke(Values);
         }
-        public void ReplaceNoInvoke(List<T> newList)
+        public void ReplaceNoInvoke(IEnumerable<T> newList)
         {
-            ClearNoInvoke();
-            foreach(var item in newList) AddNoInvoke(item);
+            list.values = new List<T>(newList);
+            SetDirty();
         }
         
         public void Clear()
         {
-            for(int i = Values.Count-1; i >= 0; i--) Remove(Values[i]);
+            var oldValue = new List<T>(Values);
+            Values.Clear();
+            SetDirty();
+
+            list.onClearWithOld?.Invoke(oldValue);
+            list.onClear?.Invoke();
         }
         public void ClearNoInvoke()
         {
-            for(int i = Values.Count-1; i >= 0; i--) RemoveNoInvoke(Values[i]);
+            Values.Clear();
+            SetDirty();
         }
 
         [Conditional("UNITY_EDITOR")]

@@ -79,25 +79,31 @@ namespace NuiN.ScriptableHarmony.References
         {
             Entities.RemoveAt(index);
         }
+        
+        public void Replace(IEnumerable<T> newList)
+        {
+            var oldValue = new List<T>(Entities);
+            runtimeSet.entities = new List<T>(newList);
 
-        public void Replace(List<T> newList)
-        {
-            Clear();
-            foreach(var item in newList) Add(item);
+            runtimeSet.onReplaceWithOld?.Invoke(oldValue, Entities);
+            runtimeSet.onReplace?.Invoke(Entities);
         }
-        public void ReplaceNoInvoke(List<T> newList)
+        public void ReplaceNoInvoke(IEnumerable<T> newList)
         {
-            ClearNoInvoke();
-            foreach(var item in newList) AddNoInvoke(item);
+            runtimeSet.entities = new List<T>(newList);
         }
         
         public void Clear()
         {
-            for(int i = Entities.Count-1; i >= 0; i--) Remove(Entities[i]);
+            var oldValue = new List<T>(Entities);
+            Entities.Clear();
+
+            runtimeSet.onClearWithOld?.Invoke(oldValue);
+            runtimeSet.onClear?.Invoke();
         }
         public void ClearNoInvoke()
         {
-            for(int i = Entities.Count-1; i >= 0; i--) RemoveNoInvoke(Entities[i]);
+            runtimeSet.entities.Clear();
         }
     }
 }

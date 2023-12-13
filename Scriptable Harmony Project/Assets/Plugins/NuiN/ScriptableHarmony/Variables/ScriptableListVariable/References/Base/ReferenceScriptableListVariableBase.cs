@@ -29,5 +29,15 @@ namespace NuiN.ScriptableHarmony.ListVariable.References.Base
         public void UnSubOnRemove(Action<List<T>> onRemoveWithList) => list.onRemoveWithList -= onRemoveWithList;
         public void SubOnRemoveWithOld(Action<List<T>,List<T>> onRemoveWithListWithOld) => list.onRemoveWithListWithOld += onRemoveWithListWithOld;
         public void UnSubOnRemoveWithOld(Action<List<T>,List<T>> onRemoveWithListWithOld) => list.onRemoveWithListWithOld -= onRemoveWithListWithOld;
+        
+        public void SubOnClear(Action onClear) => list.onClear += onClear;
+        public void UnSubOnClear(Action onClear) => list.onClear -= onClear;
+        public void SubOnClearWithOld(Action<List<T>> onClearWithOld) => list.onClearWithOld += onClearWithOld;
+        public void UnSubOnClearWithOld(Action<List<T>> onClearWithOld) => list.onClearWithOld -= onClearWithOld;
+        
+        public void SubOnReplace(Action<List<T>> onReplace) => list.onReplace += onReplace;
+        public void UnSubOnReplace(Action<List<T>> onReplace) => list.onReplace -= onReplace;
+        public void SubOnReplaceWithOld(Action<List<T>,List<T>> onReplaceWithOld) => list.onReplaceWithOld += onReplaceWithOld;
+        public void UnSubReplaceWithOld(Action<List<T>,List<T>> onReplaceWithOld) => list.onReplaceWithOld -= onReplaceWithOld;
     }
 }

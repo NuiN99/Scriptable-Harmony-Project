@@ -30,5 +30,15 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.References.Base
         public void UnSubOnRemove(Action<List<T>> onRemoveWithList) => runtimeSet.onRemoveWithList -= onRemoveWithList;
         public void SubOnRemoveWithOld(Action<List<T>,List<T>> onRemoveWithListWithOld) => runtimeSet.onRemoveWithListWithOld += onRemoveWithListWithOld;
         public void UnSubOnRemoveWithOld(Action<List<T>,List<T>> onRemoveWithListWithOld) => runtimeSet.onRemoveWithListWithOld -= onRemoveWithListWithOld;
+        
+        public void SubOnClear(Action onClear) => runtimeSet.onClear += onClear;
+        public void UnSubOnClear(Action onClear) => runtimeSet.onClear -= onClear;
+        public void SubOnClearWithOld(Action<List<T>> onClearWithOld) => runtimeSet.onClearWithOld += onClearWithOld;
+        public void UnSubOnClearWithOld(Action<List<T>> onClearWithOld) => runtimeSet.onClearWithOld -= onClearWithOld;
+        
+        public void SubOnReplace(Action<List<T>> onReplace) => runtimeSet.onReplace += onReplace;
+        public void UnSubOnReplace(Action<List<T>> onReplace) => runtimeSet.onReplace -= onReplace;
+        public void SubOnReplaceWithOld(Action<List<T>,List<T>> onReplaceWithOld) => runtimeSet.onReplaceWithOld += onReplaceWithOld;
+        public void UnSubReplaceWithOld(Action<List<T>,List<T>> onReplaceWithOld) => runtimeSet.onReplaceWithOld -= onReplaceWithOld;
     }
 }

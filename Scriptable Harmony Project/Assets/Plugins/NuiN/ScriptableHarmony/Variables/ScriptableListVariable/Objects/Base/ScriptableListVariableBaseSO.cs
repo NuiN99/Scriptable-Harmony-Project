@@ -29,6 +29,12 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         public Action<List<T>> onRemoveWithList;
         public Action<List<T>,List<T>> onRemoveWithListWithOld;
         
+        public Action<List<T>> onReplace;
+        public Action<List<T>,List<T>> onReplaceWithOld;
+        
+        public Action onClear;
+        public Action<List<T>> onClearWithOld;
+        
         [Header("Debugging")]
         [SerializeField] GetSetReferencesContainer gettersAndSetters = new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters;set => gettersAndSetters = value; }
