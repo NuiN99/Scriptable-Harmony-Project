@@ -22,7 +22,7 @@ namespace NuiN.ScriptableHarmony.References
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
             
-            SHLogger.LogEvent("Set Variable", $"From: <color='red'>{oldValue}</color> | To: <color='green'>{Val}</color>", variable);
+            SHLogger.LogSetEvent("Set Variable", oldValue, Val, variable);
         }
         public void SetNoInvoke(T value)
         {
