@@ -7,5 +7,6 @@ namespace NuiN.ScriptableHarmony.References
     public class GetVariable<T> : ReferenceScriptableVariableBase<T>
     {
         public T Val => variable.value;
+        public T DefaultVal => variable.DefaultValue;
     }
 }

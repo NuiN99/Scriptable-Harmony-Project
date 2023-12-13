@@ -26,6 +26,8 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         [SerializeField] GetSetReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
 
+        public T DefaultValue => defaultValue;
+
         [SOMethodButton("Save Value")]
         public void SaveValueButton()
         {
@@ -35,6 +37,7 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         void OnValidate()
         {
             InvokeOnValueChangedInEditor();
+            if(!Application.isPlaying) defaultValue = value;
         }
         async void InvokeOnValueChangedInEditor()
         {

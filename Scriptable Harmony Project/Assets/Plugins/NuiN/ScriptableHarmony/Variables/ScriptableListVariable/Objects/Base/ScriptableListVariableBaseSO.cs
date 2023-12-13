@@ -39,12 +39,19 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         [SerializeField] GetSetReferencesContainer gettersAndSetters = new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters;set => gettersAndSetters = value; }
         
+        public List<T> DefaultValues => defaultValues;
+        
         [SOMethodButton("Save List")]
         public void SaveValueButton()
         {
             defaultValues = new List<T>(values);
         }
-        
+
+        void OnValidate()
+        {
+            if(!Application.isPlaying) defaultValues = new List<T>(values);
+        }
+
         protected override void CacheInitialValue() => defaultValues = new List<T>(values);
         protected override void ResetValue() => values = new List<T>(defaultValues);
         protected override bool ResetOnSceneLoad() => resetOnSceneLoad;

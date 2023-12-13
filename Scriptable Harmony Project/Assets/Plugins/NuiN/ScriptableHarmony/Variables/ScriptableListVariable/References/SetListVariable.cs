@@ -111,6 +111,16 @@ namespace NuiN.ScriptableHarmony.References
             SetDirty();
         }
 
+        public void ResetValues()
+        {
+            Replace(list.DefaultValues);
+        }
+        public void ResetValuesNoInvoke()
+        {
+            ReplaceNoInvoke(list.DefaultValues);
+        }
+        
+
         [Conditional("UNITY_EDITOR")]
         void SetDirty()
         {

@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using NuiN.ScriptableHarmony.Variable.Base;
 using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
 
@@ -8,15 +10,14 @@ namespace NuiN.ScriptableHarmony.References
     public class SetVariable<T> : ReferenceScriptableVariableBase<T>
     {
         public T Val => variable.value;
+        public T DefaultVal => variable.DefaultValue;
 
         public void Set(T value)
         {
             T oldValue = variable.value;
             variable.value = value;
             
-            #if UNITY_EDITOR
-            EditorUtility.SetDirty(variable);
-            #endif
+            SetDirty();
 
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
@@ -24,10 +25,23 @@ namespace NuiN.ScriptableHarmony.References
         public void SetNoInvoke(T value)
         {
             variable.value = value;
-            
-            #if UNITY_EDITOR
+
+            SetDirty();
+        }
+
+        public void ResetValue()
+        {
+            Set(variable.DefaultValue);
+        }
+        public void ResetValueNoInvoke()
+        {
+            SetNoInvoke(variable.DefaultValue);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        void SetDirty()
+        {
             EditorUtility.SetDirty(variable);
-            #endif
         }
     }
 }

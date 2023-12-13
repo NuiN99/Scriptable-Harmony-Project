@@ -32,7 +32,7 @@ namespace NuiN.ScriptableHarmony.Base
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
 #endif
         }
-    
+
         protected abstract void CacheInitialValue();
         protected abstract void ResetValue();
         protected abstract bool ResetOnSceneLoad();

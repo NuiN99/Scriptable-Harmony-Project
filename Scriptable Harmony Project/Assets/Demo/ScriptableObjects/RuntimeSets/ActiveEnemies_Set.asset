@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ActiveEnemies_Set
   m_EditorClassIdentifier: 
   description: 
-  runtimeSet: []
+  entities: []
   componentHolders:
     prefabs: []
     scene: []
