@@ -86,20 +86,22 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Helpers
 
             void DrawLabel()
             {
-                EditorStyles.label.normal.textColor = color;
                 Rect labelPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
+                Color originalColor = EditorStyles.label.normal.textColor;
+                EditorStyles.label.normal.textColor = color;
                 EditorGUI.LabelField(labelPosition, label);
-                EditorStyles.label.normal.textColor = Color.white;
+                EditorStyles.label.normal.textColor = originalColor;
             }
 
             void DrawPropertyField()
             {
                 Rect objectFieldPosition = new Rect(position.x, position.y, position.width - EditorGUIUtility.singleLineHeight, EditorGUIUtility.singleLineHeight);
-                EditorGUI.BeginProperty(objectFieldPosition, GUIContent.none, variableProperty);
+                Color originalColor = EditorStyles.label.normal.textColor;
                 EditorStyles.label.normal.textColor = color;
+                EditorGUI.BeginProperty(objectFieldPosition, GUIContent.none, variableProperty);
                 EditorGUI.PropertyField(objectFieldPosition, variableProperty, label, true);
-                EditorStyles.label.normal.textColor = Color.white;
                 EditorGUI.EndProperty();
+                EditorStyles.label.normal.textColor = originalColor;
             }
         }
         
