@@ -124,7 +124,9 @@ namespace NuiN.ScriptableHarmony.References
         [Conditional("UNITY_EDITOR")]
         void SetDirty()
         {
+#if UNITY_EDITOR
             EditorUtility.SetDirty(list);
+#endif
         }
     }
 }

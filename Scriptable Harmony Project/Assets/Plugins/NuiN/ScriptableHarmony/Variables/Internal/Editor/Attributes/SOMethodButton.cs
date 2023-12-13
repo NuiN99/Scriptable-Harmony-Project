@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System;
 using System.Linq;
 using System.Reflection;
@@ -20,7 +19,8 @@ namespace NuiN.ScriptableHarmony.Editor.Attributes
             this.onlyShowInPlayMode = onlyShowInPlayMode;
         }
     }
-
+    
+#if UNITY_EDITOR
     [CustomEditor(typeof(ScriptableObject), true)]
     public class EditorButtonDrawer : UnityEditor.Editor
     {

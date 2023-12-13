@@ -1,30 +1,32 @@
+using NuiN.ScriptableHarmony.Internal.Logging;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
-internal static class SHLoggerOptionsWindow
+namespace  NuiN.ScriptableHarmony.Editor
 {
-    public const string LOGGING_BOOL_KEY = "LoggingEnabled";
-    const string MENU_PATH = "ScriptableHarmony/Logging/Toggle Logging";
-
-    [MenuItem(MENU_PATH)]
-    static void ToggleLogging()
+    internal static class SHLoggerOptionsWindow
     {
-        bool loggingDisabled = IsLogDisabled();
-        PlayerPrefs.SetInt(LOGGING_BOOL_KEY, loggingDisabled ? 1 : -1);
+#if UNITY_EDITOR
+        const string MENU_PATH = "ScriptableHarmony/Logging/Logging Enabled";
+        [MenuItem(MENU_PATH)]
+        static void ToggleLogging()
+        {
+            var config = Resources.Load<ScriptableHarmonyConfigSO>("ScriptableHarmony_Config");
+            bool loggingEnabled = config.loggingEnabled;
+            config.loggingEnabled = !loggingEnabled;
+            SHLogger.loggingEnabled = loggingEnabled;
+            Debug.Log("Logging: " + (loggingEnabled ? "<color=\"red\">Off</color>" : "<color=\"white\">On</color>"));
+        }
 
-        Debug.Log("Logging " + (loggingDisabled ? "<color='green'>enabled</green>" : "<color='red'>disabled</color>"));
-    }
-
-    [MenuItem(MENU_PATH, true)]
-    static bool ToggleLoggingValidate()
-    {
-        bool loggingDisabled = IsLogDisabled();
-        Menu.SetChecked(MENU_PATH, !loggingDisabled);
-        return true;
-    }
-
-    static bool IsLogDisabled()
-    {
-        return PlayerPrefs.GetInt(LOGGING_BOOL_KEY, 1) != 1;
+        [MenuItem(MENU_PATH, true)]
+        static bool ToggleLoggingValidate()
+        {
+            bool loggingEnabled = Resources.Load<ScriptableHarmonyConfigSO>("ScriptableHarmony_Config").loggingEnabled;
+            Menu.SetChecked(MENU_PATH, loggingEnabled);
+            return true;
+        }
+#endif
     }
 }
+

@@ -9,16 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79409f4465a801b44a3c0ea9c415e617, type: 3}
-  m_Name: Player_Health
+  m_Script: {fileID: 11500000, guid: 6ea62cf25345e5e43a5d391cae9c115e, type: 3}
+  m_Name: ScriptableHarmony_Config
   m_EditorClassIdentifier: 
-  description: 
-  value: 100
-  defaultValue: 100
-  resetOnSceneLoad: 1
-  logEvents: 1
-  gettersAndSetters:
-    Getters: []
-    Setters: []
-    getters: []
-    setters: []
+  loggingEnabled: 0

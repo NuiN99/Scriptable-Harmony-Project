@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using System.Linq;
 using NuiN.ScriptableHarmony.Internal.Helpers;
@@ -100,3 +102,4 @@ namespace NuiN.ScriptableHarmony.Editor
         }
     }
 }
+#endif

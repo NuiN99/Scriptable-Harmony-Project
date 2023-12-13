@@ -22,12 +22,13 @@ namespace NuiN.ScriptableHarmony.References
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
             
-            SHLogger.LogSetEvent("Set Variable", oldValue, Val, variable);
+            SHLogger.LogVariableSet("Set Variable", oldValue, Val, true, variable);
         }
         public void SetNoInvoke(T value)
         {
-            variable.value = value;
+            SHLogger.LogVariableSet("Set Variable (No Event)", Val, value, false, variable);
 
+            variable.value = value;
             SetDirty();
         }
 
@@ -43,7 +44,9 @@ namespace NuiN.ScriptableHarmony.References
         [Conditional("UNITY_EDITOR")]
         void SetDirty()
         {
+#if UNITY_EDITOR
             EditorUtility.SetDirty(variable);
+#endif
         }
     }
 }
