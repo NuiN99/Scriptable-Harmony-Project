@@ -8,7 +8,7 @@ namespace NuiN.ScriptableHarmony.References
     [Serializable]
     public class SetRuntimeSet<T> : ReferenceRuntimeSetBase<T> where T : Object
     {
-        public List<T> Entities => runtimeSet.runtimeSet;
+        public List<T> Entities => runtimeSet.entities;
     
         public void Add(T item)
         {

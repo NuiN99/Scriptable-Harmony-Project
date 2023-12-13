@@ -7,6 +7,6 @@ namespace NuiN.ScriptableHarmony.References
     [Serializable]
     public class GetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T> where T : Object
     {
-        public T Entity => runtimeSingle.runtimeSingle;
+        public T Entity => runtimeSingle.entity;
     }
 }

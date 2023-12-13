@@ -14,7 +14,7 @@ namespace NuiN.ScriptableHarmony.RuntimeSingle.Base
     {
         [SerializeField] [TextArea] string description;
 
-        [TypeMismatchFix] public T runtimeSingle;
+        [TypeMismatchFix] public T entity;
         
         public Action<T> onSet;
         public Action<T, T> onSetWithOld;
@@ -28,7 +28,7 @@ namespace NuiN.ScriptableHarmony.RuntimeSingle.Base
         protected override RuntimeObjectReferencesContainer ComponentHolders { get => componentHolders; set => componentHolders = value; }
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
         
-        protected override void ResetValue() => runtimeSingle = null;
+        protected override void ResetValue() => entity = null;
     }
 }
 

@@ -13,7 +13,7 @@ namespace NuiN.ScriptableHarmony.Editor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            DebugReferencesDrawerBase.DebugReferenceGUI(_propertyNames.ToList(), "References - ", position, property, label);
+            DebugReferencesDrawerBase.DebugReferenceGUI(_propertyNames.ToList(), "Script References - ", position, property, label);
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
@@ -29,7 +29,7 @@ namespace NuiN.ScriptableHarmony.Editor
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            DebugReferencesDrawerBase.DebugReferenceGUI(_propertyNames.ToList(), "Entities - ", position, property, label);
+            DebugReferencesDrawerBase.DebugReferenceGUI(_propertyNames.ToList(), "Component References - ", position, property, label);
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

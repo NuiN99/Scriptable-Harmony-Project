@@ -9,8 +9,8 @@ namespace NuiN.ScriptableHarmony.References
     {
         public T Entity
         {
-            get => runtimeSingle.runtimeSingle;
-            private set => runtimeSingle.runtimeSingle = value;
+            get => runtimeSingle.entity;
+            private set => runtimeSingle.entity = value;
         }
 
         void Set(T newItem, bool overrideExisting, bool invokeActions)

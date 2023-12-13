@@ -8,6 +8,6 @@ namespace NuiN.ScriptableHarmony.References
     [Serializable]
     public class GetRuntimeSet<T> : ReferenceRuntimeSetBase<T> where T : Object
     {
-        public ReadOnlyCollection<T> Entities => runtimeSet.runtimeSet.AsReadOnly();
+        public ReadOnlyCollection<T> Entities => runtimeSet.entities.AsReadOnly();
     }
 }
