@@ -23,12 +23,12 @@ namespace NuiN.ScriptableHarmony.RuntimeSingle.Base
         public Action<T> onRemoveWithOld;
 
         [Header("Debugging")]
-        [SerializeField] bool logEvents;
+        [SerializeField] bool logActions = true;
         [SerializeField] RuntimeObjectReferencesContainer componentHolders = new("runtimeSingle", typeof(RuntimeSingleItemComponentBase<T>), typeof(SetRuntimeSingle<T>));
         [SerializeField] GetSetReferencesContainer gettersAndSetters = new("runtimeSingle", typeof(ReferenceRuntimeSingleBase<T>), typeof(GetRuntimeSingle<T>), typeof(SetRuntimeSingle<T>));
         protected override RuntimeObjectReferencesContainer ComponentHolders { get => componentHolders; set => componentHolders = value; }
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
-        public override bool LogEvents => logEvents;
+        public override bool LogActions => logActions;
         
         protected override void ResetValue() => entity = null;
     }

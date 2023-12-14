@@ -23,12 +23,12 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         public Action<T, T> onChangeWithOld;
 
         [Header("Debugging")] 
-        [SerializeField] bool logEvents;
+        [SerializeField] bool logActions = true;
         [SerializeField] GetSetReferencesContainer gettersAndSetters = new("variable", typeof(ReferenceScriptableVariableBase<T>), typeof(GetVariable<T>), typeof(SetVariable<T>));
         
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
         public T DefaultValue => defaultValue;
-        public override bool LogEvents => logEvents;
+        public override bool LogActions => logActions;
 
         [SOMethodButton("Save Value")]
         public void SaveValueButton()

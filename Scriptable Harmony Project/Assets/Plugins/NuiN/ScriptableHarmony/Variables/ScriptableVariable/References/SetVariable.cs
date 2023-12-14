@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using NuiN.ScriptableHarmony.Internal.Helpers;
 using NuiN.ScriptableHarmony.Internal.Logging;
 using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
@@ -22,11 +23,11 @@ namespace NuiN.ScriptableHarmony.References
             variable.onChangeWithOld?.Invoke(oldValue, value);
             variable.onChange?.Invoke(value);
             
-            SHLogger.LogVariableSet("Set Variable", oldValue, Val, true, variable);
+            SHLogger.LogSet("Set Value", SOType.Variable, oldValue?.ToString(), Val?.ToString(), true, variable);
         }
         public void SetNoInvoke(T value)
         {
-            SHLogger.LogVariableSet("Set Variable (No Event)", Val, value, false, variable);
+            SHLogger.LogSet("Set Value", SOType.Variable, Val?.ToString(), value?.ToString(), false, variable);
 
             variable.value = value;
             SetDirty();

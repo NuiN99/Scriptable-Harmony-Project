@@ -7,7 +7,7 @@ namespace NuiN.ScriptableHarmony.Base
     public abstract class ScriptableObjectBaseSO<T> : ScriptableObject
     {
         protected abstract GetSetReferencesContainer GettersAndSetters { get; set; }
-        public abstract bool LogEvents { get; }
+        public abstract bool LogActions { get; }
 
         protected virtual void OnEnable()
         {

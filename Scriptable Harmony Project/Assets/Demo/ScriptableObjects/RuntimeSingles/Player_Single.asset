@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Player_Single
   m_EditorClassIdentifier: 
   description: 
-  runtimeSingle: {fileID: 0}
-  total: 2
+  entity: {fileID: 0}
+  logActions: 1
   componentHolders:
     prefabs: []
     scene: []

@@ -1,4 +1,6 @@
 using System;
+using NuiN.ScriptableHarmony.Internal.Helpers;
+using NuiN.ScriptableHarmony.Internal.Logging;
 using NuiN.ScriptableHarmony.RuntimeSingle.References.Base;
 using Object = UnityEngine.Object;
 
@@ -21,8 +23,10 @@ namespace NuiN.ScriptableHarmony.References
             T oldItem = Entity;
             Entity = newItem;
             
-            if (!invokeActions) return;
+            SHLogger.LogSet("Set Entity", SOType.RuntimeSingle, oldItem != null ? oldItem.name : "", newItem != null ? newItem.name : "", invokeActions, runtimeSingle);
             
+            if (!invokeActions) return;
+
             runtimeSingle.onSetWithOld?.Invoke(oldItem, Entity);
             runtimeSingle.onSet?.Invoke(Entity);
         }
@@ -41,6 +45,8 @@ namespace NuiN.ScriptableHarmony.References
 
             T oldItem = Entity;
             Entity = null;
+            
+            SHLogger.LogSet("Removed Entity", SOType.RuntimeSingle, oldItem != null ? oldItem.name : "null", null, invokeActions, runtimeSingle);
             
             if (!invokeActions) return;
             

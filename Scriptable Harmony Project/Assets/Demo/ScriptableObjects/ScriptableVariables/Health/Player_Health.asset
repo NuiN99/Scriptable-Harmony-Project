@@ -15,8 +15,8 @@ MonoBehaviour:
   description: 
   value: 100
   defaultValue: 100
-  resetOnSceneLoad: 1
-  logEvents: 1
+  resetOnSceneLoad: 0
+  logActions: 1
   gettersAndSetters:
     Getters: []
     Setters: []

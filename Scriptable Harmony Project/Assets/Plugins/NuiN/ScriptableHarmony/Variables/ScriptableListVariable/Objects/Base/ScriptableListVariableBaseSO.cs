@@ -36,12 +36,12 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         public Action<List<T>> onClearWithOld;
 
         [Header("Debugging")] 
-        [SerializeField] bool logEvents;
+        [SerializeField] bool logActions = true;
         [SerializeField] GetSetReferencesContainer gettersAndSetters = new("list", typeof(ReferenceScriptableListVariableBase<T>), typeof(GetListVariable<T>), typeof(SetListVariable<T>));
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters;set => gettersAndSetters = value; }
         
         public List<T> DefaultValues => defaultValues;
-        public override bool LogEvents => logEvents;
+        public override bool LogActions => logActions;
         
         [SOMethodButton("Save List")]
         public void SaveValueButton()
