@@ -1,103 +1,78 @@
+#if UNITY_EDITOR
 using NuiN.ScriptableHarmony.Internal.Logging;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace  NuiN.ScriptableHarmony.Editor
 {
-    internal static class SHLoggerOptionsWindow
+    internal class SHLoggerOptionsWindow : EditorWindow
     {
-#if UNITY_EDITOR
-        const string MENU_PATH = "ScriptableHarmony/Logging/";
-
-        const string LOGGING_PATH_SUFFIX = "Logging Enabled";
         const string PREFS_LOGGING_KEY = "SHLoggerBool";
 
-        const string VARIABLE_PATH_SUFFIX = "Individual Objects/Scriptable Variable";
-        const string LISTVARIABLE_PATH_SUFFIX = "Individual Objects/Scriptable List Variable";
-        const string RUNTIMESET_PATH_SUFFIX = "Individual Objects/Runtime Set";
-        const string RUNTIMESINGLE_PATH_SUFFIX = "Individual Objects/Runtime Single";
-        
         const string PREFS_VARIABLE_LOGGING_KEY = "SHLoggerVariableBool";
         const string PREFS_LISTVARIABLE_LOGGING_KEY = "SHLoggerListVariableBool";
         const string PREFS_RUNTIMESET_LOGGING_KEY = "SHLoggerRuntimeSetBool";
         const string PREFS_RUNTIMESINGLE_LOGGING_KEY = "SHLoggeRuntimeSingleBool";
 
-        static bool ToggleLoggingOption(bool loggingEnabled, string prefsKey, string logMessage)
-        {
-            PlayerPrefs.SetInt(prefsKey, loggingEnabled ? 0 : 1);
-            PlayerPrefs.Save();
-            Debug.Log(logMessage + (loggingEnabled ? "<color=\"red\">Off</color>" : "<color=\"white\">On</color>"));
+        bool _loggingEnabled = true;
+        bool _variableLoggingEnabled = true;
+        bool _listVariableLoggingEnabled = true;
+        bool _runtimeSetLoggingEnabled = true;
+        bool _runtimeSingleLoggingEnabled = true;
 
-            return !loggingEnabled;
-        }
-        
-        [MenuItem(MENU_PATH + LOGGING_PATH_SUFFIX)]
-        static void ToggleLogging()
+        [MenuItem("ScriptableHarmony/Logger Options")]
+        static void OpenWindow()
         {
-            SHLogger.logging = ToggleLoggingOption(IsLoggingEnabled(), PREFS_LOGGING_KEY, "Logging: ");
+            SHLoggerOptionsWindow window = (SHLoggerOptionsWindow)EditorWindow.GetWindow(typeof(SHLoggerOptionsWindow));
+            window.titleContent = new GUIContent("Logger Options");
+            window.minSize = new Vector2(180, 175);
+            window.Show();
         }
-        [MenuItem(MENU_PATH + LOGGING_PATH_SUFFIX, true)]
-        static bool ToggleLoggingValidate()
+
+        void OnEnable()
         {
-            Menu.SetChecked(MENU_PATH + LOGGING_PATH_SUFFIX, IsLoggingEnabled());
-            return true;
+            _loggingEnabled = IsLoggingEnabled();
+            _variableLoggingEnabled = IsVariableLoggingEnabled();
+            _listVariableLoggingEnabled = IsListVariableLoggingEnabled();
+            _runtimeSetLoggingEnabled = IsRuntimeSetLoggingEnabled();
+            _runtimeSingleLoggingEnabled = IsRuntimeSingleLoggingEnabled();
         }
-        
-        [MenuItem(MENU_PATH + VARIABLE_PATH_SUFFIX)]
-        static void ToggleVariableLogging()
+
+        void OnGUI()
         {
-            SHLogger.variableLogging = ToggleLoggingOption(IsVariableLoggingEnabled(), PREFS_VARIABLE_LOGGING_KEY, "Scriptable Variable Logs: ");
+            GUILayout.Label("Global", EditorStyles.boldLabel);
+            _loggingEnabled = EditorGUILayout.Toggle("Logging Enabled", _loggingEnabled);
+            
+            GUILayout.Space(EditorGUIUtility.singleLineHeight);
+            GUILayout.Label("Individual", EditorStyles.boldLabel);
+            _variableLoggingEnabled = EditorGUILayout.Toggle("Variable Logs", _variableLoggingEnabled);
+            _listVariableLoggingEnabled = EditorGUILayout.Toggle("List Variable Logs", _listVariableLoggingEnabled);
+            _runtimeSetLoggingEnabled = EditorGUILayout.Toggle("Runtime Set Logs", _runtimeSetLoggingEnabled);
+            _runtimeSingleLoggingEnabled = EditorGUILayout.Toggle("Runtime Single Logs", _runtimeSingleLoggingEnabled);
+
+            if (!GUI.changed) return;
+            
+            SetLoggingOption(PREFS_LOGGING_KEY, _loggingEnabled);
+            SHLogger.logging = _loggingEnabled;
+            SetLoggingOption(PREFS_VARIABLE_LOGGING_KEY, _variableLoggingEnabled);
+            SHLogger.variableLogging = _variableLoggingEnabled;
+            SetLoggingOption(PREFS_LISTVARIABLE_LOGGING_KEY, _listVariableLoggingEnabled);
+            SHLogger.listVariableLogging = _listVariableLoggingEnabled;
+            SetLoggingOption(PREFS_RUNTIMESET_LOGGING_KEY, _runtimeSetLoggingEnabled);
+            SHLogger.runtimeSetLogging = _runtimeSetLoggingEnabled;
+            SetLoggingOption(PREFS_RUNTIMESINGLE_LOGGING_KEY, _runtimeSingleLoggingEnabled);
+            SHLogger.runtimeSingleLogging = _runtimeSingleLoggingEnabled;
         }
-        [MenuItem(MENU_PATH + VARIABLE_PATH_SUFFIX, true)]
-        static bool ToggleVariableLoggingValidate()
+
+        static void SetLoggingOption(string prefsKey, bool enabled)
         {
-            Menu.SetChecked(MENU_PATH + VARIABLE_PATH_SUFFIX, IsVariableLoggingEnabled());
-            return true;
-        }
-        
-        [MenuItem(MENU_PATH + LISTVARIABLE_PATH_SUFFIX)]
-        static void ToggleListVariableLogging()
-        {
-            SHLogger.listVariableLogging = ToggleLoggingOption(IsListVariableLoggingEnabled(), PREFS_LISTVARIABLE_LOGGING_KEY, "Scriptable List Variable Logs: ");
-        }
-        [MenuItem(MENU_PATH + LISTVARIABLE_PATH_SUFFIX, true)]
-        static bool ToggleListVariableLoggingValidate()
-        {
-            Menu.SetChecked(MENU_PATH + LISTVARIABLE_PATH_SUFFIX, IsListVariableLoggingEnabled());
-            return true;
-        }
-        
-        [MenuItem(MENU_PATH + RUNTIMESET_PATH_SUFFIX)]
-        static void ToggleRuntimeSetLogging()
-        {
-            SHLogger.runtimeSetLogging = ToggleLoggingOption(IsRuntimeSetLoggingEnabled(), PREFS_RUNTIMESET_LOGGING_KEY, "Runtime Set Logs: ");
-        }
-        [MenuItem(MENU_PATH + RUNTIMESET_PATH_SUFFIX, true)]
-        static bool ToggleRuntimeSetLoggingValidate()
-        {
-            Menu.SetChecked(MENU_PATH + RUNTIMESET_PATH_SUFFIX, IsRuntimeSetLoggingEnabled());
-            return true;
-        }
-        
-        [MenuItem(MENU_PATH + RUNTIMESINGLE_PATH_SUFFIX)]
-        static void ToggleRuntimeSingleLogging()
-        {
-            SHLogger.runtimeSetLogging = ToggleLoggingOption(IsRuntimeSingleLoggingEnabled(), PREFS_RUNTIMESINGLE_LOGGING_KEY, "Runtime Single Logs: ");
-        }
-        [MenuItem(MENU_PATH + RUNTIMESINGLE_PATH_SUFFIX, true)]
-        static bool ToggleRuntimeSingleLoggingValidate()
-        {
-            Menu.SetChecked(MENU_PATH + RUNTIMESINGLE_PATH_SUFFIX, IsRuntimeSingleLoggingEnabled());
-            return true;
+            PlayerPrefs.SetInt(prefsKey, enabled ? 1 : 0);
+            PlayerPrefs.Save();
         }
 
         static bool LoggingCheck(string prefsKey)
         {
-            if (PlayerPrefs.HasKey(prefsKey))
-            {
-                return PlayerPrefs.GetInt(prefsKey) == 1;
-            }
+            if (PlayerPrefs.HasKey(prefsKey)) return PlayerPrefs.GetInt(prefsKey) == 1;
 
             PlayerPrefs.SetInt(prefsKey, 1);
             PlayerPrefs.Save();
@@ -109,7 +84,8 @@ namespace  NuiN.ScriptableHarmony.Editor
         public static bool IsListVariableLoggingEnabled() => LoggingCheck(PREFS_LISTVARIABLE_LOGGING_KEY);
         public static bool IsRuntimeSetLoggingEnabled() => LoggingCheck(PREFS_RUNTIMESET_LOGGING_KEY);
         public static bool IsRuntimeSingleLoggingEnabled() => LoggingCheck(PREFS_RUNTIMESINGLE_LOGGING_KEY);
-#endif
     }
 }
+#endif
+
 
