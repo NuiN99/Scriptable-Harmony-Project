@@ -9,7 +9,12 @@ namespace NuiN.ScriptableHarmony.Internal.Logging
 {
     internal static class SHLogger
     {
-        public static bool loggingEnabled;
+        public static bool logging = true;
+        
+        public static bool variableLogging = true;
+        public static bool listVariableLogging = true;
+        public static bool runtimeSetLogging = true;
+        public static bool runtimeSingleLogging = true;
 
         const string VARIABLE_COLOR = "#b980ff";
         const string LIST_VARIABLE_COLOR = "#8c98ff";
@@ -20,18 +25,34 @@ namespace NuiN.ScriptableHarmony.Internal.Logging
         const string NEGATIVE_COLOR = "#ff6e6e";
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void CheckLoggingState()
+        static void SetLoggingState()
         {
-            loggingEnabled = SHLoggerOptionsWindow.IsLoggingEnabled();
+            logging = SHLoggerOptionsWindow.IsLoggingEnabled();
+            variableLogging = SHLoggerOptionsWindow.IsVariableLoggingEnabled();
+            listVariableLogging = SHLoggerOptionsWindow.IsListVariableLoggingEnabled();
+            runtimeSetLogging = SHLoggerOptionsWindow.IsRuntimeSetLoggingEnabled();
+            runtimeSingleLogging = SHLoggerOptionsWindow.IsRuntimeSingleLoggingEnabled();
         }
         
         // ReSharper disable Unity.PerformanceAnalysis
         [Conditional("UNITY_EDITOR")] [Conditional("DEVELOPMENT_BUILD")]
         static void Log<T>(string message, SOType type, ScriptableObjectBaseSO<T> obj)
         {
-            if (!loggingEnabled || !obj.LogActions) return;
-            string soType = type.ToString();
-            Debug.Log($"<b><color='{GetColor(type)}'>{soType}</color></b> : <b><color='white'>{obj.name}</color></b> | {message}", obj);
+            if (!logging || !obj.LogActions) return;
+            switch (type)
+            {
+                case SOType.Variable when !variableLogging:
+                case SOType.ListVariable when !listVariableLogging:
+                case SOType.RuntimeSet when !runtimeSetLogging:
+                case SOType.RuntimeSingle when !runtimeSingleLogging:
+                    return;
+                default:
+                {
+                    string soType = type.ToString();
+                    Debug.Log($"<b><color='{GetColor(type)}'>{soType}</color></b> : <b><color='white'>{obj.name}</color></b> | {message}", obj);
+                    break;
+                }
+            }
         }
 
         [Conditional("UNITY_EDITOR")] [Conditional("DEVELOPMENT_BUILD")]
