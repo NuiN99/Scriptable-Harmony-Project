@@ -1,33 +1,49 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-namespace NuiN.ScriptableHarmony.Internal.Helpers
+[Serializable]
+public class SerializableDictionary<TKey,TValue>
 {
-    [Serializable]
-    public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
-    {
-        [SerializeField] List<TKey> keys;
-        [SerializeField] List<TValue> values;
+   Dictionary<TKey, TValue> _dictionary;
+   [SerializeField] List<SerializedKeyValuePair<TKey, TValue>> keyValuePairs = new();
 
-        public void OnBeforeSerialize()
-        {
-            keys.Clear();
-            values.Clear();
-            foreach (KeyValuePair<TKey, TValue> pair in this)
-            {
-                keys.Add(pair.Key);
-                values.Add(pair.Value);
-            }
-        }
+   public SerializableDictionary(Dictionary<TKey, TValue> dictionary)
+   {
+      _dictionary = dictionary;
+   }
+   
+   public void Add(TKey key, TValue value)
+   {
+      keyValuePairs.Add(new SerializedKeyValuePair<TKey, TValue>(key, value));
+   }
+   public void Serialize()
+   {
+      keyValuePairs.Clear();
+      foreach (KeyValuePair<TKey, TValue> item in _dictionary)
+      {
+         Add(item.Key, item.Value);
+      }
+      
+   }
+   
+   public void ValidateAndApply()
+   {
+      _dictionary.Clear();
+      List<SerializedKeyValuePair<TKey, TValue>> duplicates = new();
+      foreach (var pair in keyValuePairs)
+      {
+         bool success = _dictionary.TryAdd(pair.key, pair.value);
+         if(!success) duplicates.Add(pair);
+      }
 
-        public void OnAfterDeserialize()
-        {
-            Clear();
-
-            if (keys.Count != values.Count) throw new Exception(string.Format($"there are {keys.Count} keys and {values.Count} values after deserialization. Make sure that both key and value types are serializable."));
-
-            for (int i = 0; i < keys.Count; i++) this.Add(keys[i], values[i]);
-        }
-    }
+      foreach (var duplicate in duplicates)
+      {
+         Debug.LogWarning($"Validation: Removed duplicate | Key: {duplicate.key} | Value: {duplicate.value}");
+         keyValuePairs.Remove(duplicate);
+      }
+      
+      Serialize();
+   }
 }
