@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using NuiN.ScriptableHarmony.Internal.Logging;
+using NuiN.ScriptableHarmony.Variable.Base;
 using NuiN.ScriptableHarmony.Variable.References.Base;
 using UnityEditor;
 
@@ -12,6 +13,11 @@ namespace NuiN.ScriptableHarmony.References
     {
         public T Val => variable.value;
         public T DefaultVal => variable.DefaultValue;
+
+        internal SetVariable(ScriptableVariableBaseSO<T> variable)
+        {
+            this.variable = variable;
+        }
 
         public void Set(T value)
         {

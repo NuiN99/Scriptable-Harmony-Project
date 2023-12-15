@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using NuiN.ScriptableHarmony.Internal.Logging;
+using NuiN.ScriptableHarmony.ListVariable.Base;
 using NuiN.ScriptableHarmony.ListVariable.References.Base;
 using UnityEditor;
 
@@ -12,6 +13,11 @@ namespace NuiN.ScriptableHarmony.References
     public class SetListVariable<T> : ReferenceScriptableListVariableBase<T>
     {
         public List<T> Values => list.values;
+        
+        internal SetListVariable(ScriptableListVariableBaseSO<T> variable)
+        {
+            list = variable;
+        }
         
         public void Add(T item)
         {

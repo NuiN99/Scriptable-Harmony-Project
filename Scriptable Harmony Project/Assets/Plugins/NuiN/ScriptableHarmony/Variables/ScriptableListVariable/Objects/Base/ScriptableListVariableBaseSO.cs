@@ -50,7 +50,11 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         }
 
         protected override void SaveDefaultValue() => defaultValues = new List<T>(values);
-        protected override void ResetValueToDefault() => values = new List<T>(defaultValues);
+        protected override void ResetValueToDefault()
+        {
+            SetListVariable<T> setListVar = new(this);
+            setListVar.ResetValues();
+        }
 
         protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;
     }
