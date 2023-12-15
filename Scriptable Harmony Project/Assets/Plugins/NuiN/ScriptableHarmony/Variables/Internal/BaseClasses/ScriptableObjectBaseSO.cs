@@ -27,7 +27,8 @@ namespace NuiN.ScriptableHarmony.Base
         
         void OnSelectedInProjectWindow()
         {
-            GettersAndSetters?.Clear();
+            GettersAndSetters.Clear();
+            if(this) EditorUtility.SetDirty(this);
             if (Selection.activeObject != this) return;
             AssignDebugReferences();
         }
