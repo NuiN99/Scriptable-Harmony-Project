@@ -29,12 +29,6 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
         public T DefaultValue => defaultValue;
         public override bool LogActions => logActions;
-
-        [SOMethodButton("Save Value")]
-        public void SaveValueButton()
-        {
-            defaultValue = value;
-        }
         
         void OnValidate()
         {
@@ -48,14 +42,15 @@ namespace NuiN.ScriptableHarmony.Variable.Base
             // yield until next frame to avoid warnings when using sliders
             await Task.Yield();
             
+            onChangeWithOld?.Invoke(_prevValue, value);
             onChange?.Invoke(value);
             _prevValue = value;
         }
         
-        protected override void CacheInitialValue() => defaultValue = value;
-        protected override void ResetValue() => value = defaultValue;
-        
-        protected override bool ResetOnSceneLoad() => resetOnSceneLoad;
+        protected override void SaveDefaultValue() => defaultValue = value;
+        protected override void ResetValueToDefault() => value = defaultValue;
+
+        protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;
     }
 }
 

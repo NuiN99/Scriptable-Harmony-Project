@@ -42,20 +42,16 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         
         public List<T> DefaultValues => defaultValues;
         public override bool LogActions => logActions;
-        
-        [SOMethodButton("Save List")]
-        public void SaveValueButton()
-        {
-            defaultValues = new List<T>(values);
-        }
+
 
         void OnValidate()
         {
             if(!Application.isPlaying) defaultValues = new List<T>(values);
         }
 
-        protected override void CacheInitialValue() => defaultValues = new List<T>(values);
-        protected override void ResetValue() => values = new List<T>(defaultValues);
-        protected override bool ResetOnSceneLoad() => resetOnSceneLoad;
+        protected override void SaveDefaultValue() => defaultValues = new List<T>(values);
+        protected override void ResetValueToDefault() => values = new List<T>(defaultValues);
+
+        protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;
     }
 }

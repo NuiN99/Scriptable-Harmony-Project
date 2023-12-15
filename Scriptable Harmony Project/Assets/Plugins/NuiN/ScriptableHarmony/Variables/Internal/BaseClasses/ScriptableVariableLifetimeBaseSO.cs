@@ -1,3 +1,4 @@
+using NuiN.ScriptableHarmony.Editor.Attributes;
 using NuiN.ScriptableHarmony.Events;
 using NuiN.ScriptableHarmony.Internal.Helpers;
 using UnityEditor;
@@ -13,39 +14,42 @@ namespace NuiN.ScriptableHarmony.Base
         new void OnEnable()
         {
             base.OnEnable();;
-            GameLoadedEvent.OnGameLoaded += CacheInitialValue;
+            GameLoadedEvent.OnGameLoaded += SaveDefaultValue;
             SceneManager.activeSceneChanged += ResetValueOnSceneLoad;
-            VariableEvents.OnResetAllVariableObjects += ResetValue;
+            VariableEvents.OnResetAllVariableObjects += ResetValueToDefault;
 #if UNITY_EDITOR
-            EditorApplication.quitting += ResetValue;
+            EditorApplication.quitting += ResetValueToDefault;
             EditorApplication.playModeStateChanged += ResetValueOnStoppedPlaying;
 #endif
         }
         new void OnDisable()
         {
             base.OnDisable();
-            GameLoadedEvent.OnGameLoaded -= CacheInitialValue;
+            GameLoadedEvent.OnGameLoaded -= SaveDefaultValue;
             SceneManager.activeSceneChanged -= ResetValueOnSceneLoad;
-            VariableEvents.OnResetAllVariableObjects -= ResetValue;
+            VariableEvents.OnResetAllVariableObjects -= ResetValueToDefault;
 #if  UNITY_EDITOR
-            EditorApplication.quitting -= ResetValue;
+            EditorApplication.quitting -= ResetValueToDefault;
             EditorApplication.playModeStateChanged -= ResetValueOnStoppedPlaying;
 #endif
         }
 
-        protected abstract void CacheInitialValue();
-        protected abstract void ResetValue();
-        protected abstract bool ResetOnSceneLoad();
+        [SOMethodButton("Save Value")]
+        protected abstract void SaveDefaultValue();
+        
+        [SOMethodButton("Reset to Default")]
+        protected abstract void ResetValueToDefault();
+        protected abstract bool ResetsOnSceneLoad();
     
         void ResetValueOnSceneLoad(Scene s1, Scene s2)
         {
-            if (ResetOnSceneLoad()) ResetValue();
+            if (ResetsOnSceneLoad()) ResetValueToDefault();
         }
         
 #if UNITY_EDITOR
         void ResetValueOnStoppedPlaying(PlayModeStateChange state)
         {
-            if (state == PlayModeStateChange.EnteredEditMode) ResetValue();
+            if (state == PlayModeStateChange.EnteredEditMode) ResetValueToDefault();
         }
 #endif
     }
