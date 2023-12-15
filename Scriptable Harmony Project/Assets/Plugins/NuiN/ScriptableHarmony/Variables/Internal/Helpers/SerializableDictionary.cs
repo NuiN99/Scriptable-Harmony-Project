@@ -6,10 +6,10 @@ using UnityEngine;
 [Serializable]
 public class SerializableDictionary<TKey,TValue>
 {
-   Dictionary<TKey, TValue> _dictionary;
+   [NonSerialized] public Dictionary<TKey, TValue> _dictionary;
    [SerializeField] List<SerializedKeyValuePair<TKey, TValue>> keyValuePairs = new();
 
-   public SerializableDictionary(Dictionary<TKey, TValue> dictionary)
+   public SerializableDictionary(ref Dictionary<TKey, TValue> dictionary)
    {
       _dictionary = dictionary;
    }
@@ -20,16 +20,19 @@ public class SerializableDictionary<TKey,TValue>
    }
    public void Serialize()
    {
-      keyValuePairs.Clear();
+      if (_dictionary == null) return;
+      
+      keyValuePairs?.Clear();
       foreach (KeyValuePair<TKey, TValue> item in _dictionary)
       {
          Add(item.Key, item.Value);
       }
-      
    }
    
    public void ValidateAndApply()
    {
+      if (_dictionary == null) return;
+      
       _dictionary.Clear();
       List<SerializedKeyValuePair<TKey, TValue>> duplicates = new();
       foreach (var pair in keyValuePairs)
@@ -40,10 +43,10 @@ public class SerializableDictionary<TKey,TValue>
 
       foreach (var duplicate in duplicates)
       {
-         Debug.LogWarning($"Validation: Removed duplicate | Key: {duplicate.key} | Value: {duplicate.value}");
+         Debug.LogWarning($"Dictionary Validation: Removed duplicate | Key: {duplicate.key} | Value: {duplicate.value}");
          keyValuePairs.Remove(duplicate);
       }
-      
+      Debug.Log($"Dictionary Validation: Successfully validated");
       Serialize();
    }
 }

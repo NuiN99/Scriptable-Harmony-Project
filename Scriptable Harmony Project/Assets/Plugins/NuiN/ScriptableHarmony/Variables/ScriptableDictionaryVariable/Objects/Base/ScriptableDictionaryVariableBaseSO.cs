@@ -15,7 +15,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         public Dictionary<TKey,TValue> dictionary = new();
         [ReadOnlyPlayMode] Dictionary<TKey,TValue> defaultDictionary = new();
 
-        [SerializeField] SerializableDictionary<TKey, TValue> serializedDictionary;
+        public SerializableDictionary<TKey, TValue> serializedDictionary;
         
         [Header("Value Persistence")]
         [SerializeField] bool resetOnSceneLoad = true;
@@ -36,9 +36,10 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         protected override void OnEnable()
         {
             base.OnEnable();
-            dictionary.TryAdd(default, default);
-            serializedDictionary = new SerializableDictionary<TKey, TValue>(dictionary);
-            serializedDictionary.Serialize();
+            serializedDictionary ??= new SerializableDictionary<TKey, TValue>(ref dictionary);
+            serializedDictionary._dictionary = dictionary;
+            serializedDictionary.ValidateAndApply();
+            Debug.Log(dictionary.Count);
         }
 
         [SOMethodButton("ValidateDictionary", true)]
@@ -47,6 +48,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
             Undo.RecordObject(this, "Validate and Apply");
             serializedDictionary.ValidateAndApply();
             EditorUtility.SetDirty(this);
+            Debug.Log(dictionary.Count);
         }
 
         protected override void SaveDefaultValue() => defaultDictionary = new Dictionary<TKey,TValue>(dictionary);
@@ -54,6 +56,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         {
             SetDictionaryVariable<TKey,TValue> dictionaryVar = new(this);
             dictionaryVar.ResetDictionary();
+            serializedDictionary.Serialize();
         }
 
         protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;
