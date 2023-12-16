@@ -11,7 +11,7 @@ namespace NuiN.ScriptableHarmony.Base
     {
         [SerializeField] [TextArea] string description;
     
-        new void OnEnable()
+        protected new virtual void OnEnable()
         {
             base.OnEnable();;
             GameLoadedEvent.OnGameLoaded += SaveDefaultValue;

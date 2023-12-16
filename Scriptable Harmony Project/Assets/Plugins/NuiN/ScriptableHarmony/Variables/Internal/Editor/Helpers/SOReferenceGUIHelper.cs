@@ -22,7 +22,7 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Helpers
             Color color = accessType switch { Access.Getter => GetterColor, Access.Setter => SetterColor, _ => Color.white };
             
             EditorGUI.BeginProperty(position, label, property);
-
+            
             SerializedProperty variableProperty = property.FindPropertyRelative(propertyName);
 
             Type variableType = fieldInfo.FieldType.GetGenericArguments()[0];
@@ -40,6 +40,14 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Helpers
                 case SOType.ListVariable:
                 {
                     typeName = $"{typeName}ListVariableSO";
+                    break;
+                }
+                case SOType.DictionaryVariable:
+                {
+                    Type[] genericArguments = fieldInfo.FieldType.GetGenericArguments();
+                    string type1 = GetReadableTypeName(genericArguments[0]);
+                    string type2 = GetReadableTypeName(genericArguments[1]);
+                    typeName = $"{type1}{type2}DictionaryVariableSO";
                     break;
                 }
             }

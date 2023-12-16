@@ -17,15 +17,21 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] SoundSO clickSound;
 
+    [SerializeField] SetDictionaryVariable<int, bool> dictionary;
+
     public void TakeDamage(float amount)
     {
         curHealth.SubtractClamped(amount, min: 0, max: maxHealth.Val);
     }
 
+    int curValue = 5;
     // temp for testing
     void Update()
     {
-        if (Input.GetMouseButtonDown(1)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (Input.GetMouseButtonDown(1))
+        {
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         if (Input.GetMouseButtonDown(0))
         {
             TakeDamage(10);
@@ -40,6 +46,10 @@ public class PlayerHealth : MonoBehaviour
                 lifetime: 2f);
             
             clickSound.PlaySpatial(mousePosition.Val);
+
+            Debug.Log(dictionary.Dictionary.Count);
+            dictionary.TryAdd(curValue, true);
+            curValue++;
         }
     }
 }

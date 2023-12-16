@@ -8,6 +8,6 @@ namespace NuiN.ScriptableHarmony.References
     [Serializable]
     public class GetDictionaryVariable<T,TU> : ReferenceScriptableDictionaryVariableBase<T,TU>
     {
-        public Dictionary<T, TU> Dictionary => dictionaryVariable.dictionary;
+        public Dictionary<T, TU> Dictionary => dictionary.dictionary;
     }
 }

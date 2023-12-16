@@ -51,9 +51,11 @@ MonoBehaviour:
     variable: {fileID: 11400000, guid: a3c0bcc312ab773419e971dce8159a71, type: 2}
   mousePosition:
     variable: {fileID: 11400000, guid: 86785aa3398081d41a2afbdbb8f6109d, type: 2}
-  clickSound: {fileID: 11400000, guid: 6cdccd4445e20b149a254567308cf392, type: 2}
   clickParticles: {fileID: 11400000, guid: d41eb3bb143bb504b9fa2950edce9809, type: 2}
   clickParticle: {fileID: 11400000, guid: 8ca1884ae5632cc459c7b0a23c1fbaac, type: 2}
+  clickSound: {fileID: 11400000, guid: 6cdccd4445e20b149a254567308cf392, type: 2}
+  dictionary:
+    dictionary: {fileID: 11400000, guid: 7979aadd68842af488cbd44e94b35f1a, type: 2}
 --- !u!114 &6679494176011856133
 MonoBehaviour:
   m_ObjectHideFlags: 0

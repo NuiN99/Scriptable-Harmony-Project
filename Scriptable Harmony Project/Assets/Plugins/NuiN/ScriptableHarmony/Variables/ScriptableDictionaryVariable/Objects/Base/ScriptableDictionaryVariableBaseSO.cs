@@ -37,8 +37,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         {
             base.OnEnable();
             serializedDictionary ??= new SerializableDictionary<TKey, TValue>(ref dictionary);
-            serializedDictionary._dictionary = dictionary;
-            serializedDictionary.ValidateAndApply();
+            serializedDictionary.ValidateAndApply(ref dictionary);
             Debug.Log(dictionary.Count);
         }
 
@@ -46,9 +45,8 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         public void ValidateDictionary()
         {
             Undo.RecordObject(this, "Validate and Apply");
-            serializedDictionary.ValidateAndApply();
+            serializedDictionary.ValidateAndApply(ref dictionary);
             EditorUtility.SetDirty(this);
-            Debug.Log(dictionary.Count);
         }
 
         protected override void SaveDefaultValue() => defaultDictionary = new Dictionary<TKey,TValue>(dictionary);
@@ -56,7 +54,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         {
             SetDictionaryVariable<TKey,TValue> dictionaryVar = new(this);
             dictionaryVar.ResetDictionary();
-            serializedDictionary.Serialize();
+            serializedDictionary.Serialize(ref dictionary);
         }
 
         protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;

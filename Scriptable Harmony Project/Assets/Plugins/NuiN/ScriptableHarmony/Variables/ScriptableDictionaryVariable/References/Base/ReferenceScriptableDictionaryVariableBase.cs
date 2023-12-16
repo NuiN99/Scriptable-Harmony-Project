@@ -8,6 +8,6 @@ namespace NuiN.ScriptableHarmony.ListVariable.References.Base
     [Serializable]
     public abstract class ReferenceScriptableDictionaryVariableBase<T,TU>
     {
-        [SerializeField] protected ScriptableDictionaryVariableBaseSO<T,TU> dictionaryVariable;
+        [SerializeField] protected ScriptableDictionaryVariableBaseSO<T,TU> dictionary;
     }
 }

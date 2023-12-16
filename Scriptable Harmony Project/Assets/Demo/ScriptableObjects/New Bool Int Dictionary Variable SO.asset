@@ -9,12 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e132555c41c75f43bb4ed757427885f, type: 3}
-  m_Name: New Int Int Dictionary Variable SO
+  m_Script: {fileID: 11500000, guid: 58c9f71b4adf7234093d9511dc89703c, type: 3}
+  m_Name: New Bool Int Dictionary Variable SO
   m_EditorClassIdentifier: 
   description: 
   serializedDictionary:
-    serializedPairs: []
+    serializedPairs:
+    - key: 5
+      value: 1
+    - key: 9
+      value: 1
+    - key: 10
+      value: 1
+    - key: 11
+      value: 1
+    - key: 12
+      value: 1
+    - key: 13
+      value: 1
   resetOnSceneLoad: 1
   logActions: 1
   gettersAndSetters:
