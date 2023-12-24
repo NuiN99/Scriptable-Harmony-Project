@@ -18,7 +18,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
         public SerializableDictionary<TKey, TValue> serializedDictionary;
         
         [Header("Value Persistence")]
-        [SerializeField] bool resetOnSceneLoad = true;
+        [SerializeField] ResetOn resetOn;
 
         [Header("Debugging")] 
         [SerializeField] bool logActions = true;
@@ -59,6 +59,6 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
             serializedDictionary.Serialize(ref dictionary);
         }
 
-        protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;
+        protected override bool ResetsOnSceneLoad() => resetOn == ResetOn.SceneLoad;
     }
 }

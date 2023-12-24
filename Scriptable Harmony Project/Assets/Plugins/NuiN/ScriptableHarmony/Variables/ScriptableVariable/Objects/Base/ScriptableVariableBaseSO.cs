@@ -17,7 +17,7 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         [SerializeField] [ReadOnlyPlayMode] T defaultValue;
         
         [Header("Value Persistence")]
-        [SerializeField] bool resetOnSceneLoad;
+        [SerializeField] ResetOn resetOn;
         
         public Action<T> onChange;
         public Action<T, T> onChangeWithOld;
@@ -57,7 +57,7 @@ namespace NuiN.ScriptableHarmony.Variable.Base
             onChange?.Invoke(value);
         }
 
-        protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;
+        protected override bool ResetsOnSceneLoad() => resetOn == ResetOn.SceneLoad;
     }
 }
 
