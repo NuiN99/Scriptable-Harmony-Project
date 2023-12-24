@@ -8,7 +8,7 @@ namespace NuiN.ScriptableHarmony.Core.Editor.Tools
 #if UNITY_EDITOR
     internal class SelectionPathController
     {
-        const string EMPTY_PATH_MESSAGE = "Please select a folder in the Project panel";
+        const string EMPTY_PATH_MESSAGE = "Please select an asset in the Project panel";
 
         EditorWindow _window;
         public string SelectionPath { get; private set; }
