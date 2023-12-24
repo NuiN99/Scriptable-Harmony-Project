@@ -34,10 +34,10 @@ namespace NuiN.ScriptableHarmony.Base
 #endif
         }
 
-        [SOMethodButton("Save Value")]
+        [MethodButton("Save Value", true)]
         protected abstract void SaveDefaultValue();
         
-        [SOMethodButton("Reset to Default")]
+        [MethodButton("Reset to Default", true)]
         protected abstract void ResetValueToDefault();
         protected abstract bool ResetsOnSceneLoad();
     

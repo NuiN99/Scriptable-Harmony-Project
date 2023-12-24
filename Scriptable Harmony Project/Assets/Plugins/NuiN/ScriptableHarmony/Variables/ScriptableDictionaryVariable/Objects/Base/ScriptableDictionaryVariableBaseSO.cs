@@ -41,7 +41,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
             Debug.Log(dictionary.Count);
         }
 
-        [SOMethodButton("ValidateDictionary", true)]
+        [MethodButton("ValidateDictionary")]
         public void ValidateDictionary()
         {
             Undo.RecordObject(this, "Validate and Apply");
