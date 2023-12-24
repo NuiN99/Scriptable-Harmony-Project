@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableHarmony.References
 {
     [Serializable]
-    public class GetRuntimeSet<T> : ReferenceRuntimeSetBase<T> where T : Object
+    public class GetRuntimeSet<T> : ReferenceRuntimeSetBase<T>
     {
         public ReadOnlyCollection<T> Entities => runtimeSet.entities.AsReadOnly();
     }

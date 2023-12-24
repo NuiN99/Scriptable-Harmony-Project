@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.RuntimeSet.Components.Base
 {
-    public class RuntimeSetItemComponentBase<T> : MonoBehaviour where T : Object
+    public class RuntimeSetItemComponentBase<T> : MonoBehaviour
     {
         enum Type{ OnEnableOnDisable, OnAwakeOnDestroy }
     
@@ -19,7 +19,11 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Components.Base
         void OnEnable() => AddToSet(Type.OnEnableOnDisable);
         void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
 
-        void Awake() => AddToSet(Type.OnAwakeOnDestroy);
+        void Awake()
+        {
+            AddToSet(Type.OnAwakeOnDestroy);
+        }
+
         void OnDestroy() => RemoveFromSet(lifetimeType);
 
         void AddToSet(Type type)

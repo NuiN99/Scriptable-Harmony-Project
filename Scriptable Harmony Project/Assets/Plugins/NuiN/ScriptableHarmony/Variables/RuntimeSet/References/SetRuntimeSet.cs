@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableHarmony.References
 {
     [Serializable]
-    public class SetRuntimeSet<T> : ReferenceRuntimeSetBase<T> where T : Object
+    public class SetRuntimeSet<T> : ReferenceRuntimeSetBase<T>
     {
         public List<T> Entities => runtimeSet.entities;
     
@@ -23,15 +23,17 @@ namespace NuiN.ScriptableHarmony.References
             runtimeSet.onAddWithOld?.Invoke(oldItems, item);
             runtimeSet.onAddWithList?.Invoke(Entities);
             runtimeSet.onAdd?.Invoke(item);
-            
-            SHLogger.LogAddRemove("Added Entity", SOType.RuntimeSet, item.name, true, true, runtimeSet);
+
+            Object itemObj = item as Object;
+            SHLogger.LogAddRemove("Added Entity", SOType.RuntimeSet, itemObj.name, true, true, runtimeSet);
         }
         public void AddNoInvoke(T item)
         {
             if (item == null) return;
             Entities.Add(item);
             
-            SHLogger.LogAddRemove("Added Entity", SOType.RuntimeSet, item.name, true, false, runtimeSet);
+            Object itemObj = item as Object;
+            SHLogger.LogAddRemove("Added Entity", SOType.RuntimeSet, itemObj.name, true, false, runtimeSet);
         }
         
         public void Insert(T item, int index)
@@ -46,14 +48,16 @@ namespace NuiN.ScriptableHarmony.References
             runtimeSet.onAddWithList?.Invoke(Entities);
             runtimeSet.onAdd?.Invoke(item);
             
-            SHLogger.LogAddRemove($"Inserted Entity | Index: {index}", SOType.RuntimeSet, item.name, true, true, runtimeSet);
+            Object itemObj = item as Object;
+            SHLogger.LogAddRemove($"Inserted Entity | Index: {index}", SOType.RuntimeSet, itemObj.name, true, true, runtimeSet);
         }
         public void InsertNoInvoke(T item, int index)
         {
             if (item == null) return;
             Entities.Insert(index, item);
             
-            SHLogger.LogAddRemove($"Inserted Entity | Index: {index}", SOType.RuntimeSet, item.name, true, false, runtimeSet);
+            Object itemObj = item as Object;
+            SHLogger.LogAddRemove($"Inserted Entity | Index: {index}", SOType.RuntimeSet, itemObj.name, true, false, runtimeSet);
         }
     
         public void Remove(T item)
@@ -67,12 +71,15 @@ namespace NuiN.ScriptableHarmony.References
             runtimeSet.onRemoveWithList?.Invoke(Entities);
             runtimeSet.onRemove?.Invoke(item);
             
-            SHLogger.LogAddRemove("Removed Entity", SOType.RuntimeSet, item.name, false, true, runtimeSet);
+            Object itemObj = item as Object;
+            SHLogger.LogAddRemove("Removed Entity", SOType.RuntimeSet, itemObj.name, false, true, runtimeSet);
         }
         public void RemoveNoInvoke(T item)
         {
             if(!Entities.Remove(item)) return;
-            SHLogger.LogAddRemove("Removed Entity", SOType.RuntimeSet, item.name, false, false, runtimeSet);
+            
+            Object itemObj = item as Object;
+            SHLogger.LogAddRemove("Removed Entity", SOType.RuntimeSet, itemObj.name, false, false, runtimeSet);
         }
         
         public void RemoveAt(int index)
@@ -88,13 +95,16 @@ namespace NuiN.ScriptableHarmony.References
             runtimeSet.onRemoveWithList?.Invoke(Entities);
             runtimeSet.onRemove?.Invoke(removedItem);
             
-            SHLogger.LogAddRemove($"Removed Entity | Index: {index}", SOType.RuntimeSet, removedItem.name, false, true, runtimeSet);
+            Object itemObj = removedItem as Object;
+            SHLogger.LogAddRemove($"Removed Entity | Index: {index}", SOType.RuntimeSet, itemObj.name, false, true, runtimeSet);
         }
         public void RemoveAtNoInvoke(int index)
         {
             if (Entities[index] == null) return;
             Entities.RemoveAt(index);
-            SHLogger.LogAddRemove($"Removed Entity | Index: {index}", SOType.RuntimeSet, Entities[index].name, false, false, runtimeSet);
+            
+            Object itemObj = Entities[index] as Object;
+            SHLogger.LogAddRemove($"Removed Entity | Index: {index}", SOType.RuntimeSet, itemObj.name, false, false, runtimeSet);
         }
         
         public void Replace(IEnumerable<T> newList)

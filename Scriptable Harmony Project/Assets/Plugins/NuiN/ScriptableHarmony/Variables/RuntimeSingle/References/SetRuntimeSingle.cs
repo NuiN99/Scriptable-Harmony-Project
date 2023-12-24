@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableHarmony.References
 {
     [Serializable]
-    public class SetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T> where T : Object
+    public class SetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T>
     {
         public T Entity
         {
@@ -22,8 +22,10 @@ namespace NuiN.ScriptableHarmony.References
 
             T oldItem = Entity;
             Entity = newItem;
-            
-            SHLogger.LogSet("Set Entity", SOType.RuntimeSingle, oldItem != null ? oldItem.name : "", newItem != null ? newItem.name : "", invokeActions, runtimeSingle);
+
+            Object newItemObj = newItem as Object;
+            Object oldItemObj = oldItem as Object;
+            SHLogger.LogSet("Set Entity", SOType.RuntimeSingle, oldItemObj != null ? oldItemObj.name : "", newItemObj != null ? newItemObj.name : "", invokeActions, runtimeSingle);
             
             if (!invokeActions) return;
 
@@ -44,9 +46,10 @@ namespace NuiN.ScriptableHarmony.References
             if (Entity == null) return;
 
             T oldItem = Entity;
-            Entity = null;
+            Entity = default;
             
-            SHLogger.LogSet("Removed Entity", SOType.RuntimeSingle, oldItem != null ? oldItem.name : "null", null, invokeActions, runtimeSingle);
+            Object oldItemObj = oldItem as Object;
+            SHLogger.LogSet("Removed Entity", SOType.RuntimeSingle, oldItem != null ? oldItemObj.name : "null", null, invokeActions, runtimeSingle);
             
             if (!invokeActions) return;
             

@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableHarmony.RuntimeSingle.Base
 {
-    public class RuntimeSingleBaseSO<T> : RuntimeObjectBaseSO<T> where T : Object
+    public class RuntimeSingleBaseSO<T> : RuntimeObjectBaseSO<T>
     {
         [SerializeField] [TextArea] string description;
 
@@ -30,7 +30,7 @@ namespace NuiN.ScriptableHarmony.RuntimeSingle.Base
         protected override GetSetReferencesContainer GettersAndSetters { get => gettersAndSetters; set => gettersAndSetters = value; }
         public override bool LogActions => logActions;
         
-        protected override void ResetValue() => entity = null;
+        protected override void ResetValue() => entity = default;
     }
 }
 

@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace NuiN.ScriptableHarmony.RuntimeSet.Base
 {
-    public class RuntimeSetBaseSO<T> : RuntimeObjectBaseSO<T> where T : Object
+    public class RuntimeSetBaseSO<T> : RuntimeObjectBaseSO<T>
     {
         [SerializeField] [TextArea] string description;
         

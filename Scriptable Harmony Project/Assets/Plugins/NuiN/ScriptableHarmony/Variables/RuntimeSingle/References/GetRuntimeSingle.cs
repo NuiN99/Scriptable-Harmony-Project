@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 namespace NuiN.ScriptableHarmony.References
 {
     [Serializable]
-    public class GetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T> where T : Object
+    public class GetRuntimeSingle<T> : ReferenceRuntimeSingleBase<T>
     {
         public T Entity => runtimeSingle.entity;
     }

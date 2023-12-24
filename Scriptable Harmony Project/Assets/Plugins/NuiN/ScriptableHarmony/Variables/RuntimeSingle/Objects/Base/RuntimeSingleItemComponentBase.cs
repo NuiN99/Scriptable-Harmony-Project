@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace NuiN.ScriptableHarmony.RuntimeSingle.Components.Base
 {
-    public class RuntimeSingleItemComponentBase<T> : MonoBehaviour where T : Object
+    public class RuntimeSingleItemComponentBase<T> : MonoBehaviour
     {
         enum Type{ OnEnableOnDisable, OnAwakeOnDestroy }
     
