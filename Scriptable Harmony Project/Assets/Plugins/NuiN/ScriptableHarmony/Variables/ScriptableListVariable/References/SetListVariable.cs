@@ -14,11 +14,6 @@ namespace NuiN.ScriptableHarmony.References
     {
         public List<T> Values => list.values;
         
-        internal SetListVariable(ScriptableListVariableBaseSO<T> variable)
-        {
-            list = variable;
-        }
-        
         public void Add(T item)
         {
             var oldValue = new List<T>(Values);

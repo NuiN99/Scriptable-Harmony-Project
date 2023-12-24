@@ -34,17 +34,32 @@ public class SerializableDictionary<TKey,TValue>
       
       dictionary.Clear();
       List<SerializedKeyValuePair<TKey, TValue>> duplicates = new();
-      foreach (var pair in serializedPairs)
+      foreach (SerializedKeyValuePair<TKey, TValue> pair in serializedPairs)
       {
          bool success = dictionary.TryAdd(pair.key, pair.value);
          if(!success) duplicates.Add(pair);
       }
 
-      foreach (var duplicate in duplicates)
+      foreach (SerializedKeyValuePair<TKey, TValue> duplicate in duplicates)
       {
-         Debug.LogWarning($"Dictionary Validation: Removed duplicate | Key: {duplicate.key} | Value: {duplicate.value}");
+         LogDuplicateWarning(duplicate);
          serializedPairs.Remove(duplicate);
       }
       Serialize(ref dictionary);
+   }
+
+   public Dictionary<TKey, TValue> GetDictionary()
+   {
+      var dict = new Dictionary<TKey, TValue>();
+      foreach (SerializedKeyValuePair<TKey, TValue> pair in serializedPairs)
+      {
+         if (!dict.TryAdd(pair.key, pair.value) && Application.isPlaying) LogDuplicateWarning(pair);
+      }
+      return dict;
+   }
+
+   void LogDuplicateWarning(SerializedKeyValuePair<TKey, TValue> pair)
+   {
+      Debug.LogWarning($"Dictionary Validation: Removed duplicate | Key: {pair.key} | Value: {pair.value}");
    }
 }

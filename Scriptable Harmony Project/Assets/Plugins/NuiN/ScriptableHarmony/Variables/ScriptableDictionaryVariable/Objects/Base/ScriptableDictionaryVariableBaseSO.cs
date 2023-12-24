@@ -14,7 +14,7 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
     {
         public Dictionary<TKey,TValue> dictionary = new();
         [ReadOnlyPlayMode] Dictionary<TKey,TValue> defaultDictionary = new();
-
+        
         public SerializableDictionary<TKey, TValue> serializedDictionary;
         
         [Header("Value Persistence")]
@@ -48,11 +48,14 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
             EditorUtility.SetDirty(this);
         }
 
-        protected override void SaveDefaultValue() => defaultDictionary = new Dictionary<TKey,TValue>(dictionary);
+        protected override void SaveDefaultValue()
+        {
+            defaultDictionary = new Dictionary<TKey, TValue>(serializedDictionary.GetDictionary());
+        }
+
         protected override void ResetValueToDefault()
         {
-            SetDictionaryVariable<TKey,TValue> dictionaryVar = new(this);
-            dictionaryVar.ResetDictionary();
+            dictionary = new Dictionary<TKey, TValue>(defaultDictionary);
             serializedDictionary.Serialize(ref dictionary);
         }
 

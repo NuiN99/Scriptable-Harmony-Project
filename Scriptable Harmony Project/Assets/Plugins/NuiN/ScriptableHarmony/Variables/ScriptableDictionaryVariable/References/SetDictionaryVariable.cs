@@ -17,11 +17,6 @@ namespace NuiN.ScriptableHarmony.References
         public IReadOnlyDictionary<TKey,TValue> Dictionary => dictionary.dictionary;
         Dictionary<TKey, TValue> InternalDictionary => (Dictionary<TKey, TValue>)Dictionary;
 
-        internal SetDictionaryVariable(ScriptableDictionaryVariableBaseSO<TKey,TValue> variable)
-        {
-            dictionary = variable;
-        }
-
         public bool TryAdd(TKey key, TValue value)
         {
             bool added = InternalDictionary.TryAdd(key, value);

@@ -50,8 +50,11 @@ namespace NuiN.ScriptableHarmony.Variable.Base
         protected override void SaveDefaultValue() => defaultValue = value;
         protected override void ResetValueToDefault()
         {
-            SetVariable<T> setVar = new(this);
-            setVar.ResetValue();
+            T oldValue = value;
+            value = defaultValue;
+            
+            onChangeWithOld?.Invoke(oldValue, value);
+            onChange?.Invoke(value);
         }
 
         protected override bool ResetsOnSceneLoad() => resetOnSceneLoad;

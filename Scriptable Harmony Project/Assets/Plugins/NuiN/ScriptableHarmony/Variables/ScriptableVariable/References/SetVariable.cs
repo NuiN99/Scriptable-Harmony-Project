@@ -13,12 +13,7 @@ namespace NuiN.ScriptableHarmony.References
     {
         public T Val => variable.value;
         public T DefaultVal => variable.DefaultValue;
-
-        internal SetVariable(ScriptableVariableBaseSO<T> variable)
-        {
-            this.variable = variable;
-        }
-
+        
         public void Set(T value)
         {
             T oldValue = variable.value;
