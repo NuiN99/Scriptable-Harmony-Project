@@ -15,7 +15,9 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Components.Base
         [Header("Actions")]
         [SerializeField] bool dontInvokeOnAdd;
         [SerializeField] bool dontInvokeOnRemove;
-    
+
+        void Reset() => thisObject ??= GetComponent<T>();
+
         void OnEnable() => AddToSet(Type.OnEnableOnDisable);
         void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
 

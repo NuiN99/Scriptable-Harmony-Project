@@ -15,7 +15,7 @@ MonoBehaviour:
   description: 
   value: {x: 0, y: 0}
   defaultValue: {x: 0, y: 0}
-  resetOnSceneLoad: 0
+  resetOn: 0
   logActions: 0
   gettersAndSetters:
     Getters: []

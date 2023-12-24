@@ -18,6 +18,8 @@ namespace NuiN.ScriptableHarmony.RuntimeSingle.Components.Base
         [SerializeField] bool dontInvokeOnSet;
         [SerializeField] bool dontInvokeOnRemove;
     
+        void Reset() => thisObject ??= GetComponent<T>();
+        
         void OnEnable() => SetItem(Type.OnEnableOnDisable);
         void OnDisable() => RemoveFromSet(Type.OnEnableOnDisable);
 

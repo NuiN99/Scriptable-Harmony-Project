@@ -31,7 +31,7 @@ MonoBehaviour:
       value: 0
     - key: 345345
       value: 0
-  resetOnSceneLoad: 1
+  resetOn: 0
   logActions: 1
   gettersAndSetters:
     Getters: []

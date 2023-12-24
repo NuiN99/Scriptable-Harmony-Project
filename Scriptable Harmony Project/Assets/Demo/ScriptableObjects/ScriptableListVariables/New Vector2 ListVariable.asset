@@ -15,7 +15,7 @@ MonoBehaviour:
   description: 
   values: []
   defaultValues: []
-  resetOnSceneLoad: 1
+  resetOn: 0
   logActions: 1
   gettersAndSetters:
     Getters: []
