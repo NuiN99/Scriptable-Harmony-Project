@@ -23,6 +23,7 @@ namespace NuiN.ScriptableHarmony.RuntimeSingle.Components.Base
 
         void Awake()
         {
+            thisObject ??= GetComponent<T>();
             SetItem(Type.OnAwakeOnDestroy);
         }
 

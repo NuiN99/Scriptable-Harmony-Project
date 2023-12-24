@@ -38,7 +38,6 @@ namespace NuiN.ScriptableHarmony.ListVariable.Base
             base.OnEnable();
             serializedDictionary ??= new SerializableDictionary<TKey, TValue>(ref dictionary);
             serializedDictionary.ValidateAndApply(ref dictionary);
-            Debug.Log(dictionary.Count);
         }
 
         [MethodButton("ValidateDictionary")]

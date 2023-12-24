@@ -47,7 +47,6 @@ public class PlayerHealth : MonoBehaviour
             
             clickSound.PlaySpatial(mousePosition.Val);
 
-            Debug.Log(dictionary.Dictionary.Count);
             dictionary.TryAdd(curValue, true);
             curValue++;
         }

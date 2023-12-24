@@ -21,6 +21,7 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Components.Base
 
         void Awake()
         {
+            thisObject ??= GetComponent<T>();
             AddToSet(Type.OnAwakeOnDestroy);
         }
 

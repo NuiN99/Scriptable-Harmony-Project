@@ -14,19 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   serializedDictionary:
-    serializedPairs:
-    - key: 5
-      value: 1
-    - key: 9
-      value: 1
-    - key: 10
-      value: 1
-    - key: 11
-      value: 1
-    - key: 12
-      value: 1
-    - key: 13
-      value: 1
+    serializedPairs: []
   resetOnSceneLoad: 1
   logActions: 1
   gettersAndSetters:
