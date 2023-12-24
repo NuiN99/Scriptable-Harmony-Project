@@ -40,7 +40,6 @@ namespace NuiN.ScriptableHarmony.RuntimeSet.Components.Base
         void RemoveFromSet(Type type)
         {
             if (lifetimeType != type) return;
-            runtimeSet.Remove(thisObject);
             
             if(!dontInvokeOnRemove) runtimeSet.Remove(thisObject);
             else runtimeSet.RemoveNoInvoke(thisObject);
