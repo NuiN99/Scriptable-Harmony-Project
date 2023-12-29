@@ -35,10 +35,10 @@ public class PlayerHealth : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             TakeDamage(10);
-            clickParticles.SpawnAll(mousePosition);
+            clickParticles.SpawnAll(mousePosition.Val);
             
             clickParticle.Spawn(
-                position: mousePosition, 
+                position: mousePosition.Val, 
                 rotation: Random.rotation, 
                 parent: transform, 
                 emissionFactor: 2f, 
