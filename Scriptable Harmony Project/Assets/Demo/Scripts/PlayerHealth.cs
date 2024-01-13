@@ -3,7 +3,6 @@ using NuiN.ScriptableHarmony.References;
 using NuiN.ScriptableHarmony.Sound;
 using NuiN.ScriptableHarmony.Variable.References;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -43,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
                 scaleFactor: 2f, 
                 lifetime: 2f);
             
-            clickSound.Play();
+            clickSound.PlaySpatial(transform.position);
             
             curValue++;
         }

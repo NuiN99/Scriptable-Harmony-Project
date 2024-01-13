@@ -15,4 +15,5 @@ MonoBehaviour:
   masterVolume: 1
   mixerGroup: {fileID: 0}
   disableAudio: 0
-  disableAudioOnScenes: []
+  disableAudioOnScenes:
+  - SomeScene

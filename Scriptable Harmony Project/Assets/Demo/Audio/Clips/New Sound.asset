@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: 1e33e00110230a24f9ba055874fabde0, type: 2}
   settings:
-    <Clips>k__BackingField:
+    clips:
     - {fileID: 8300000, guid: 9dc230a1e8b108b4fa41bf2de39a1222, type: 3}
-    <Loop>k__BackingField: 0
-    <Priority>k__BackingField: 128
-    <MinVolume>k__BackingField: 0.5
-    <MaxVolume>k__BackingField: 0.5
-    <MinPitch>k__BackingField: 1
-    <MaxPitch>k__BackingField: 1
-    <StereoPan>k__BackingField: 0
-    <ReverbZoneMix>k__BackingField: 1
+    minVolume: 0.5
+    maxVolume: 0.5
+    minPitch: 1
+    maxPitch: 1
+    stereoPan: 0
+    priority: 128
+    reverbZoneMix: 1
+    loop: 0
