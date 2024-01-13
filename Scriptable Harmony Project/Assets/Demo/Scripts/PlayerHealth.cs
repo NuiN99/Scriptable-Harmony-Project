@@ -17,8 +17,6 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] SoundSO clickSound;
 
-    [SerializeField] SetDictionaryVariable<int, bool> dictionary;
-
     public void TakeDamage(float amount)
     {
         curHealth.SubtractClamped(amount, min: 0, max: maxHealth.Val);
@@ -45,9 +43,8 @@ public class PlayerHealth : MonoBehaviour
                 scaleFactor: 2f, 
                 lifetime: 2f);
             
-            clickSound.PlaySpatial(mousePosition.Val);
-
-            dictionary.TryAdd(curValue, true);
+            clickSound.Play();
+            
             curValue++;
         }
     }
