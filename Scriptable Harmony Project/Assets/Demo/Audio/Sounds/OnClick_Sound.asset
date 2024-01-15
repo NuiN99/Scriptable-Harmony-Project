@@ -15,11 +15,20 @@ MonoBehaviour:
   player: {fileID: 11400000, guid: 1e33e00110230a24f9ba055874fabde0, type: 2}
   settings:
     clips:
-    - {fileID: 8300000, guid: 9dc230a1e8b108b4fa41bf2de39a1222, type: 3}
-    minVolume: 0.501
-    maxVolume: 0.525
-    minPitch: 0.93
-    maxPitch: 1.19
+    - {fileID: 0}
+    minVolume: 0.408
+    maxVolume: 0.634
+    useSetVolumes: 0
+    possibleVolumes:
+    - 0.438
+    - 0.685
+    minPitch: 0.28
+    maxPitch: 2.72
+    useSetPitches: 1
+    possiblePitches:
+    - 0.5
+    - 1
+    - 3
     stereoPan: 0
     priority: 128
     reverbZoneMix: 1

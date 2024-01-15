@@ -18,8 +18,15 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 9dc230a1e8b108b4fa41bf2de39a1222, type: 3}
     minVolume: 0.5
     maxVolume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    useSetVolumes: 0
+    possibleVolumes: []
+    minPitch: -1
+    maxPitch: -1
+    useSetPitches: 1
+    possiblePitches:
+    - 1
+    - 1.5
+    - 2
     stereoPan: 0
     priority: 128
     reverbZoneMix: 1
