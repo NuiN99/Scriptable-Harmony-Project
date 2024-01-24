@@ -15,7 +15,7 @@ MonoBehaviour:
   player: {fileID: 11400000, guid: 1e33e00110230a24f9ba055874fabde0, type: 2}
   settings:
     clips:
-    - {fileID: 0}
+    - {fileID: 8300000, guid: 9dc230a1e8b108b4fa41bf2de39a1222, type: 3}
     minVolume: 0.408
     maxVolume: 0.634
     useSetVolumes: 0
