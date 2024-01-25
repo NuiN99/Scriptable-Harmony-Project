@@ -12,22 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9114bca19cf226f4a8c4a5a96dee6b04, type: 3}
   m_Name: New Sound
   m_EditorClassIdentifier: 
-  player: {fileID: 11400000, guid: 1e33e00110230a24f9ba055874fabde0, type: 2}
-  settings:
-    clips:
-    - {fileID: 8300000, guid: 9dc230a1e8b108b4fa41bf2de39a1222, type: 3}
-    minVolume: 0.5
-    maxVolume: 0.5
-    useSetVolumes: 0
-    possibleVolumes: []
-    minPitch: -1
-    maxPitch: -1
-    useSetPitches: 1
-    possiblePitches:
-    - 1
-    - 1.5
-    - 2
-    stereoPan: 0
-    priority: 128
-    reverbZoneMix: 1
-    loop: 0
+  soundPlayer: {fileID: 11400000, guid: 1e33e00110230a24f9ba055874fabde0, type: 2}
+  clips:
+  - {fileID: 8300000, guid: 9dc230a1e8b108b4fa41bf2de39a1222, type: 3}
+  minVolume: 0.08115554
+  maxVolume: 0.8116378
+  useFixedVolumes: 0
+  possibleVolumes: []
+  minPitch: 0.05
+  maxPitch: 1.240351
+  useFixedPitches: 1
+  possiblePitches:
+  - 1
+  stereoPan: 0
+  priority: 128
+  reverbZoneMix: 1
+  loop: 0
